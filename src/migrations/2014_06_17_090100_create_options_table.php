@@ -17,6 +17,7 @@ class CreateOptionsTable extends Migration {
 			$table->increments('id');
 			$table->string('name');
 			$table->text('value');
+			$table->text('description');
 			$table->string('type');
 			$table->timestamps();
 		});
