@@ -15,8 +15,8 @@ class CreatePagesTable extends Migration {
 		Schema::connection( Config::get('asmoyo::config.database') )->create('pages', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('objectable_id');
-			$table->string('objectable_type');
+			// $table->integer('objectable_id');
+			// $table->string('objectable_type');
 			$table->integer('parent_id');
 			$table->string('status');
 			$table->string('title');

@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration {
 		    $table->string('groupable_type');
 		    $table->integer('media_id')->nullable();
 		    $table->integer('user_id');
+		    $table->string('type');
 		    $table->string('title');
 		    $table->string('url');
 		    $table->text('description');
