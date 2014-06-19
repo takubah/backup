@@ -19,6 +19,15 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('antoniputra/asmoyo');
+
+		// register profiler when debug is true
+		if ( \Config::get('asmoyo::profiler') )
+		{
+			$this->app->register('Profiler\ProfilerServiceProvider');
+		}
+
+		// set Auth model
+		// \Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
 	}
 
 	/**

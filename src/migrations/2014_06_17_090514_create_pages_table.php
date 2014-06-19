@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration {
 			$table->increments('id');
 			// $table->integer('objectable_id');
 			// $table->string('objectable_type');
-			$table->integer('parent_id');
+			$table->integer('parent_id')->nullable();
 			$table->string('status');
 			$table->string('title');
 			$table->string('url');
@@ -25,9 +25,9 @@ class CreatePagesTable extends Migration {
 			$table->text('side_left');
 			$table->text('side_right');
 			$table->text('footer');
-			$table->string('meta_title');
-			$table->text('meta_keyword');
-			$table->text('meta_description');
+			$table->string('meta_title')->nullable();
+			$table->text('meta_keyword')->nullable();
+			$table->text('meta_description')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

@@ -4,18 +4,20 @@ class MediaTableSeeder extends Seeder {
 
 	public function run()
 	{
-		// Uncomment the below to wipe the table clean before populating
-		DB::table('media')->truncate();
-
-		$media 	= array(
+		$medias 	= array(
 			array(
-				'category_id'	=> 1,
-				'title'			=> '',
+			    'category_id'	=> 2,
+			    'type' 			=> 'internal',
+			    'file'			=> 'example.jpg',
+			    'mime_type'		=> 'image/jpeg',
+			    'size'			=> 200,
+			    'title' 		=> 'example image',
+			    'description' 	=> 'example image for missed image',
 			),
 
 		);
 
-		DB::table('media')->insert($media);
+		DB::table('medias')->insert($medias);
 	}
 
 }
