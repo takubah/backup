@@ -11,7 +11,9 @@ class AsmoyoSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
+		$this->call('FirstTableSeeder');
 		$this->call('OptionTableSeeder');
+		$this->call('MediaTableSeeder');
 	}
 
 }
