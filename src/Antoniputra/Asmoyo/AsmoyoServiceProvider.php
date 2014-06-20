@@ -37,10 +37,15 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->registerObject();
+	}
+
+	public function registerObject()
+	{
 		$app = $this->app;
 
 		// Option Object
-		$app->singleton('asmoyo.option', function()
+		$app->bind('asmoyo.option', function()
 		{
 			return new \Antoniputra\Asmoyo\Options\Option;
 			// return new \Antoniputra\Asmoyo\Options\OptionRepo(
@@ -53,6 +58,38 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		{
 			return \Antoniputra\Asmoyo\Options\Option::all();
 		});
+
+		// Media Object
+		$app->bind('asmoyo.media', function()
+		{
+			return new \Antoniputra\Asmoyo\Medias\Media;
+		});
+
+		// User Object
+		$app->bind('asmoyo.user', function()
+		{
+			return new \Antoniputra\Asmoyo\Users\User;
+		});
+
+		// Category Object
+		$app->bind('asmoyo.category', function()
+		{
+			return new \Antoniputra\Asmoyo\Categories\Category;
+		});
+
+		// Page Object
+		$app->bind('asmoyo.page', function()
+		{
+			return new \Antoniputra\Asmoyo\Pages\Page;
+		});
+
+		// Post Object
+		$app->bind('asmoyo.post', function()
+		{
+			return new \Antoniputra\Asmoyo\Posts\Post;
+		});
+
+
 	}
 
 	/**
