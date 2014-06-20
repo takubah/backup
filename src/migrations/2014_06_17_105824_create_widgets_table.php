@@ -18,7 +18,7 @@ class CreateWidgetsTable extends Migration {
 			$table->string('title');
 		    $table->text('description');
 		    $table->string('view_path');
-		    $table->boolean('is_groupable');
+		    $table->boolean('is_hasMany');
 		    $table->string('status');
 			$table->timestamps();
 		});

@@ -25,9 +25,9 @@ class CreatePostsTable extends Migration {
 		    $table->text('description');
 		    $table->text('body');
 		    $table->string('status');
-		    $table->string('meta_title');
-		    $table->text('meta_keyword');
-		    $table->text('meta_description');
+		    $table->string('meta_title')->nullable();
+		    $table->text('meta_keyword')->nullable();
+		    $table->text('meta_description')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
