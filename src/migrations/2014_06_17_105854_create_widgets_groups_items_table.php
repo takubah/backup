@@ -16,8 +16,8 @@ class CreateWidgetsGroupsItemsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('widget_group_id');
-			$table->integer('objectable_id');
-			$table->string('objectable_type');
+			$table->integer('objectable_id')->nullable();
+			$table->string('objectable_type')->nullable();
 			$table->text('content');
 			$table->timestamps();
 		});
