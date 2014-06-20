@@ -16,6 +16,7 @@ class CreateWidgetsGroupsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('widget_id');
+			$table->string('type')->nullable();
 			$table->string('title');
 			$table->string('description');
 			$table->timestamps();
