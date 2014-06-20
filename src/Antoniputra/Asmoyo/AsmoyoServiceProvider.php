@@ -37,7 +37,22 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$app = $this->app;
+
+		// Option Object
+		$app->singleton('asmoyo.option', function()
+		{
+			return new \Antoniputra\Asmoyo\Options\Option;
+			// return new \Antoniputra\Asmoyo\Options\OptionRepo(
+			// 	new \Antoniputra\Asmoyo\Options\Option
+			// );
+		});
+
+		// get website current option
+		$app->bindShared('asmoyo.web', function()
+		{
+			return \Antoniputra\Asmoyo\Options\Option::all();
+		});
 	}
 
 	/**
@@ -47,7 +62,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('asmoyo.option');
 	}
 
 }
