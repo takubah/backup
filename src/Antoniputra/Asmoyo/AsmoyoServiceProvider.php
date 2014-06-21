@@ -47,10 +47,9 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		// Option Object
 		$app->bind('asmoyo.option', function()
 		{
-			return new \Antoniputra\Asmoyo\Options\Option;
-			// return new \Antoniputra\Asmoyo\Options\OptionRepo(
-			// 	new \Antoniputra\Asmoyo\Options\Option
-			// );
+			return new \Antoniputra\Asmoyo\Options\OptionRepo(
+				new \Antoniputra\Asmoyo\Options\Option
+			);
 		});
 
 		// get website current option
