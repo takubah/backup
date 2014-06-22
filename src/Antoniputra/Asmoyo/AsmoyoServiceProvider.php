@@ -26,6 +26,8 @@ class AsmoyoServiceProvider extends ServiceProvider {
 			$this->app->register('Profiler\ProfilerServiceProvider');
 		}
 
+		include __DIR__ . '/../../routes.php';
+
 		// set Auth model
 		// \Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
 	}
@@ -61,13 +63,17 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		// Media Object
 		$app->bind('asmoyo.media', function()
 		{
-			return new \Antoniputra\Asmoyo\Medias\Media;
+			return new \Antoniputra\Asmoyo\Medias\MediaRepo(
+				new \Antoniputra\Asmoyo\Medias\Media
+			);
 		});
 
 		// User Object
 		$app->bind('asmoyo.user', function()
 		{
-			return new \Antoniputra\Asmoyo\Users\User;
+			return new \Antoniputra\Asmoyo\Users\UserRepo(
+				new \Antoniputra\Asmoyo\Users\User
+			);
 		});
 
 		// Category Object

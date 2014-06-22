@@ -9,6 +9,14 @@ return array(
 	*/
 	'database'		=> 'mysql',
 
+	/**
+	* Set Auth Model
+	*/
 	'auth_model'	=> 'Antoniputra\Asmoyo\Users\User',
+
+	/**
+	* Set Admin Url
+	*/
+	'admin_url'		=> 'admin',
 
 );
