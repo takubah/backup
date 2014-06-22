@@ -2,6 +2,9 @@
 
 return array(
 
+	/**
+	* Set Profiler (Debug Bar)
+	*/
 	'profiler'		=> Config::get('app.debug'),
 
 	/**
@@ -15,8 +18,29 @@ return array(
 	'auth_model'	=> 'Antoniputra\Asmoyo\Users\User',
 
 	/**
-	* Set Admin Url
+	* Admin Settings
 	*/
-	'admin_url'		=> 'admin',
+	'admin'		=> array(
 
+		/**
+		* Admin Url
+		*/
+		'url'	=>	'admin'
+	),
+
+	/**
+	* Api Settings
+	*/
+	'api'			=> array(
+
+		/**
+		* Enabled API boolean (true/false)
+		*/
+		'status'	=> true,
+
+		/**
+		* Api Url
+		*/
+		'url'		=> 'api/v1'
+	),
 );
