@@ -1,6 +1,7 @@
 <?php namespace Antoniputra\Asmoyo;
 
 use Illuminate\Support\ServiceProvider;
+use Config;
 
 class AsmoyoServiceProvider extends ServiceProvider {
 
@@ -21,15 +22,16 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		$this->package('antoniputra/asmoyo');
 
 		// register profiler when debug is true
-		if ( \Config::get('asmoyo::profiler') )
+		if ( Config::get('asmoyo::profiler') )
 		{
 			$this->app->register('Profiler\ProfilerServiceProvider');
 		}
 
+		include __DIR__ . '/../../filters.php';
 		include __DIR__ . '/../../routes.php';
 
 		// set Auth model
-		// \Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
+		Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
 	}
 
 	/**
@@ -46,22 +48,22 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	{
 		$app = $this->app;
 
-		// Option Object
-		$app->bind('asmoyo.option', function()
-		{
-			return new \Antoniputra\Asmoyo\Options\OptionRepo(
-				new \Antoniputra\Asmoyo\Options\Option
-			);
-		});
-
 		// get website current option
 		$app->bindShared('asmoyo.web', function()
 		{
 			return \Antoniputra\Asmoyo\Options\Option::all();
 		});
 
+		// Option Object
+		$app->bind('Antoniputra\Asmoyo\Options\OptionInterface', function()
+		{
+			return new \Antoniputra\Asmoyo\Options\OptionRepo(
+				new \Antoniputra\Asmoyo\Options\Option
+			);
+		});
+
 		// Media Object
-		$app->bind('asmoyo.media', function()
+		$app->bind('Antoniputra\Asmoyo\Medias\MediaInterface', function()
 		{
 			return new \Antoniputra\Asmoyo\Medias\MediaRepo(
 				new \Antoniputra\Asmoyo\Medias\Media
@@ -69,7 +71,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		});
 
 		// User Object
-		$app->bind('asmoyo.user', function()
+		$app->bind('Antoniputra\Asmoyo\Users\UserInterface', function()
 		{
 			return new \Antoniputra\Asmoyo\Users\UserRepo(
 				new \Antoniputra\Asmoyo\Users\User
@@ -77,24 +79,22 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		});
 
 		// Category Object
-		$app->bind('asmoyo.category', function()
+		$app->bind('Antoniputra\Asmoyo\Categories\CategoryInterface', function()
 		{
 			return new \Antoniputra\Asmoyo\Categories\Category;
 		});
 
 		// Page Object
-		$app->bind('asmoyo.page', function()
+		$app->bind('Antoniputra\Asmoyo\Pages\PageInterface', function()
 		{
 			return new \Antoniputra\Asmoyo\Pages\Page;
 		});
 
 		// Post Object
-		$app->bind('asmoyo.post', function()
+		$app->bind('Antoniputra\Asmoyo\Posts\PostInterface', function()
 		{
 			return new \Antoniputra\Asmoyo\Posts\Post;
 		});
-
-
 	}
 
 	/**
