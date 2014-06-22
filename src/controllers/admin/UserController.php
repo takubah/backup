@@ -1,7 +1,7 @@
 <?php
 
-class UserController extends \BaseController {
-
+class Admin_UserController extends AsmoyoController
+{
 	/**
 	* Display admin login
 	* @return Response
