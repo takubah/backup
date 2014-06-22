@@ -1,5 +1,7 @@
 <?php namespace Antoniputra\Asmoyo\Cores;
 
+use Lang, Validator;
+
 abstract class RepoBase
 {
 	public $model;
@@ -15,8 +17,8 @@ abstract class RepoBase
 	{
 		$rules = $this->prepareValidation( $input, array_merge($this->model->rules, $custom_rules) );
 
-		$messages   = \Lang::get('validation.custom');
-        $v          = \Validator::make($input, $rules, $messages);
+		$messages   = Lang::get('validation.custom');
+        $v          = Validator::make($input, $rules, $messages);
         
          // check for failure
         if ($v->fails())

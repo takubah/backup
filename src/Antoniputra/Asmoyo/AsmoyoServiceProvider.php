@@ -81,19 +81,25 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		// Category Object
 		$app->bind('Antoniputra\Asmoyo\Categories\CategoryInterface', function()
 		{
-			return new \Antoniputra\Asmoyo\Categories\Category;
+			return new \Antoniputra\Asmoyo\Categories\CategoryRepo(
+				new \Antoniputra\Asmoyo\Categories\Category
+			);
 		});
 
 		// Page Object
 		$app->bind('Antoniputra\Asmoyo\Pages\PageInterface', function()
 		{
-			return new \Antoniputra\Asmoyo\Pages\Page;
+			return new \Antoniputra\Asmoyo\Pages\PageRepo(
+				new \Antoniputra\Asmoyo\Pages\Page
+			);
 		});
 
 		// Post Object
 		$app->bind('Antoniputra\Asmoyo\Posts\PostInterface', function()
 		{
-			return new \Antoniputra\Asmoyo\Posts\Post;
+			return new \Antoniputra\Asmoyo\Posts\PostRepo(
+				new \Antoniputra\Asmoyo\Posts\Post
+			);
 		});
 	}
 

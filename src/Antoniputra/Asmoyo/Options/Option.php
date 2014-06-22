@@ -19,6 +19,9 @@ class Option extends EloquentBase {
      */
 	protected $fillable = array('name', 'value', 'description', 'type');
 
+	/**
+	* Default validation rules
+	*/
 	public $rules = array(
 		'name'			=> 'required',
 		'value'			=> 'required',

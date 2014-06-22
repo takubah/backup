@@ -6,6 +6,9 @@ class Category extends EloquentBase {
 	
 	protected $table = 'categories';
 
+    /**
+    * Morph relation name
+    */
 	protected $morphClass = 'category';
 
 	/**
@@ -26,7 +29,10 @@ class Category extends EloquentBase {
      */
 	protected $fillable = array('media_id', 'parent_id', 'title', 'url', 'description', 'type', 'status');
 
-
+    /**
+    * These are make collumn to Carbon instance
+    * @return array
+    */
 	public function getDates()
     {
         return array('created_at', 'updated_at', 'deleted_at');
