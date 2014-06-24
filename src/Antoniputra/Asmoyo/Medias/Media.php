@@ -50,14 +50,14 @@ class Media extends EloquentBase
     * list type support
     * @var array
     */
-    public $type_list = array(
+    public $typeList = array(
     	'internal', 'external'
 	);
 
 
 
-	/*public function category()
+	public function category()
     {
         return $this->belongsTo('Antoniputra\Asmoyo\Categories\Category');
-    }*/
+    }
 }

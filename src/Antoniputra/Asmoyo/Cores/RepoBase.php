@@ -10,13 +10,10 @@ abstract class RepoBase
 
 	public $rules = array();
 
-    public $repoLimit;
-
 	public function __construct($model=null)
 	{
 		$this->model      = $model;
         $this->webOption  = app('asmoyo.web');
-        $this->repoLimit  = Input::get('limit') ?: $this->webOption['web_itemPerPage'];
 	}
 
 	public function repoValidation($input, $custom_rules=array())
@@ -93,9 +90,20 @@ abstract class RepoBase
             }
         }
 
-        $data = $data->limit( $this->repoLimit );
+        $data = $data->limit( $this->repoLimit() );
 
         return $data;
+    }
+
+    /**
+    * Set global limit data for all object
+    * @param $limit integer|numeric
+    */
+    protected function repoLimit($limit=null)
+    {
+        $limit = Input::get('limit', $limit) ?: $this->webOption['web_itemPerPage'];
+
+        return is_numeric($limit) ? $limit : 10;
     }
 
 }

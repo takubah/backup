@@ -2,10 +2,10 @@
 
 interface MediaInterface {
 
-	public function getAllPaginated($limit);
+	public function getAll($limit=null);
 
-	public function getByGallery($gallery_id);
+	public function getByGallery($gallery_id, $limit=null);
 
-	public function getByType($type);
+	public function getByType($type, $limit=null);
 	
 }
