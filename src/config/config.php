@@ -29,6 +29,23 @@ return array(
 	),
 
 	/**
+	* Cache Settings
+	*/
+	'cache'			=> array(
+
+		/**
+		* Base Cache Name
+		*/
+		'baseName'	=> 'plensip.com',
+
+		/**
+		* Cache Time
+		* @see : forever or number in minutes
+		*/
+		'time'	=> 'forever',
+	),
+
+	/**
 	* Api Settings
 	*/
 	'api'			=> array(
