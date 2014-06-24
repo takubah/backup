@@ -13,7 +13,7 @@ abstract class RepoBase
 		$this->model = $model;
 	}
 
-	public function doValidation($input, $custom_rules=array())
+	public function repoValidation($input, $custom_rules=array())
 	{
 		$rules = $this->prepareValidation( $input, array_merge($this->model->rules, $custom_rules) );
 

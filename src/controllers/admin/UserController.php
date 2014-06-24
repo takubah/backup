@@ -8,7 +8,7 @@ class Admin_UserController extends AsmoyoController
 	*/
 	public function adminLogin()
 	{
-
+		return 'here is admin login';
 	}
 
 
@@ -18,15 +18,6 @@ class Admin_UserController extends AsmoyoController
 	public function postAdminLogin()
 	{
 		
-	}
-
-
-	/**
-	* @return Redirect
-	*/
-	public function postAdminLogin()
-	{
-
 	}
 
 

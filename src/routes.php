@@ -14,7 +14,14 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 	Route::group(array('prefix' => $apiUrl, 'before' => 'ApiFilter'), function() use($apiUrl)
 	{
 		// ApiUser
-		Route::resource('users', 'Api_UserController');
+		Route::resource('user', 'Api_User');
+		
+		// ApiMedia
+		Route::resource('media', 'Api_Media');
+		
+		// ApiCategory
+		Route::resource('category', 'Api_Category');
+
 	});
 /**
 * End API ROUTING

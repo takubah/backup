@@ -39,9 +39,9 @@ class FirstSeeder extends Seeder {
 				'media_id'		=> 1,
 				'parent_id'		=> null,
 				'title'			=> 'My Album',
-				'url'			=> 'my-album',
+				'url'			=> 'my-first-gallery',
 				'description'	=> 'My Default Album',
-				'type'			=> 'album',
+				'type'			=> 'gallery',
 				'status'		=> 'publish',
 			),
 		);

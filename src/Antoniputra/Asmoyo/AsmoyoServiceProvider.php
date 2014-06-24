@@ -27,11 +27,11 @@ class AsmoyoServiceProvider extends ServiceProvider {
 			$this->app->register('Profiler\ProfilerServiceProvider');
 		}
 
-		include __DIR__ . '/../../filters.php';
-		include __DIR__ . '/../../routes.php';
-
 		// set Auth model
 		Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
+
+		include __DIR__ . '/../../filters.php';
+		include __DIR__ . '/../../routes.php';
 	}
 
 	/**

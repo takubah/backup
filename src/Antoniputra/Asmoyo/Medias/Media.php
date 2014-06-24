@@ -53,4 +53,11 @@ class Media extends EloquentBase
     public $type_list = array(
     	'internal', 'external'
 	);
+
+
+
+	/*public function category()
+    {
+        return $this->belongsTo('Antoniputra\Asmoyo\Categories\Category');
+    }*/
 }

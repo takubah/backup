@@ -2,7 +2,8 @@
 
 use Antoniputra\Asmoyo\Cores\EloquentBase;
 
-class Category extends EloquentBase {
+class Category extends EloquentBase
+{
 	
 	protected $table = 'categories';
 
