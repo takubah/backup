@@ -1,7 +1,7 @@
 <?php namespace Antoniputra\Asmoyo;
 
 use Illuminate\Support\ServiceProvider;
-use Config;
+use Config, Cache;
 
 class AsmoyoServiceProvider extends ServiceProvider {
 
@@ -44,22 +44,22 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		$this->registerObject();
 	}
 
-	public function registerObject()
+	protected function registerObject()
 	{
 		$app = $this->app;
 
-		// get website current option
-		$app->bindShared('asmoyo.web', function()
-		{
-			return \Antoniputra\Asmoyo\Options\Option::all();
-		});
-
 		// Option Object
-		$app->bind('Antoniputra\Asmoyo\Options\OptionInterface', function()
+		$app->bind('Antoniputra\Asmoyo\Options\OptionInterface', function($app)
 		{
 			return new \Antoniputra\Asmoyo\Options\OptionRepo(
 				new \Antoniputra\Asmoyo\Options\Option
 			);
+		});
+
+		// get website current option
+		$this->app->bindShared('asmoyo.web', function($app)
+		{
+			return $app->make('Antoniputra\Asmoyo\Options\OptionInterface')->get();
 		});
 
 		// Media Object
