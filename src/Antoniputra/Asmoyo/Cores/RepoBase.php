@@ -1,16 +1,22 @@
 <?php namespace Antoniputra\Asmoyo\Cores;
 
-use Lang, Validator;
+use Lang, Input, Validator;
 
 abstract class RepoBase
 {
 	public $model;
 
+    public $webOption;
+
 	public $rules = array();
 
-	public function __construct(null $model)
+    public $repoLimit;
+
+	public function __construct($model=null)
 	{
-		$this->model = $model;
+		$this->model      = $model;
+        $this->webOption  = app('asmoyo.web');
+        $this->repoLimit  = Input::get('limit') ?: $this->webOption['web_itemPerPage'];
 	}
 
 	public function repoValidation($input, $custom_rules=array())
@@ -50,6 +56,46 @@ abstract class RepoBase
         }
 
         return $preparedRules;
+    }
+
+
+    protected function prepareData()
+    {
+        $data = $this->model;
+
+        if( $sortir = Input::get('sortir') )
+        {
+            switch ( $sortir ) {
+                case 'new':
+                    $data = $data->orderBy('created', 'desc');
+                break;
+                
+                case 'latest-updated':
+                    $data = $data->orderBy('updated', 'desc');
+                break;
+
+                case 'title-ascending':
+                    $data = $data->orderBy('title', 'asc');
+                break;
+
+                case 'title-descending':
+                    $data = $data->orderBy('title', 'desc');
+                break;
+
+                case 'popular':
+                    $data = $data->orderBy('title', 'desc');
+                break;
+                
+                default:
+                    // default by new
+                    $data = $data->orderBy('created', 'desc');
+                break;
+            }
+        }
+
+        $data = $data->limit( $this->repoLimit );
+
+        return $data;
     }
 
 }
