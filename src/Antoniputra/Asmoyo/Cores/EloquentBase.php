@@ -13,4 +13,9 @@ class EloquentBase extends \Eloquent
 		return $this->fillable;
 	}
 
+	public function checkSoftDelete()
+	{
+		return $this->softDelete;
+	}
+
 }
