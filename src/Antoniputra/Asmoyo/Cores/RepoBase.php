@@ -48,6 +48,10 @@ abstract class RepoBase
             {
                 $rule = str_replace("<url>", $input['url'], $rule);
             }
+            elseif (false !== strpos($rule, "<slug>"))
+            {
+                $rule = str_replace("<slug>", $input['slug'], $rule);
+            }
 
             $preparedRules[$key] = $rule;
         }
