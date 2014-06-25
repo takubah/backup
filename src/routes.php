@@ -13,6 +13,13 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 
 	Route::group(array('prefix' => $apiUrl, 'before' => 'ApiFilter'), function() use($apiUrl)
 	{
+		// resource
+		foreach (app('asmoyo.resources') as $value)
+		{
+			Route::pattern($value, '[0-9]+');
+		}
+		// end resource
+
 		// ApiUser
 		Route::resource('user', 'Api_User');
 		
@@ -20,7 +27,9 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 		Route::resource('media', 'Api_Media');
 		
 		// ApiCategory
+		$c = str_replace('/', '.', $apiUrl).'.category.';
 		Route::resource('category', 'Api_Category');
+		Route::get('category/{slug}', array('as' => $c .'showSlug', 'uses' => 'Api_Category@showSlug'));
 
 	});
 /**
