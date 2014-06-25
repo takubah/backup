@@ -4,14 +4,14 @@ interface CategoryInterface
 {
 	public function getCategories($limit=null);
 
-	public function getCategoryById();
+	public function getCategoryById($id);
 
-	public function getCategoryBySlug();
+	public function getCategoryBySlug($slug);
 
 
 	public function getGalleries($limit=null);
 
-	public function getGaleryById();
+	public function getGalleryById($id);
 
-	public function getGaleryBySlug();
+	public function getGalleryBySlug($slug);
 }

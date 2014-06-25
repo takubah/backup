@@ -31,6 +31,9 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 		Route::resource('category', 'Api_Category');
 		Route::get('category/{slug}', array('as' => $c .'showSlug', 'uses' => 'Api_Category@showSlug'));
 
+		Route::get('gallery', array('as' => $c .'gallery', 'uses' => 'Api_Category@gallery'));
+		Route::get('gallery/{slug}', array('as' => $c .'galleryShow', 'uses' => 'Api_Category@galleryShow'));
+
 	});
 /**
 * End API ROUTING
