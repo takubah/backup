@@ -23,6 +23,11 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 		// ApiUser
 		Route::resource('user', 'Api_User');
 		
+		// ApiPage
+		$p = str_replace('/', '.', $apiUrl).'.page.';
+		Route::resource('page', 'Api_Page');
+		Route::get('page/{slug}', array('as' => $p .'showSlug', 'uses' => 'Api_Page@showSlug'));
+		
 		// ApiMedia
 		$m = str_replace('/', '.', $apiUrl).'.media.';
 		Route::resource('media', 'Api_Media');

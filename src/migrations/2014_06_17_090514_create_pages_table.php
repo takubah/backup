@@ -20,7 +20,7 @@ class CreatePagesTable extends Migration {
 			$table->integer('parent_id')->nullable();
 			$table->string('status');
 			$table->string('title');
-			$table->string('url');
+			$table->string('slug');
 			$table->text('content');
 			$table->text('side_left');
 			$table->text('side_right');

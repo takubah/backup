@@ -58,7 +58,7 @@ class FirstSeeder extends Seeder {
 				'parent_id' 		=> null,
 				'status' 			=> 'published',
 				'title' 			=> 'Home',
-				'url' 				=> '/',
+				'slug' 				=> 'home',
 				'content'			=> json_encode(array(
 					'{<asmoyo:post slug:>}'
 				)),

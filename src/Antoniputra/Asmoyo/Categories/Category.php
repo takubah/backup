@@ -48,6 +48,14 @@ class Category extends EloquentBase
     );
 
     /**
+    * list status support
+    * @var array
+    */
+    public $statusList = array(
+        'publish', 'private',
+    );
+
+    /**
     * Default validation rules
     */
     public function defaultRules()
@@ -56,7 +64,7 @@ class Category extends EloquentBase
             'title'         => 'required',
             'slug'          => 'required',
             'type'          => 'required|in:'.implode(',', $this->typeList),
-            'status'        => 'required',
+            'status'        => 'required|in:'.implode(',', $this->statusList),
         );
     }
 
