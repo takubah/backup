@@ -24,7 +24,9 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 		Route::resource('user', 'Api_User');
 		
 		// ApiMedia
+		$m = str_replace('/', '.', $apiUrl).'.media.';
 		Route::resource('media', 'Api_Media');
+		Route::get('media/{slug}', array('as' => $m .'showSlug', 'uses' => 'Api_Media@showSlug'));
 		
 		// ApiCategory
 		$c = str_replace('/', '.', $apiUrl).'.category.';

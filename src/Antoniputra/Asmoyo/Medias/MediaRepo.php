@@ -39,4 +39,10 @@ class MediaRepo extends RepoBase implements MediaInterface
 		return $this->model->with('category')->find($id);
 	}
 
+	public function getBySlug($slug)
+	{
+		return $this->model->with('category')
+			->where('slug', $slug)->first();
+	}
+
 }

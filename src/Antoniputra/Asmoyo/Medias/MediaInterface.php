@@ -8,4 +8,7 @@ interface MediaInterface {
 
 	public function getByType($type, $limit=null);
 	
+	public function getById($id);
+
+	public function getBySlug($slug);
 }

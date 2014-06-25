@@ -18,4 +18,9 @@ class Api_Media extends ApiController
 	{
 		return $this->media->getById($id);
 	}
+
+	public function showSlug($slug)
+	{
+		return $this->media->getBySlug($slug);
+	}
 }
