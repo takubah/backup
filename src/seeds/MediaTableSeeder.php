@@ -12,6 +12,7 @@ class MediaTableSeeder extends Seeder {
 			    'mime_type'		=> 'image/jpeg',
 			    'size'			=> 200,
 			    'title' 		=> 'example image',
+			    'slug'	 		=> \Str::slug('example image'),
 			    'description' 	=> 'example image for missed image',
 			),
 

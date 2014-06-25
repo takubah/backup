@@ -12,7 +12,7 @@ class PostTableSeeder extends Seeder {
 			    'user_id' 			=> 1,
 			    'type'            	=> 'article',
 			    'title' 			=> 'My First Article',
-			    'url' 				=> 'my-first-article',
+			    'slug' 				=> \Str::slug('my-first-article'),
 			    'description' 		=> 'hello world',
 			    'body'				=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
