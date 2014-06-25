@@ -23,7 +23,7 @@ class Media extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('category_id', 'type', 'file', 'mime_type', 'size', 'title', 'description');
+	protected $fillable = array('category_id', 'type', 'file', 'mime_type', 'size', 'title', 'slug', 'description');
 
 	/**
     * These are make collumn to Carbon instance
@@ -35,24 +35,26 @@ class Media extends EloquentBase
     }
 
     /**
-	* Default validation rules
-	*/
-	public $rules = array(
-		'type'			=> 'required',
-		'file'			=> 'required',
-		'mime_type'		=> 'required',
-		'size'			=> 'required',
-		'title'			=> 'required',
-		// 'description'	=> 'required',
-	);
-
-    /**
     * list type support
     * @var array
     */
     public $typeList = array(
     	'internal', 'external'
 	);
+
+    /**
+    * Default validation rules
+    */
+    public function defaultRules()
+    {
+        return array(
+            'type'          => 'required|in:'.implode(',', $this->typeList),
+            'file'          => 'required',
+            'mime_type'     => 'required',
+            'size'          => 'required',
+            'title'         => 'required',
+        );
+    }
 
 
 

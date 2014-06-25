@@ -2,10 +2,12 @@
 
 use Antoniputra\Asmoyo\Cores\RepoBase;
 
-class CategoryRepo extends RepoBase {
+class CategoryRepo extends RepoBase implements CategoryInterface
+{
 	
 	public function __construct(Category $model)
 	{
+		parent::__construct($model);
 		$this->model = $model;
 	}
 

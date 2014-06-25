@@ -28,7 +28,7 @@ class Category extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('media_id', 'parent_id', 'title', 'url', 'description', 'type', 'status');
+	protected $fillable = array('media_id', 'parent_id', 'title', 'slug', 'description', 'type', 'status');
 
     /**
     * These are make collumn to Carbon instance
@@ -38,6 +38,29 @@ class Category extends EloquentBase
     {
         return array('created_at', 'updated_at', 'deleted_at');
     }
+
+    /**
+    * list type support
+    * @var array
+    */
+    public $typeList = array(
+        'category', 'gallery'
+    );
+
+    /**
+    * Default validation rules
+    */
+    public function defaultRules()
+    {
+        return array(
+            'title'         => 'required',
+            'slug'          => 'required',
+            'type'          => 'required|in:'.implode(',', $this->typeList),
+            'status'        => 'required',
+        );
+    }
+
+
 
     public function cover()
     {
