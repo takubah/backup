@@ -65,6 +65,7 @@ class FirstSeeder extends Seeder {
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
+				'order'				=> 0,
 				'meta_title'		=> null,
 				'meta_keyword' 		=> null,
 				'meta_description'	=> null,

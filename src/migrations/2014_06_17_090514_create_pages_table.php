@@ -25,6 +25,7 @@ class CreatePagesTable extends Migration {
 			$table->text('side_left');
 			$table->text('side_right');
 			$table->text('footer');
+			$table->integer('order');
 			$table->string('meta_title')->nullable();
 			$table->text('meta_keyword')->nullable();
 			$table->text('meta_description')->nullable();
