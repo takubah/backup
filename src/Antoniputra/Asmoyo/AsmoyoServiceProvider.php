@@ -48,6 +48,12 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	{
 		$app = $this->app;
 
+		// get website current option
+		$this->app->bindShared('asmoyo.resources', function()
+		{
+			return array('option', 'media', 'user', 'category', 'page', 'post', 'widget');
+		});
+
 		// Option Object
 		$app->bind('Antoniputra\Asmoyo\Options\OptionInterface', function($app)
 		{
