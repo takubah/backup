@@ -7,20 +7,18 @@ class OptionRepo extends RepoBase {
 	
 	public function __construct(Option $model)
 	{
-		$this->model = $model;
+		$this->model 		= $model;
+		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function get($key=null)
 	{
-		$cacheBaseKey	= Config::get('asmoyo::config.cache.baseName');
 		$cacheKey		= 'asmoyo.web';
 
 		// check cache
-		if( Cache::tags( $cacheBaseKey )->has($cacheKey) )
+		if($cachedResult = $this->cacheGet($cacheKey))
 		{
-			$optionCached = Cache::tags( $cacheBaseKey )->get($cacheKey);
-
-			return ( !$key ) ? $optionCached : $optionCached[$key];
+			return ( !$key ) ? $cachedResult : $cachedResult[$key];
 		}
 
 		$result = array();
@@ -35,11 +33,8 @@ class OptionRepo extends RepoBase {
 		}
 
 		// save item to cache
-		$optionData	= Cache::tags( $cacheBaseKey )->rememberForever($cacheKey, function() use ($result)
-		{
-			return $result;
-		});
+		$cachedResult = $this->cacheStore($cacheKey, $result);
 		
-		return ( !$key ) ? $optionData : $optionData[$key];
+		return ( !$key ) ? $cachedResult : $cachedResult[$key];
 	}
 }

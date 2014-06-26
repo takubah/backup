@@ -1,6 +1,6 @@
 <?php namespace Antoniputra\Asmoyo\Cores;
 
-use Lang, Input, Validator;
+use Lang, Input, Validator, Config, Cache;
 
 abstract class RepoBase
 {
@@ -8,13 +8,57 @@ abstract class RepoBase
 
     public $webOption;
 
-	public $rules = array();
+	public $cacheObjTag;
 
 	public function __construct($model=null)
 	{
 		$this->model      = $model;
         $this->webOption  = app('asmoyo.web');
 	}
+
+    /**
+    * manage cache tag for all repo
+    * @param array
+    * @return Cache Object
+    */
+    protected function repoCacheTag($cacheObjTag=array())
+    {
+        $cacheTags = array(Config::get('asmoyo::cache.base_name'));
+
+        if( !is_array($cacheObjTag) ) {
+            $cacheObjTag = array($cacheObjTag);
+        }
+
+        $cacheTags = array_merge($cacheTags, $cacheObjTag);
+
+        return Cache::tags( $cacheTags );
+    }
+
+    protected function cacheStore($key, $value)
+    {
+        $cacheTime = Config::get('asmoyo::cache.time');
+        
+        if( is_integer($cacheTime) )
+        {
+            $this->cacheObjTag->put($key, $value, $cacheTime);
+        }
+        else
+        {
+            $this->cacheObjTag->forever($key, $value);
+        }
+
+        return $value;
+    }
+
+    protected function cacheGet($key)
+    {
+        if( $this->cacheObjTag->has($key) )
+        {
+            return $this->cacheObjTag->get($key);
+        }
+
+        return false;
+    }
 
 	public function repoValidation($input, $custom_rules=array())
 	{

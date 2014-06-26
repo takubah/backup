@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration {
 			$table->increments('id');
 			// $table->integer('objectable_id');
 			// $table->string('objectable_type');
-			$table->integer('parent_id')->nullable();
+			$table->integer('parent_id');
 			$table->string('status');
 			$table->string('title');
 			$table->string('slug');

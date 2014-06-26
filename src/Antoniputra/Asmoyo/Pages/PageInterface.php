@@ -7,5 +7,7 @@ interface PageInterface {
 	public function getById($id);
 
 	public function getBySlug($slug);
+
+	public function getAsMenu($parent=0);
 	
 }

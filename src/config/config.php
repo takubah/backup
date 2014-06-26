@@ -36,7 +36,7 @@ return array(
 		/**
 		* Base Cache Name
 		*/
-		'baseName'	=> 'plensip.com',
+		'base_name'	=> 'plensip.com',
 
 		/**
 		* Cache Time

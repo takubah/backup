@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('media_id');
-			$table->integer('parent_id')->nullable();
+			$table->integer('parent_id');
 			$table->string('title');
 			$table->string('slug');
 			$table->text('description');

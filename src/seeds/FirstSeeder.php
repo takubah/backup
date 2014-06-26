@@ -29,7 +29,7 @@ class FirstSeeder extends Seeder {
 		$categories 	= array(
 			array(
 				'media_id'		=> 1,
-				'parent_id'		=> null,
+				'parent_id'		=> 0,
 				'title'			=> 'Uncategorized',
 				'slug'			=> 'uncategorized',
 				'description'	=> 'Uncategorized Item',
@@ -38,7 +38,7 @@ class FirstSeeder extends Seeder {
 			),
 			array(
 				'media_id'		=> 1,
-				'parent_id'		=> null,
+				'parent_id'		=> 0,
 				'title'			=> 'My Album',
 				'slug'			=> 'my-first-gallery',
 				'description'	=> 'My Default Album',
@@ -55,7 +55,7 @@ class FirstSeeder extends Seeder {
 
 		$pages 	= array(
 			array(
-				'parent_id' 		=> null,
+				'parent_id' 		=> 0,
 				'status' 			=> 'published',
 				'title' 			=> 'Home',
 				'slug' 				=> 'home',
@@ -70,6 +70,55 @@ class FirstSeeder extends Seeder {
 				'meta_keyword' 		=> null,
 				'meta_description'	=> null,
 			),
+			array(
+				'parent_id' 		=> 0,
+				'status' 			=> 'published',
+				'title' 			=> 'About',
+				'slug' 				=> 'about',
+				'content'			=> json_encode(array(
+					'ini adalah halaman about'
+				)),
+				'side_left'			=> json_encode(array()),
+				'side_right'		=> json_encode(array()),
+				'footer'			=> json_encode(array()),
+				'order'				=> 0,
+				'meta_title'		=> null,
+				'meta_keyword' 		=> null,
+				'meta_description'	=> null,
+			),
+			array(
+				'parent_id' 		=> 2,
+				'status' 			=> 'published',
+				'title' 			=> 'Team',
+				'slug' 				=> 'team',
+				'content'			=> json_encode(array(
+					'ini adalah halaman team, child dari about'
+				)),
+				'side_left'			=> json_encode(array()),
+				'side_right'		=> json_encode(array()),
+				'footer'			=> json_encode(array()),
+				'order'				=> 0,
+				'meta_title'		=> null,
+				'meta_keyword' 		=> null,
+				'meta_description'	=> null,
+			),
+			array(
+				'parent_id' 		=> 2,
+				'status' 			=> 'published',
+				'title' 			=> 'Vision',
+				'slug' 				=> 'vision',
+				'content'			=> json_encode(array(
+					'ini adalah halaman vision child dari about'
+				)),
+				'side_left'			=> json_encode(array()),
+				'side_right'		=> json_encode(array()),
+				'footer'			=> json_encode(array()),
+				'order'				=> 0,
+				'meta_title'		=> null,
+				'meta_keyword' 		=> null,
+				'meta_description'	=> null,
+			),
+
 		);
 
 		DB::table('pages')->insert($pages);
