@@ -3,6 +3,7 @@
 /* Route Pattern */
 Route::pattern('id', '[0-9]+');
 Route::pattern('slug', '[A-Za-z0-9-_]+');
+Route::pattern('username', '[A-Za-z0-9-_]+');
 /* End Route Pattern */
 
 
@@ -21,7 +22,9 @@ Route::pattern('slug', '[A-Za-z0-9-_]+');
 		// end resource
 
 		// ApiUser
+		$u = str_replace('/', '.', $apiUrl).'.user.';
 		Route::resource('user', 'Api_User');
+		Route::get('user/{username}', array('as' => $u .'showUsername', 'uses' => 'Api_User@showUsername'));
 		
 		// ApiPage
 		$p = str_replace('/', '.', $apiUrl).'.page.';
