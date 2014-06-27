@@ -25,48 +25,44 @@ class PageRepo extends RepoBase implements PageInterface
 
 	public function getBySlug($slug)
 	{
-		return $this->model->where('slug', $slug)->first();
-	}
-
-	public function getAsMenu($parent=0, Closure $el = null)
-	{
-		if( $el )
-		{
-			$html = $el();
-		} else {
-			$html = '<ul>';
-		}
+		$cacheKey = __FUNCTION__.'|'.$slug;
 
 		// check cache
-		if($cachedResult = $this->cacheGet($cacheKey))
-		{
-			return ( !$key ) ? $cachedResult : $cachedResult[$key];
+		if($cachedResult = $this->cacheGet($cacheKey)) {
+			return $cachedResult;
+		}
+		
+		return $this->cacheStore( $cacheKey, $this->model->where('slug', $slug)->first() );
+	}
+
+	public function getAsMenu()
+	{
+		// check cache
+		if($cachedResult = $this->cacheGet(__FUNCTION__)) {
+			return $cachedResult;
 		}
 
-		// PEE.ER
-	    // $query = $this->model->where('parent_id', $parent)->get();
-	    // foreach ($query as $row)
-	    // {
-	    //     $current_id = $row['id'];
-	        
-	    //     if()
-	    //     	$html 	.= '<li>';
-	    //     else
-	    //     	$html 	.= '<li class="'.$el["active_class"].'">';
+		$result 	= array();
+		$pageParent = $this->model->where('parent_id', 0)->get()->toArray();
+		
+		if ($pageParent)
+		{
+			foreach ($pageParent as $p)
+			{
+				$p 				= $p;
+				$p['dropdown']	= $this->childPage($p['id']);
 
-	    //     $html 	.= $row['title'];
-	    //     $has_sub = NULL;
-	    //     $has_sub = $this->model->where('parent_id', $current_id)->count();
-	    //     if($has_sub)
-	    //     {
-	    //         $html .= $this->getAsMenu($current_id);
-	    //     }
-	    //     $html .= '</li>';
-	    // }
-	    // $html .= '</ul>';
+				$result[]	= $p;
+			}
+		}
 
-	    // save item to cache
-		return $this->cacheStore($cacheKey, $result);
+		return $this->cacheStore(__FUNCTION__, $result);
+	}
+
+	private function childPage($parent_id)
+	{
+		return $this->model->where('parent_id', $parent_id)
+			->get()->toArray();
 	}
 
 }

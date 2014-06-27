@@ -8,6 +8,6 @@ interface PageInterface {
 
 	public function getBySlug($slug);
 
-	public function getAsMenu($parent=0);
+	public function getAsMenu();
 	
 }
