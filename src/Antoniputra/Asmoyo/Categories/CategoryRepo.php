@@ -8,7 +8,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 	public function __construct(Category $model)
 	{
 		parent::__construct($model);
-		$this->model = $model;
+		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getCategories($limit=null)

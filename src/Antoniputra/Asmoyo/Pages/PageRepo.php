@@ -9,7 +9,6 @@ class PageRepo extends RepoBase implements PageInterface
 	public function __construct(Page $model)
 	{
 		parent::__construct($model);
-		$this->model 		= $model;
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
