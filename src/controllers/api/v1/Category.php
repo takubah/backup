@@ -29,7 +29,12 @@ class Api_Category extends ApiController
 		return $this->category->getGalleries();
 	}
 
-	public function galleryShow($slug)
+	public function galleryShow($id)
+	{
+		return $this->category->getGalleryById($id);
+	}
+
+	public function galleryShowSlug($slug)
 	{
 		return $this->category->getGalleryBySlug($slug);
 	}

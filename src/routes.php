@@ -42,7 +42,8 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		Route::get('category/{slug}', array('as' => $c .'showSlug', 'uses' => 'Api_Category@showSlug'));
 
 		Route::get('gallery', array('as' => $c .'gallery', 'uses' => 'Api_Category@gallery'));
-		Route::get('gallery/{slug}', array('as' => $c .'galleryShow', 'uses' => 'Api_Category@galleryShow'));
+		Route::get('gallery/{id}', array('as' => $c .'galleryShow', 'uses' => 'Api_Category@galleryShow'));
+		Route::get('gallery/{slug}', array('as' => $c .'galleryShow', 'uses' => 'Api_Category@galleryShowSlug'));
 
 		// Api_Post
 		$post = str_replace('/', '.', $apiUrl).'.post.';

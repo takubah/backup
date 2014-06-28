@@ -13,27 +13,31 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 
 	public function getCategories($limit=null)
 	{
-		return $this->prepareData()
+		return $this->prepareData()->with('posts')
 			->where('type', 'category')
 			->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getCategoryById($id)
 	{
-		return $this->model->with('cover')->find($id);
+		return $this->model->with('cover')
+			->where('id', $id)
+			->where('type', 'category')
+			->first();
 	}
 
 	public function getCategoryBySlug($slug)
 	{
 		return $this->model->with('cover')
 			->where('slug', $slug)
+			->where('type', 'category')
 			->first();
 	}
 
 
 	public function getGalleries($limit=null)
 	{
-		return $this->prepareData()
+		return $this->prepareData()->with('medias')
 			->where('type', 'gallery')
 			->paginate( $this->repoLimit($limit) );
 	}
@@ -42,7 +46,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 	{
 		return $this->model->with('cover')
 			->where('id', $id)
-			->andWhere('type', 'gallery')
+			->where('type', 'gallery')
 			->first();
 	}
 
