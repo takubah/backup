@@ -4,6 +4,8 @@ class PostTableSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('posts')->truncate();
+
 		$posts 	= array(
 			array(
 			    'groupable_id' 		=> 1,
@@ -24,6 +26,38 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
 			    'meta_title'		=> 'plensip example article',
 			    'meta_keyword'		=> 'plensip example article',
 			    'meta_description'	=> 'plensip example article',
+			),
+
+			array(
+			    'groupable_id' 		=> 1,
+			    'groupable_type' 	=> 'category',
+			    'media_id' 			=> 1,
+			    'user_id' 			=> 1,
+			    'type'            	=> 'audio',
+			    'title' 			=> 'My First Audio',
+			    'slug' 				=> \Str::slug('my-first-audio'),
+			    'description' 		=> 'hello world',
+			    'body'				=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.'),
+			    'status'			=> 'published',
+			    'meta_title'		=> 'plensip example audio',
+			    'meta_keyword'		=> 'plensip example audio',
+			    'meta_description'	=> 'plensip example audio',
+			),
+
+			array(
+			    'groupable_id' 		=> 1,
+			    'groupable_type' 	=> 'category',
+			    'media_id' 			=> 1,
+			    'user_id' 			=> 1,
+			    'type'            	=> 'audio',
+			    'title' 			=> 'My Second Audio',
+			    'slug' 				=> \Str::slug('my-first-audio'),
+			    'description' 		=> 'hello world',
+			    'body'				=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.consectetur adipisicing elit, sed do eiusmod.'),
+			    'status'			=> 'privated',
+			    'meta_title'		=> 'plensip example audio',
+			    'meta_keyword'		=> 'plensip example audio',
+			    'meta_description'	=> 'plensip example audio',
 			),
 
 		);
