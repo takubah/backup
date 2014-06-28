@@ -7,6 +7,11 @@ class Option extends EloquentBase {
 	protected $table = 'options';
 
 	/**
+	* Disabled timestamps
+	*/
+	public $timestamps = false;
+
+	/**
      * The attributes that aren't mass assignable.
      *
      * @var array
