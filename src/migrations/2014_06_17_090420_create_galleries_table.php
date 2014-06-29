@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCategoriesTable extends Migration {
+class CreateGalleriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::connection( Config::get('asmoyo::config.database') )->create('categories', function(Blueprint $table)
+		Schema::connection( Config::get('asmoyo::config.database') )->create('galleries', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('media_id');
-			$table->integer('parent_id');
 			$table->string('title');
 			$table->string('slug');
 			$table->text('description');
@@ -34,7 +33,7 @@ class CreateCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('categories');
+		Schema::drop('galleries');
 	}
 
 }

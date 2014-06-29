@@ -9,7 +9,7 @@ class PostTableSeeder extends Seeder {
 		$posts 	= array(
 			array(
 			    'groupable_id' 		=> 1,
-			    'groupable_type' 	=> 'category',
+			    'groupable_type' 	=> 'Antoniputra\Asmoyo\Categories\Category',
 			    'media_id' 			=> 1,
 			    'user_id' 			=> 1,
 			    'type'            	=> 'article',
@@ -30,7 +30,7 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
 
 			array(
 			    'groupable_id' 		=> 1,
-			    'groupable_type' 	=> 'category',
+			    'groupable_type' 	=> 'Antoniputra\Asmoyo\Categories\Category',
 			    'media_id' 			=> 1,
 			    'user_id' 			=> 1,
 			    'type'            	=> 'audio',
@@ -46,7 +46,7 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
 
 			array(
 			    'groupable_id' 		=> 1,
-			    'groupable_type' 	=> 'category',
+			    'groupable_type' 	=> 'Antoniputra\Asmoyo\Categories\Category',
 			    'media_id' 			=> 1,
 			    'user_id' 			=> 1,
 			    'type'            	=> 'audio',

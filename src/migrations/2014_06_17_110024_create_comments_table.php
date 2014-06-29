@@ -18,6 +18,8 @@ class CreateCommentsTable extends Migration {
 			$table->integer('objectable_id');
 		    $table->string('objectable_type');
 		    $table->integer('user_id')->nullable();
+		    $table->string('type');
+		    $table->string('title');
 		    $table->text('content');
 		    $table->string('status');
 		    $table->string('anonymous_name');

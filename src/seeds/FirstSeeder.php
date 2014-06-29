@@ -33,22 +33,43 @@ class FirstSeeder extends Seeder {
 				'title'			=> 'Uncategorized',
 				'slug'			=> 'uncategorized',
 				'description'	=> 'Uncategorized Item',
-				'type'			=> 'category',
 				'status'		=> 'publish',
 			),
 			array(
 				'media_id'		=> 1,
 				'parent_id'		=> 0,
-				'title'			=> 'My Album',
-				'slug'			=> 'my-first-gallery',
-				'description'	=> 'My Default Album',
-				'type'			=> 'gallery',
+				'title'			=> 'My First Category',
+				'slug'			=> 'my-first-category',
+				'description'	=> 'bla bla bla description',
 				'status'		=> 'publish',
 			),
 		);
 
 		DB::table('categories')->insert($categories);
 		// End Categories Seeder
+
+		// Galleries Seeder
+		DB::table('galleries')->truncate();
+
+		$galleries 	= array(
+			array(
+				'media_id'		=> 1,
+				'title'			=> 'Album Default',
+				'slug'			=> 'album-default',
+				'description'	=> 'Uncategorized Item',
+				'status'		=> 'publish',
+			),
+			array(
+				'media_id'		=> 1,
+				'title'			=> 'My First Album',
+				'slug'			=> 'my-first-album',
+				'description'	=> 'bla bla bla description',
+				'status'		=> 'publish',
+			),
+		);
+
+		DB::table('galleries')->insert($galleries);
+		// End Galleries Seeder
 	}
 
 }

@@ -17,6 +17,7 @@ class AsmoyoSeeder extends Seeder {
 		$this->call('MediaTableSeeder');
 		$this->call('UserTableSeeder');
 		$this->call('PostTableSeeder');
+		$this->call('CommentTableSeeder');
 		$this->call('WidgetTableSeeder');
 	}
 
