@@ -15,7 +15,7 @@ class CreateMediasTable extends Migration {
 		Schema::connection( Config::get('asmoyo::config.database') )->create('medias', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('category_id');
+			$table->integer('gallery_id');
 			$table->string('type');
 			$table->string('file');
 			$table->string('mime_type');

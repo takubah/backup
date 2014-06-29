@@ -9,7 +9,7 @@ class FirstSeeder extends Seeder {
 
 		$medias 	= array(
 			array(
-			    'category_id'	=> 0,
+			    'gallery_id'	=> 1,
 			    'type' 			=> 'internal',
 			    'file'			=> 'default.jpg',
 			    'mime_type'		=> 'image/jpeg',

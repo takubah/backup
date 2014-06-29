@@ -6,7 +6,7 @@ class MediaTableSeeder extends Seeder {
 	{
 		$medias 	= array(
 			array(
-			    'category_id'	=> 2,
+			    'gallery_id'	=> 2,
 			    'type' 			=> 'internal',
 			    'file'			=> 'example.jpg',
 			    'mime_type'		=> 'image/jpeg',
