@@ -51,6 +51,11 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		Route::resource('post', 'Api_Post');
 		Route::get('post/{slug}', array('as' => $post .'showSlug', 'uses' => 'Api_Post@showSlug'));
 
+		// Api_Widget
+		$widget = str_replace('/', '.', $apiUrl).'.widget.';
+		Route::resource('widget', 'Api_Widget');
+		Route::get('widget/{slug}', array('as' => $widget .'showSlug', 'uses' => 'Api_Widget@showSlug'));
+
 	});
 /**
 * End API ROUTING
