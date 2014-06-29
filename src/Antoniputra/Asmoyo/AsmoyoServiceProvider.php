@@ -100,6 +100,16 @@ class AsmoyoServiceProvider extends ServiceProvider {
 			);
 		});
 
+		// Widget Object
+		$app->bind('Antoniputra\Asmoyo\Widgets\WidgetInterface', function()
+		{
+			return new \Antoniputra\Asmoyo\Widgets\WidgetRepo(
+				new \Antoniputra\Asmoyo\Widgets\Widget,
+				new \Antoniputra\Asmoyo\Widgets\WidgetGroup,
+				new \Antoniputra\Asmoyo\Widgets\WidgetItem
+			);
+		});
+
 		// Page Object
 		$app->bind('Antoniputra\Asmoyo\Pages\PageInterface', function()
 		{
