@@ -11,32 +11,17 @@ class Api_Category extends ApiController
 
 	public function index()
 	{
-		return $this->category->getCategories();
+		return $this->category->getAll();
 	}
 
 	public function show($id)
 	{
-		return $this->category->getCategoryById($id);
+		return $this->category->getById($id);
 	}
 
 	public function showSlug($slug)
 	{
-		return $this->category->getCategoryBySlug($slug);
-	}
-
-	public function gallery()
-	{
-		return $this->category->getGalleries();
-	}
-
-	public function galleryShow($id)
-	{
-		return $this->category->getGalleryById($id);
-	}
-
-	public function galleryShowSlug($slug)
-	{
-		return $this->category->getGalleryBySlug($slug);
+		return $this->category->getBySlug($slug);
 	}
 
 }

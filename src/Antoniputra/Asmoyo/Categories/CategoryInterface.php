@@ -2,16 +2,9 @@
 
 interface CategoryInterface
 {
-	public function getCategories($limit=null);
+	public function getAll($limit=null);
 
-	public function getCategoryById($id);
+	public function getById($id);
 
-	public function getCategoryBySlug($slug);
-
-
-	public function getGalleries($limit=null);
-
-	public function getGalleryById($id);
-
-	public function getGalleryBySlug($slug);
+	public function getBySlug($slug);
 }

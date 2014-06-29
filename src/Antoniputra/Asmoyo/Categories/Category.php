@@ -10,7 +10,7 @@ class Category extends EloquentBase
     /**
     * Morph relation name
     */
-	protected $morphClass = 'category';
+	protected $morphClass = 'Antoniputra\Asmoyo\Categories\Category';
 
 	/**
     * Soft delete active
@@ -28,7 +28,7 @@ class Category extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('media_id', 'parent_id', 'title', 'slug', 'description', 'type', 'status');
+	protected $fillable = array('media_id', 'parent_id', 'title', 'slug', 'description', 'status');
 
     /**
     * These are make collumn to Carbon instance
@@ -38,14 +38,6 @@ class Category extends EloquentBase
     {
         return array('created_at', 'updated_at', 'deleted_at');
     }
-
-    /**
-    * list type support
-    * @var array
-    */
-    public $typeList = array(
-        'category', 'gallery'
-    );
 
     /**
     * list status support
@@ -63,7 +55,6 @@ class Category extends EloquentBase
         return array(
             'title'         => 'required',
             'slug'          => 'required',
-            'type'          => 'required|in:'.implode(',', $this->typeList),
             'status'        => 'required|in:'.implode(',', $this->statusList),
         );
     }
@@ -72,7 +63,7 @@ class Category extends EloquentBase
 
     public function cover()
     {
-    	return $this->hasOne('Antoniputra\Asmoyo\Medias\Media');
+    	return $this->belongsTo('Antoniputra\Asmoyo\Medias\Media', 'media_id');
     }
 
 	public function medias()
