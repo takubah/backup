@@ -10,7 +10,7 @@ class Gallery extends EloquentBase
     /**
     * Morph relation name
     */
-	// protected $morphClass = 'gallery';
+	protected $morphClass = 'Antoniputra\Asmoyo\Galleries\Gallery';
 
 	/**
     * Soft delete active
