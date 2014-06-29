@@ -65,3 +65,13 @@ Route::filter('Permission', function($route, $request, $value)
 		return Redirect::route('admin.auth.login');
 	}
 });
+
+
+/**
+* Handle error 404
+*/
+\App::missing(function($exception)
+{
+	// return \Response::view('errorView', array(), 404);
+	return \Response::json('not found', 404);
+});
