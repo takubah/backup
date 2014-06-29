@@ -9,7 +9,7 @@ class Post extends EloquentBase {
 	/**
     * Morph relation name
     */
-	protected $morphClass = 'post';
+	protected $morphClass = 'Antoniputra\Asmoyo\Posts\Post';
 
 	/**
     * Soft delete active
@@ -71,17 +71,12 @@ class Post extends EloquentBase {
 
     public function groupable()
     {
-    	return $this->myMorphTo('Antoniputra\Asmoyo\Categories\Category');
+        return $this->morphTo();
     }
 
-    public function category()
+    public function cover()
     {
-    	return $this->belongsTo('Antoniputra\Asmoyo\Categories\Category', 'groupable_id');
-    }
-
-    public function scopePostCategory($query)
-    {
-    	return $query->where('groupable_type', 'category')->with('category');
+        return $this->belongsTo('Antoniputra\Asmoyo\Medias\Media', 'media_id');
     }
 
 }

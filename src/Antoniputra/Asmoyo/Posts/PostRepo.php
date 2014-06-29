@@ -13,35 +13,27 @@ class PostRepo extends RepoBase implements PostInterface
 
 	public function getAll($limit=null)
 	{
-		return $this->prepareData()->postCategory()
-			->paginate( $this->repoLimit($limit) );
+		return $this->prepareData()->with('groupable', 'cover')->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getByType($type='article', $limit=null)
 	{
 		$type = (in_array( $type, $this->model->typeList )) ? $type : 'article';
 
-		return $this->prepareData()
+		return $this->prepareData()->with('groupable', 'cover')
 			->where('type', $type)
 			->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getById($id)
 	{
-		$post 	= $this->model->find($id);
-		$result = $post->toArray();
-		$result['groupable']	= $post->groupable->toArray();
-
-		return $result;
+		return $this->model->with('groupable', 'cover')->find($id);
 	}
 
 	public function getBySlug($slug)
 	{
-		$post 	= $this->model->where('slug', $slug)->first();
-		$result = $post->toArray();
-		$result['groupable']	= $post->groupable->toArray();
-
-		return $result;
+		return $this->model->with('groupable', 'cover')
+			->where('slug', $slug)->first();
 	}
 
 }
