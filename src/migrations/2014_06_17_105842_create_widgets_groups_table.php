@@ -18,6 +18,7 @@ class CreateWidgetsGroupsTable extends Migration {
 			$table->integer('widget_id');
 			$table->string('type')->nullable();
 			$table->string('title');
+			$table->string('slug');
 			$table->string('description');
 			$table->timestamps();
 			$table->softDeletes();

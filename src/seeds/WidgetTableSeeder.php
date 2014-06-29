@@ -41,6 +41,7 @@ class WidgetTableSeeder extends Seeder {
 				'widget_id' 		=> 1,
 				'type'		 		=> '',
 				'title' 			=> 'Banner Utama',
+				'slug'	 			=> 'banner-utama',
 				'description' 		=> 'Banner utama pada homepage',
 			),
 
@@ -49,6 +50,7 @@ class WidgetTableSeeder extends Seeder {
 				'widget_id' 		=> 2,
 				'type'		 		=> 'vertical',
 				'title' 			=> 'Layanan Kami',
+				'slug'	 			=> 'layanan-kami',
 				'description' 		=> 'Daftar Layanan Kami',
 			),
 
@@ -57,6 +59,7 @@ class WidgetTableSeeder extends Seeder {
 				'widget_id' 		=> 2,
 				'type'		 		=> 'horizontal',
 				'title' 			=> 'Keunggulan',
+				'slug'	 			=> 'Keunggulan',
 				'description' 		=> 'Daftar Keunggulan Kami',
 			),
 		);
