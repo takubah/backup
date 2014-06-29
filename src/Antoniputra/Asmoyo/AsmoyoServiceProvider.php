@@ -142,7 +142,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('asmoyo.option');
+		return array('asmoyo.option', 'asmoyo.resources');
 	}
 
 }
