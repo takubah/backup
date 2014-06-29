@@ -9,7 +9,7 @@ class Comment extends EloquentBase {
 	/**
     * Morph relation name
     */
-	protected $morphClass = 'comment';
+	protected $morphClass = 'Antoniputra\Asmoyo\Comments\Comment';
 
     /**
      * The attributes that aren't mass assignable.

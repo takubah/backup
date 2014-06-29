@@ -9,7 +9,7 @@ class User extends EloquentBase {
 	/**
     * Morph relation name
     */
-	protected $morphClass = 'user';
+	protected $morphClass = 'Antoniputra\Asmoyo\Users\User';
 
 	/**
     * Soft delete active

@@ -9,7 +9,7 @@ class Page extends EloquentBase {
 	/**
     * Morph relation name
     */
-	protected $morphClass = 'page';
+	protected $morphClass = 'Antoniputra\Asmoyo\Pages\Page';
 
 	/**
     * Soft delete active
