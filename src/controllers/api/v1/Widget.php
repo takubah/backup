@@ -23,4 +23,14 @@ class Api_Widget extends ApiController
 	{
 		return $this->widget->getBySlug($slug);
 	}
+
+	public function group()
+	{
+		return $this->widget->getGroup();
+	}
+
+	public function groupShow($group_slug)
+	{
+		return $this->widget->getGroupBySlug($group_slug);
+	}
 }

@@ -54,7 +54,10 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		// Api_Widget
 		$widget = str_replace('/', '.', $apiUrl).'.widget.';
 		Route::resource('widget', 'Api_Widget');
+		Route::get('widget/group', array('as' => $widget .'group', 'uses' => 'Api_Widget@group'));
+		Route::get('widget/group/{slug}', array('as' => $widget .'groupShow', 'uses' => 'Api_Widget@groupShow'));
 		Route::get('widget/{slug}', array('as' => $widget .'showSlug', 'uses' => 'Api_Widget@showSlug'));
+
 
 	});
 /**
