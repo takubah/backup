@@ -51,7 +51,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		// get website current option
 		$this->app->bindShared('asmoyo.resources', function()
 		{
-			return array('option', 'media', 'user', 'category', 'page', 'post', 'widget');
+			return array('option', 'media', 'user', 'category', 'gallery', 'page', 'post', 'widget');
 		});
 
 		// Option Object
@@ -92,6 +92,14 @@ class AsmoyoServiceProvider extends ServiceProvider {
 			);
 		});
 
+		// Gallery Object
+		$app->bind('Antoniputra\Asmoyo\Galleries\GalleryInterface', function()
+		{
+			return new \Antoniputra\Asmoyo\Galleries\GalleryRepo(
+				new \Antoniputra\Asmoyo\Galleries\Gallery
+			);
+		});
+
 		// Page Object
 		$app->bind('Antoniputra\Asmoyo\Pages\PageInterface', function()
 		{
@@ -105,6 +113,14 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		{
 			return new \Antoniputra\Asmoyo\Posts\PostRepo(
 				new \Antoniputra\Asmoyo\Posts\Post
+			);
+		});
+
+		// Comment Object
+		$app->bind('Antoniputra\Asmoyo\Comments\CommentInterface', function()
+		{
+			return new \Antoniputra\Asmoyo\Comments\CommentRepo(
+				new \Antoniputra\Asmoyo\Comments\Comment
 			);
 		});
 	}
