@@ -21,6 +21,8 @@ class AsmoyoServiceProvider extends ServiceProvider {
 	{
 		$this->package('antoniputra/asmoyo');
 
+		$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
 		// register profiler when debug is true
 		if ( Config::get('asmoyo::profiler') )
 		{
@@ -29,6 +31,10 @@ class AsmoyoServiceProvider extends ServiceProvider {
 
 		// set Auth model
 		Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
+
+		// register Pseudo
+		$this->app->register('Antoniputra\Asmoyo\Utilities\Pseudo\PseudoServiceProvider');
+        $loader->alias('Pseudo', 'Antoniputra\Asmoyo\Utilities\Pseudo\PseudoFacade');
 
 		include __DIR__ . '/../../filters.php';
 		include __DIR__ . '/../../routes.php';
