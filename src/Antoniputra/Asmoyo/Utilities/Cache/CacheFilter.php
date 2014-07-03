@@ -3,7 +3,7 @@
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Str, Cache;
+use Str, Cache, Config;
 
 class CacheFilter {
 	
@@ -30,11 +30,11 @@ class CacheFilter {
 			$cacheTime = Config::get('asmoyo::cache.time');
 	        if( is_integer($cacheTime) )
 	        {
-				$this->cacheTags()->put($key, $response->getContent(), $cacheTime);
+				$this->cacheTags()->put($key, $response, $cacheTime);
 			}
 			else
 			{
-				$this->cacheTags()->forever($key, $response->getContent());
+				$this->cacheTags()->forever($key, $response);
 			}
 		}
 	}
@@ -44,7 +44,7 @@ class CacheFilter {
 		return Cache::tags(array(
 			Config::get('asmoyo::cache.base_name'),
 			Config::get('asmoyo::cache.base_name').'.assets',
-		);
+		));
 	}
 
 	protected function makeKey($url = null)

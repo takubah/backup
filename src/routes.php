@@ -72,10 +72,10 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 	Route::group(array('prefix' => $assetsUrl), function() use($assetsUrl)
 	{
 		Route::get('admin/{file}', array(
-			'before'	=> '',
 			'as' 		=> 'assets.admin.get',
 			'uses' 		=> 'AsmoyoController@assetsAdmin'
-		))->where('file', '(.*)');
+		))->where('file', '(.*)')
+		->before('cache.get')->after('cache.set');
 	});
 
 /**
