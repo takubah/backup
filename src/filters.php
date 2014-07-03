@@ -1,8 +1,12 @@
 <?php
 
-// http cache header
-Route::filter('cached.request', 'Antoniputra\Asmoyo\Utilities\Cache\Etags\RequestFilter@before');
-Route::filter('cached.response', 'Antoniputra\Asmoyo\Utilities\Cache\Etags\RequestFilter@after');
+// http cache using Etag header
+Route::filter('etag.get', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@before');
+Route::filter('etag.set', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@after');
+
+// caching response
+Route::filter('cache.get', 'Antoniputra\Asmoyo\Utilities\Cache\CacheFilter@get');
+Route::filter('cache.set', 'Antoniputra\Asmoyo\Utilities\Cache\CacheFilter@set');
 
 /**
 * just anonymous(not logged in) only has allowed access

@@ -60,4 +60,15 @@ return array(
 		*/
 		'url'		=> 'api/v1'
 	),
+
+	/**
+	* Assets Settings
+	*/
+	'assets'			=> array(
+
+		/**
+		* Assets Url
+		*/
+		'url'		=> 'assets'
+	),
 );

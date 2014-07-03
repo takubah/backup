@@ -58,10 +58,28 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		Route::get('widget/group/{slug}', array('as' => $widget .'groupShow', 'uses' => 'Api_Widget@groupShow'));
 		Route::get('widget/{slug}', array('as' => $widget .'showSlug', 'uses' => 'Api_Widget@showSlug'));
 
-
 	});
 /**
 * End API ROUTING
+*/
+
+
+/**
+* ASSET ROUTING
+*/
+	$assetsUrl 	= Config::get('asmoyo::assets.url');
+
+	Route::group(array('prefix' => $assetsUrl), function() use($assetsUrl)
+	{
+		Route::get('admin/{file}', array(
+			'before'	=> '',
+			'as' 		=> 'assets.admin.get',
+			'uses' 		=> 'AsmoyoController@assetsAdmin'
+		))->where('file', '(.*)');
+	});
+
+/**
+* END ASSET ROUTING
 */
 
 
