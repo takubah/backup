@@ -67,17 +67,18 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 /**
 * ASSET ROUTING
 */
-	$assetsUrl 	= Config::get('asmoyo::assets.url');
-
-	Route::group(array('prefix' => $assetsUrl), function() use($assetsUrl)
+	Route::group(array('prefix' => 'assets', 'before' => 'etag.get', 'after' => 'etag.set'), function()
 	{
 		Route::get('admin/{file}', array(
 			'as' 		=> 'assets.admin.get',
 			'uses' 		=> 'AsmoyoController@assetsAdmin'
-		))->where('file', '(.*)')
-		->before('cache.get')->after('cache.set');
-	});
+		))->where('file', '(.*)');
 
+		Route::get('{theme}/{file}', array(
+			'as' 		=> 'assets.theme.get',
+			'uses' 		=> 'AsmoyoController@assetsTheme'
+		))->where('slug', '[A-Za-z0-9-_]+')->where('file', '(.*)');
+	});
 /**
 * END ASSET ROUTING
 */
