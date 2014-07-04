@@ -5,6 +5,7 @@ use Illuminate\View\View;
 use Antoniputra\Asmoyo\Utilities\Pseudo\View as PseudoView;
 
 class Pseudo extends BaseEnvironment {
+    
     /**
      * Get a evaluated view contents for the given view.
      *
@@ -24,7 +25,7 @@ class Pseudo extends BaseEnvironment {
         // Pseudo Logic Here
         $this->callCreator($view = new View($this, $this->getEngineFromPath($path), $view, $path, $data));
 
-        return $this->translate($view);
+        return $this->translate($newView);
     }
 
 
