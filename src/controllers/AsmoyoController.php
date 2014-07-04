@@ -4,10 +4,11 @@ use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
 class AsmoyoController extends Controller {
 
-	public function loadView($content, $data = array() )
+	public function loadView($content, $data = array(), $debug=false)
 	{
 		$view = View::make('asmoyo::admin.oneCollumn', $data)->nest('content', $content, $data);
-		return Pseudo::render($view);
+		
+		return ($debug) ? $view : Pseudo::render($view);
 	}
 
 	public function assetsAdmin($file)
@@ -51,6 +52,8 @@ class AsmoyoController extends Controller {
 			$header = 'text/css';
 		} elseif( false !== strpos($file, 'js') ) {
 			$header = 'text/javascript';
+		} elseif( false !== strpos($file, 'font') ) {
+			$header = 'application/octet-stream';
 		}
 
 		return $header;
