@@ -1,7 +1,9 @@
-@section('content')
+@section('navbar')
 	
-	<div class="row">
-    <div class="col-md-9">
+@show
+
+<div class="row">
+	<div class="col-md-9">
 		<div class="asmoyo-box login-box">
 			<h3 class="box-header">
 				<i class="fa fa-sign-in"></i>
@@ -50,6 +52,4 @@
 			</div>
 		</div>
 	</div>
-	</div>
-
-@stop
+</div>

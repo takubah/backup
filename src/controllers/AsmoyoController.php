@@ -6,7 +6,8 @@ class AsmoyoController extends Controller {
 
 	public function loadView($content, $data = array(), $debug=false)
 	{
-		$view = View::make('asmoyo::admin.oneCollumn', $data)->nest('content', $content, $data);
+		include __DIR__ . '/../composers.php';
+		$view = View::make('asmoyo::admin.twoCollumn', $data)->nest('content', $content, $data);
 		
 		return ($debug) ? $view : Pseudo::render($view);
 	}

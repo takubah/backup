@@ -94,16 +94,16 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 	{
 		Route::get('login', array(
 			'before'	=> 'Anonymous',
-			'as' 		=> 'admin.auth.login',
+			'as' 		=> 'admin.login',
 			'uses' 		=> 'Admin_UserController@adminLogin'
 		));
 		Route::post('login', array(
 			'before'	=> 'Anonymous',
-			'as' 		=> 'admin.auth.login',
+			'as' 		=> 'admin.login',
 			'uses' 		=> 'Admin_UserController@postAdminLogin'
 		));
 		Route::get('logout', array(
-			'as' 		=> 'admin.auth.logout',
+			'as' 		=> 'admin.logout',
 			'uses' 		=> 'Admin_UserController@adminLogout'
 		));
 	});
@@ -111,8 +111,32 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 
 	Route::group(array('prefix' => $adminUrl, 'before' => 'AdminFilter'), function() use($adminUrl)
 	{
-		// user
+		// dashboard
+		Route::get('dashboard', array(
+			'as'	=> 'admin.home.dashboard',
+			'uses'	=> 'Admin_HomeController@dashboard',
+		));
+		
+		// User
 		Route::resource('user', 'Admin_UserController');
+
+		// Page
+		Route::resource('page', 'Admin_PageController');
+
+		// Media
+		Route::resource('media', 'Admin_MediaController');
+
+		// Category
+		Route::resource('category', 'Admin_CategoryController');
+
+		// Post
+		Route::resource('post', 'Admin_PostController');
+
+		// Widget
+		Route::resource('widget', 'Admin_WidgetController');
+
+		// Option
+		Route::resource('option', 'Admin_OptionController');
 	});
 
 /**

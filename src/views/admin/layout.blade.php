@@ -31,7 +31,7 @@
 <body>
 
     @section('navbar')
-    
+        @include('asmoyo::admin.partials.navbar')
     @show
 
     @yield('structure')
