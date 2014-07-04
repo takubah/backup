@@ -1,15 +1,20 @@
 <?php
 
+use Antoniputra\Asmoyo\Users\UserInterface;
+
 class Admin_UserController extends AsmoyoController
 {
+	public function __construct(UserInterface $user)
+	{
+		$this->user = $user;
+	}
+
 	/**
 	* Display admin login
 	* @return Response
 	*/
 	public function adminLogin()
 	{
-		$data = array('test' => 'testing prend');
-
 		return $this->loadView('asmoyo::admin.login', $data, true);
 	}
 
@@ -19,7 +24,15 @@ class Admin_UserController extends AsmoyoController
 	*/
 	public function postAdminLogin()
 	{
-		
+		if (Auth::attempt( array('email' => Input::get('email'), 'password' => Input::get('password')), Input::get('remember') ))
+		{
+		    return Redirect::route('admin.home.dashboard');
+		}
+
+		return Redirect::back()->with('alert', array(
+			'type'		=> 'error',
+			'message'	=> 'Login Gagal !!'
+		))->withInput();
 	}
 
 
@@ -28,7 +41,8 @@ class Admin_UserController extends AsmoyoController
 	*/
 	public function adminLogout()
 	{
-
+		$this->user->logout();
+		return Redirect::route('admin.login');
 	}
 
 	/**

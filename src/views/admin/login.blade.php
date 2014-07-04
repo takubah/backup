@@ -8,7 +8,14 @@
 				Login
 			</h3>
 			<div class="box-content">
-				{{ Form::open(array('url' => 'foo/bar', 'class' => 'form-horizontal')) }}
+
+				@if(Session::has('alert'))
+					<div class="alert alert-danger">
+						{{Session::get('alert.message')}}
+					</div>
+				@endif
+
+				{{ Form::open(array('route' => 'admin.login', 'class' => 'form-horizontal')) }}
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">
 							Email
@@ -29,7 +36,7 @@
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="remember"> Remember me
+									{{Form::checkbox('remember', true)}} Remember me
 								</label>
 							</div>
 						</div>
