@@ -2,8 +2,9 @@
 
 use View, App;
 use Antoniputra\Asmoyo\Posts\PostRepo;
+use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
-class PostPseudo
+class PostPseudo extends Pseudo
 {
 	public function translate($attr)
 	{

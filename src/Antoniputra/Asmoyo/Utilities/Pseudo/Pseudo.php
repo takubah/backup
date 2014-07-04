@@ -1,35 +1,20 @@
 <?php namespace Antoniputra\Asmoyo\Utilities\Pseudo;
 
-use Illuminate\View\Environment as BaseEnvironment;
-use Illuminate\View\View;
 use Antoniputra\Asmoyo\Utilities\Pseudo\View as PseudoView;
 
-class Pseudo extends BaseEnvironment {
+abstract class Pseudo {
     
     /**
-     * Get a evaluated view contents for the given view.
-     *
-     * @param  string  $view
-     * @param  array   $data
-     * @param  array   $mergeData
-     * @return \Illuminate\View\View
-     */
-    public function render($view, $data = array(), $mergeData = array(), $debug=false)
-    {
-        $path = $this->finder->find($view);
-
-		$data = array_merge($mergeData, $this->parseData($data));
-
-		$this->callCreator($view = new View($this, $this->getEngineFromPath($path), $view, $path, $data));
-
-		return ($debug) ? $view : $this->translate($view);
-    }
-
+    * concrete method for child object
+    * @param $attr attribute pseudo
+    */
+	abstract public function translate($attr);
 
     /**
-    * translate
+    * Rendering template or view for generate pseudo
+    * @param $tpl view
     */
-	public function translate($tpl)
+	public static function render($tpl)
 	{
 		$original = $tpl;
 
