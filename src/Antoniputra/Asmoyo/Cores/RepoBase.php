@@ -60,7 +60,15 @@ abstract class RepoBase
         return false;
     }
 
-	public function repoValidation($input, $custom_rules=array())
+    protected function cacheForget($key)
+    {
+        if( $this->cacheObjTag->has($key) )
+        {
+            return $this->cacheObjTag->forget($key);
+        }
+    }
+
+	protected function repoValidation($input, $custom_rules=array())
 	{
 		$rules = $this->prepareValidation( $input, array_merge($this->model->rules, $custom_rules) );
 
