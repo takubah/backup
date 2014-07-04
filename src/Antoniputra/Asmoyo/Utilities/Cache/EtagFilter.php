@@ -10,7 +10,7 @@ class EtagFilter {
 	public function get(Route $route, Request $request)
 	{
 		$entity = $this->entity( $request->path() );
-		
+
 		if( $this->isValid( $entity, $request->getEtags() ) )
 		{
 			return App::abort(304);
@@ -22,15 +22,17 @@ class EtagFilter {
 		$entity = $this->entity( $request->path() );
  
 	 	$response->setEtag( md5($entity) );
+	 	$response->setCache( array('max_age' => 600) );
 	}
 
 	protected function entity($url)
 	{
+		$web = app('asmoyo.web');
 		if( false !== strpos($url, 'admin') )
 		{
 			$path = public_path( str_replace('assets/admin', 'packages/antoniputra/asmoyo/admin', $url) );
 		} else {
-			$path = '';
+			$path = public_path( str_replace('assets/', 'themes/', $url) );
 		}
 
 		if( file_exists($path) )
