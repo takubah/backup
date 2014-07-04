@@ -1,8 +1,8 @@
 <?php
 
 // http cache using Etag header
-Route::filter('etag.get', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@before');
-Route::filter('etag.set', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@after');
+Route::filter('etag.get', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@get');
+Route::filter('etag.set', 'Antoniputra\Asmoyo\Utilities\Cache\EtagFilter@set');
 
 // caching response
 Route::filter('cache.get', 'Antoniputra\Asmoyo\Utilities\Cache\CacheFilter@get');
