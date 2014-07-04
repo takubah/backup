@@ -34,4 +34,27 @@ class UserRepo extends RepoBase implements UserInterface
 		return $this->cacheStore( $cacheKey, $this->model->where('username', $username)->first() );
 	}
 
+	public function auth()
+	{
+		// if($cachedResult = $this->cacheGet(__FUNCTION__)) 
+		// 	return $cachedResult;
+
+		$user = \Auth::user();
+
+		if( $user )
+		{
+			$user = $user->toArray();
+			$user['permissions'] 	= json_decode($user['permissions'], true);
+		}
+
+		// return $this->cacheStore( __FUNCTION__, $user );
+		return $user;
+	}
+
+	public function logout()
+	{
+		$this->cacheForget('auth');
+		return \Auth::logout();
+	}
+
 }

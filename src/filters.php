@@ -13,7 +13,7 @@ Route::filter('cache.set', 'Antoniputra\Asmoyo\Utilities\Cache\CacheFilter@set')
 */
 Route::filter('Anonymous', function($route, $request, $value=null)
 {
-	$value = $value ?: 'admin.home.index';
+	$value = $value ?: 'admin.home.dashboard';
 
 	if( Auth::check() )
 	{
@@ -39,11 +39,11 @@ Route::filter('User', function($route, $request, $value=null)
 */
 Route::filter('AdminFilter', function()
 {
-	$user = Asmoyo::auth();
+	$user = app('Antoniputra\Asmoyo\Users\UserInterface')->auth();
 
 	if( !$user ) return App::abort(403, 'you don\'t have permission bro');
 
-	if( !isset($user->getPermissions['superuser']) )
+	if( !isset($user['permissions']['superuser']) )
 	{
 		return App::abort(403, 'you don\'t have permission bro');
 	}
