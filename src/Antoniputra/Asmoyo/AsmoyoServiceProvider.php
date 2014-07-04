@@ -28,7 +28,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		}
 
 		// set Auth model
-		Config::set('auth.model', 'Antoniputra\Asmoyo\User\User');
+		Config::set('auth.model', 'Antoniputra\Asmoyo\Users\User');
 
 		include __DIR__ . '/../../macros.php';
 		include __DIR__ . '/../../filters.php';
