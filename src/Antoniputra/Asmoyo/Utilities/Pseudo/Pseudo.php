@@ -14,30 +14,27 @@ class Pseudo extends BaseEnvironment {
      * @param  array   $mergeData
      * @return \Illuminate\View\View
      */
-    public function render($view, $data = array(), $mergeData = array())
+    public function render($view, $data = array(), $mergeData = array(), $debug=false)
     {
         $path = $this->finder->find($view);
 
-        $data = array_merge($mergeData, $this->parseData($data));
+		$data = array_merge($mergeData, $this->parseData($data));
 
-        $newView = new View($this, $this->getEngineFromPath($path), $view, $path, $data);
+		$this->callCreator($view = new View($this, $this->getEngineFromPath($path), $view, $path, $data));
 
-        // Pseudo Logic Here
-        $this->callCreator($view = new View($this, $this->getEngineFromPath($path), $view, $path, $data));
-
-        return $this->translate($newView);
+		return ($debug) ? $view : $this->translate($view);
     }
 
 
     /**
     * translate
     */
-	public function translate($str)
+	public function translate($tpl)
 	{
-		$original = $str;
+		$original = $tpl;
 
 		// {<asmoyo:content param=value>}
-		preg_match_all('/\{<(asmoyo:[^}]+)\>}/', $str, $matches);
+		preg_match_all('/\{<(asmoyo:[^}]+)\>}/', $tpl, $matches);
 
 		foreach ($matches[1] as $elem)
 		{
@@ -56,14 +53,14 @@ class Pseudo extends BaseEnvironment {
 				break;
 			}
 
-			$str = str_replace( '{<'.$elem.'>}', call_user_func_array(
+			$tpl = str_replace( '{<'.$elem.'>}', call_user_func_array(
 				array($obj, 'translate'), 
 				array($prop)
-			), $str);
+			), $tpl);
 		}
 
-		if ($str != FALSE)
-			return $str;
+		if ($tpl != FALSE)
+			return $tpl;
 		else
 			return $original;
 	}

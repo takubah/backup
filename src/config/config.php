@@ -67,8 +67,8 @@ return array(
 	'assets'			=> array(
 
 		/**
-		* Assets Url
+		* Using Cdn ?
 		*/
-		'url'		=> 'assets'
+		'cdn'		=> '',
 	),
 );
