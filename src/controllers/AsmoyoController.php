@@ -1,18 +1,13 @@
 <?php
 
+use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
+
 class AsmoyoController extends Controller {
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
-	protected function setupLayout()
+	public function loadView($content, $data = array() )
 	{
-		if ( ! is_null($this->layout))
-		{
-			$this->layout = View::make($this->layout);
-		}
+		$view = View::make('asmoyo::admin.oneCollumn', $data)->nest('content', $content, $data);
+		return Pseudo::render($view);
 	}
 
 	public function assetsAdmin($file)

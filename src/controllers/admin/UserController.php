@@ -8,7 +8,9 @@ class Admin_UserController extends AsmoyoController
 	*/
 	public function adminLogin()
 	{
-		return 'here is admin login';
+		$data = array('test' => 'testing prend');
+
+		return $this->loadView('asmoyo::admin.login', $data);
 	}
 
 
