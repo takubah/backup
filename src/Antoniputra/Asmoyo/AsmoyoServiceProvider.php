@@ -36,6 +36,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		$this->app->register('Antoniputra\Asmoyo\Utilities\Pseudo\PseudoServiceProvider');
         $loader->alias('Pseudo', 'Antoniputra\Asmoyo\Utilities\Pseudo\PseudoFacade');
 
+		include __DIR__ . '/../../macros.php';
 		include __DIR__ . '/../../filters.php';
 		include __DIR__ . '/../../routes.php';
 	}
