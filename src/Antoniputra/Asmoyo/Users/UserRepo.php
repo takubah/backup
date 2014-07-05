@@ -11,10 +11,14 @@ class UserRepo extends RepoBase implements UserInterface
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
 	{
-		return $this->prepareData()
-			->paginate( $this->repoLimit($limit) );
+		return $this->prepareData($sortir, $limit)->get();
+	}
+
+	public function getAllPaginated($sortir = null, $limit = null)
+	{
+		return $this->prepareData()->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getById($id)
