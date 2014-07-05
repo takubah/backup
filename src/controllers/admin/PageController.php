@@ -61,8 +61,8 @@ class Admin_PageController extends AsmoyoController
 		return 'here is update method';
 	}
 
-	public function destroy($slug)
+	public function destroy($id)
 	{
-		
+		return 'ini adalah method destroy';
 	}
 }

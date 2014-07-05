@@ -89,10 +89,10 @@ class Admin_UserController extends AsmoyoController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($username)
 	{
 		$data = array(
-			'user'		=> $this->user->getBySlug($slug),
+			'user'		=> $this->user->getByUsername($username),
 		);
 
 		if( ! $data['user'] ) return App::abort(404);
@@ -107,10 +107,10 @@ class Admin_UserController extends AsmoyoController
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($username)
 	{
 		$data = array(
-			'user'		=> $this->user->getBySlug($slug),
+			'user'		=> $this->user->getByUsername($username),
 		);
 
 		if( ! $data['user'] ) return App::abort(404);
