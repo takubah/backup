@@ -14,7 +14,12 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		$this->widgetItem 	= $widgetItem;
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
+	{
+		return $this->model->with('groups.items')->get();
+	}
+	
+	public function getAllPaginated($sortir = null, $limit = null)
 	{
 		return $this->model->with('groups.items')->get();
 	}

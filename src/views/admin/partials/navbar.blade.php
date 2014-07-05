@@ -64,37 +64,37 @@
 				<i class="fa fa-home"></i> Dashboard
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'page') class="active" @endif>
 			<a href="{{route('admin.page.index')}}" class="show-tooltip" data-placement="right" title="Halaman">
 				<i class="fa fa-files-o"></i> Halaman
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'category') class="active" @endif>
 			<a href="{{route('admin.category.index')}}" class="show-tooltip" data-placement="right" title="Kategori">
 				<i class="fa fa-tag"></i> Kategori
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'media') class="active" @endif>
 			<a href="{{route('admin.media.index')}}" class="show-tooltip" data-placement="right" title="Media">
 				<i class="fa fa-picture-o"></i> Media
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'post') class="active" @endif>
 			<a href="{{route('admin.post.index')}}" class="show-tooltip" data-placement="right" title="Posting">
 				<i class="fa fa-file-text-o"></i> Posting
 			</a>
 		</li>
-		 <li>
+		 <li @if($activePage == 'user') class="active" @endif>
 			<a href="{{route('admin.user.index')}}" class="show-tooltip" data-placement="right" title="User">
 				<i class="fa fa-users"></i> User
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'widget') class="active" @endif>
 			<a href="{{route('admin.widget.index')}}" class="show-tooltip" data-placement="right" title="Widget">
 				<i class="fa fa-th-large"></i> Widget
 			</a>
 		</li>
-		<li>
+		<li @if($activePage == 'option') class="active" @endif>
 			<a href="{{route('admin.option.index')}}" class="show-tooltip" data-placement="right" title="Atur">
 				<i class="fa fa-gears"></i> Atur
 			</a>

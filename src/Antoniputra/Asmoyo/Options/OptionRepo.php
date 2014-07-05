@@ -3,7 +3,8 @@
 use Config, Cache;
 use Antoniputra\Asmoyo\Cores\RepoBase;
 
-class OptionRepo extends RepoBase {
+class OptionRepo extends RepoBase implements OptionInterface
+{
 	
 	public function __construct(Option $model)
 	{

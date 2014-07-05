@@ -12,7 +12,12 @@ class MediaRepo extends RepoBase implements MediaInterface
 		$this->model = $model;
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
+	{
+		return $this->prepareData()->get();
+	}
+
+	public function getAllPaginated($sortir = null, $limit = null)
 	{
 		return $this->prepareData()
 			->paginate( $this->repoLimit($limit) );
