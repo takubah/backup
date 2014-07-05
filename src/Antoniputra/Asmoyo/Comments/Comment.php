@@ -66,4 +66,13 @@ class Comment extends EloquentBase {
         );
     }
 
+    public function objectable()
+    {
+        return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('Antoniputra\Asmoyo\Users\User', 'user_id');
+    }
 }

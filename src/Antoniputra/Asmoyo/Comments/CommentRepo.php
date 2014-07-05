@@ -11,14 +11,21 @@ class CommentRepo extends RepoBase implements CommentInterface
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
 	{
-
+		$result = $this->prepareData($sortir, $limit)->with('objectable', 'user')->get();
+		return $result;
 	}
 
-	public function getDetail($id)
+	public function getAllPaginated($sortir = null, $limit = null)
 	{
+		return $this->prepareData($sortir, $limit)->with('objectable', 'user')
+			->paginate( $this->repoLimit($limit) );
+	}
 
+	public function getById($id)
+	{
+		return $this->model->with('objectable', 'user')->find($id);
 	}
 
 }
