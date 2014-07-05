@@ -1,11 +1,29 @@
 <?php
 
-HTML::macro('asmoyoTheme', function($file, $type='css', $admin = false)
+HTML::macro('asmoyoTheme', function($file, $type='url', $admin = false)
 {
 	$web 	= app('asmoyo.web');
 	$theme 	= ($admin) ? $web['web_adminTemplate'] : $web['web_publicTemplate'];
 	$url 	= route('assets.theme.get', $theme) .'/'. $file;
-	return ($type == 'css') ? HTML::style($url) : HTML::script($url);
+
+    switch ($type) {
+        case 'css':
+            return HTML::style($url);
+        break;
+        
+        case 'js':
+            return HTML::script($url);
+        break;
+
+        case 'url':
+            return $url;
+        break;
+        
+        default:
+            // generate url
+            return $url;
+        break;
+    }
 });
 
 // Form Link

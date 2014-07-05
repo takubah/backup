@@ -4,12 +4,28 @@ use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
 class AsmoyoController extends Controller {
 
-	public function loadView($content, $data = array(), $debug=false)
+	protected $viewStructure;
+
+	public function setStructure($file, $type='public')
+	{
+		$theme = ($type == 'admin') ? app('asmoyo.web')['web_adminTemplate'] : app('asmoyo.web')['web_publicTemplate'] ;
+		$this->viewStructure = 'asmoyoTheme.'. $theme .'.'. $file;
+		return $this;
+	}
+
+	public function loadView($content, $data = array(), $disabledPseudo=false)
 	{
 		include __DIR__ . '/../composers.php';
-		$view = View::make('asmoyo::admin.twoCollumn', $data)->nest('content', $content, $data);
 		
-		return ($debug) ? $view : Pseudo::render($view);
+		// set view structure if empty
+		if(!$this->viewStructure) {
+			$this->viewStructure = ( Request::segment(1) == 'admin' ) 
+				? 'asmoyo::admin.twoCollumn'
+				: 'asmoyoTheme.'. app('asmoyo.web')['web_publicTemplate'] .'.twoCollumn';
+		}
+
+		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data);
+		return ($disabledPseudo) ? $view : Pseudo::render($view);
 	}
 
 	public function assetsAdmin($file)
@@ -50,14 +66,32 @@ class AsmoyoController extends Controller {
 	{
 		if( false !== strpos($file, 'css') )
 		{
-			$header = 'text/css';
-		} elseif( false !== strpos($file, 'js') ) {
-			$header = 'text/javascript';
-		} elseif( false !== strpos($file, 'font') ) {
-			$header = 'application/octet-stream';
+			return 'text/css';
 		}
-
-		return $header;
+		elseif( false !== strpos($file, 'js') )
+		{
+			return 'text/javascript';
+		}
+		elseif( false !== strpos($file, 'font') )
+		{
+			return 'application/octet-stream';
+		}
+		elseif( false !== strpos($file, 'jpg') )
+		{
+			return 'image/jpg';
+		}
+		elseif( false !== strpos($file, 'jpeg') )
+		{
+			return 'image/jpeg';
+		}
+		elseif( false !== strpos($file, 'png') )
+		{
+			return 'image/png';
+		}
+		elseif( false !== strpos($file, 'gif') )
+		{
+			return 'image/gif';
+		}
 	}
 
 }

@@ -144,5 +144,18 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 	});
 
 /**
-* ADMIN ROUTING
+* END ADMIN ROUTING
+*/
+
+/**
+* PUBLIC ROUTING
+*/
+	
+	Route::get('/', array(
+		'as'	=> 'home.index',
+		'uses'	=> 'Public_HomeController@index',
+	));
+
+/**
+* END PUBLIC ROUTING
 */
