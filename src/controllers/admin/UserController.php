@@ -16,7 +16,7 @@ class Admin_UserController extends AsmoyoController
 	public function adminLogin()
 	{
 		$data = array();
-		return $this->loadView('asmoyo::admin.login', $data, true);
+		return $this->loadView('asmoyo::admin.user.login', $data, true);
 	}
 
 
@@ -53,7 +53,10 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function index()
 	{
-		//
+		$data = array(
+			'users'		=> $this->user->getAllPaginated(),
+		);
+		return $this->loadView('asmoyo::admin.user.index', $data);
 	}
 
 
@@ -64,7 +67,8 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function create()
 	{
-		//
+		$data = array();
+		return $this->loadView('asmoyo::admin.user.create', $data);
 	}
 
 
@@ -75,7 +79,7 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function store()
 	{
-		//
+		return 'here is store method';
 	}
 
 
@@ -87,7 +91,13 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function show($id)
 	{
-		//
+		$data = array(
+			'user'		=> $this->user->getBySlug($slug),
+		);
+
+		if( ! $data['user'] ) return App::abort(404);
+
+		return 'here is show method';
 	}
 
 
@@ -99,7 +109,13 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function edit($id)
 	{
-		//
+		$data = array(
+			'user'		=> $this->user->getBySlug($slug),
+		);
+
+		if( ! $data['user'] ) return App::abort(404);
+
+		return $this->loadView('asmoyo::admin.user.edit', $data);
 	}
 
 
@@ -111,7 +127,13 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function update($id)
 	{
-		//
+		$data = array(
+			'user'		=> $this->user->getBySlug($slug),
+		);
+
+		if( ! $data['user'] ) return App::abort(404);
+
+		return 'here is update method';
 	}
 
 
@@ -123,7 +145,7 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function destroy($id)
 	{
-		//
+		return 'ini adalah method destroy';
 	}
 
 
