@@ -12,9 +12,14 @@ class PageRepo extends RepoBase implements PageInterface
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
 	{
 		return $this->model->orderBy('order', 'asc')->get();
+	}
+
+	public function getAllPaginated($sortir = null, $limit = null)
+	{
+		return $this->model->orderBy('order', 'asc')->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getById($id)
