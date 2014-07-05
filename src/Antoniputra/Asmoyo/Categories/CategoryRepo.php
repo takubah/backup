@@ -11,7 +11,25 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
+	{
+		return $this->prepareData()->with('cover')
+			->paginate( $this->repoLimit($limit) );
+	}
+
+	public function getAllWithPosts($page = null, $limit = null)
+	{
+		return $this->prepareData()->with('cover', 'posts')
+			->paginate( $this->repoLimit($limit) );
+	}
+	
+	public function getAllPaginated($sortir = null, $limit = null)
+	{
+		return $this->prepareData()->with('cover')
+			->paginate( $this->repoLimit($limit) );
+	}
+
+	public function getAllPaginatedWithPosts($page = null, $limit = null)
 	{
 		return $this->prepareData()->with('cover', 'posts')
 			->paginate( $this->repoLimit($limit) );
@@ -19,12 +37,24 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 
 	public function getById($id)
 	{
+		return $this->model->with('cover')
+			->find($id);
+	}
+
+	public function getByIdWithPosts($id)
+	{
 		return $this->model->with('cover', 'posts')
-			->where('id', $id)
-			->first();
+			->find($id);
 	}
 
 	public function getBySlug($slug)
+	{
+		return $this->model->with('cover')
+			->where('slug', $slug)
+			->first();
+	}
+
+	public function getBySlugWithPosts($slug)
 	{
 		return $this->model->with('cover', 'posts')
 			->where('slug', $slug)
