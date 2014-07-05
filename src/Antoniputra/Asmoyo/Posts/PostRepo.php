@@ -11,9 +11,22 @@ class PostRepo extends RepoBase implements PostInterface
 		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
-	public function getAll($limit=null)
+	public function getAll($sortir = null, $limit = null)
 	{
-		return $this->prepareData()->with('groupable', 'cover')->paginate( $this->repoLimit($limit) );
+		$cacheKey = __FUNCTION__.'|sortir:'.$sortir.'|limit:'.$limit;
+		if($cachedResult = $this->cacheGet($cacheKey)) {
+			return $cachedResult;
+		}
+
+		$result = $this->prepareData($sortir, $limit)->with('groupable', 'cover')->get();
+
+		return $this->cacheStore($cacheKey, $result);
+	}
+
+	public function getAllPaginated($sortir = null, $limit = null)
+	{
+		return $this->prepareData($sortir, $limit)->with('groupable', 'cover')
+			->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getByType($type='article', $limit=null)
