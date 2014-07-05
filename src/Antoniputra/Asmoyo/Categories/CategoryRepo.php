@@ -13,13 +13,13 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 
 	public function getAll($sortir = null, $limit = null)
 	{
-		return $this->prepareData()->with('cover')
+		return $this->prepareData($sortir, $limit)->with('cover')
 			->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getAllWithPosts($page = null, $limit = null)
 	{
-		return $this->prepareData()->with('cover', 'posts')
+		return $this->prepareData($sortir, $limit)->with('cover', 'posts')
 			->paginate( $this->repoLimit($limit) );
 	}
 	

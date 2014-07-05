@@ -16,4 +16,11 @@ View::composer(array('*'), function($view)
 	// variable for paginated number row
 	$page 	 = ( is_numeric(Input::get('page', 1)) ) ? Input::get('page', 1) : 1 ;
 	$view->with( 'itemNumber', ($page - 1) * Input::get('limit', $web['web_itemPerPage']) + 1 );
+
+	// variable global for theme path
+	$theme = ( Request::segment(1) == 'admin' ) 
+			? 'asmoyo::admin.twoCollumn'
+			: 'asmoyo-theme.'. $web['web_publicTemplate'] .'.';
+
+	$view->with( 'theme',  $theme);
 });
