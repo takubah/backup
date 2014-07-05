@@ -31,7 +31,7 @@
 						<td> {{$user['email']}} </td>
 						<td> {{$user['gender']}} </td>
 						<td>
-							<a href="{{route('admin.user.edit', $user['slug'])}}" class="btn btn-default btn-sm">
+							<a href="{{route('admin.user.edit', $user['username'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit
 							</a>
 							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.user.destroy', $user['id']), array(

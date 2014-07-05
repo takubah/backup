@@ -12,7 +12,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th> No. </th>
+					<th style="width:40px;"> No. </th>
 					<th> Title </th>
 					<th> Opsi </th>
 				</tr>

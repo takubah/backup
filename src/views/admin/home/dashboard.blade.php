@@ -1,10 +1,30 @@
-<div class="asmoyo-box">
-	<h3 class="box-header">
-		<i class="fa fa-users"></i>
-		Visitors
-	</h3>
-	<div class="box-content">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </div>
+<div class="row">
+	<div class="col-md-6">
+		
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-file-text-o"></i>
+				Postingan Terakhir
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:post type=list sortir=latest-updated>}' }}
+			</div>
+		</div>
+
+	</div>
+	<div class="col-md-6">
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-comments"></i>
+				Tanggapan Terakhir
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:comment type=list sortir=title-descending>}' }}
+			</div>
+		</div>
+
+	</div>
 </div>
 
 @section('sideRight')
