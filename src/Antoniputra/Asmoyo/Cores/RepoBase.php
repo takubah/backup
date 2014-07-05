@@ -112,41 +112,41 @@ abstract class RepoBase
     }
 
 
-    protected function prepareData()
+    protected function prepareData($sortir = null, $limit = null)
     {
         $data = $this->model;
 
-        if( $sortir = Input::get('sortir') )
-        {
-            switch ( $sortir ) {
-                case 'new':
-                    $data = $data->orderBy('created', 'desc');
-                break;
-                
-                case 'latest-updated':
-                    $data = $data->orderBy('updated', 'desc');
-                break;
+        $sortir = $sortir ?: Input::get('sortir');
+        $limit  = $limit ?: Input::get('limit');
+        
+        switch ( $sortir ) {
+            case 'new':
+                $data = $data->orderBy('created_at', 'desc');
+            break;
+            
+            case 'latest-updated':
+                $data = $data->orderBy('updated_at', 'desc');
+            break;
 
-                case 'title-ascending':
-                    $data = $data->orderBy('title', 'asc');
-                break;
+            case 'title-ascending':
+                $data = $data->orderBy('title', 'asc');
+            break;
 
-                case 'title-descending':
-                    $data = $data->orderBy('title', 'desc');
-                break;
+            case 'title-descending':
+                $data = $data->orderBy('title', 'desc');
+            break;
 
-                case 'popular':
-                    $data = $data->orderBy('title', 'desc');
-                break;
-                
-                default:
-                    // default by new
-                    $data = $data->orderBy('created', 'desc');
-                break;
-            }
+            case 'popular':
+                $data = $data->orderBy('title', 'desc');
+            break;
+            
+            default:
+                // default by new
+                $data = $data->orderBy('created_at', 'desc');
+            break;
         }
 
-        $data = $data->limit( $this->repoLimit() );
+        $data = $data->limit( $this->repoLimit($limit) );
 
         return $data;
     }

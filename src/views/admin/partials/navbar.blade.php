@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse" id="asmoyo-navbar">
 			<ul class="nav navbar-nav navbar-left">
 				<li>
-					<a href="" class="show-tooltip" target="_blank">
+					<a href="{{url()}}" class="show-tooltip" target="_blank">
 						Kunjungi Website
 					</a>
 				</li>
@@ -28,14 +28,14 @@
 			</form> -->
 
 			<ul class="nav navbar-nav navbar-right">
-				<li>
+				<!-- <li>
 					<a href="#" class="show-tooltip" data-placement="bottom" title="Kotak Masuk">
 						<span class="fa fa-envelope"></span>
 					</a>
-				</li>
+				</li> -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						Admin <b class="caret"></b>
+						{{$auth['username']}} <b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
 						<li>
@@ -45,7 +45,7 @@
 						</li>
 						<li class="divider"> </li>
 						<li>
-							<a href="#">
+							<a href="{{route('admin.logout')}}">
 								Logout
 							</a>
 						</li>
