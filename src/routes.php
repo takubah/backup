@@ -17,7 +17,7 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		// resource pattern
 		foreach (app('asmoyo.resources') as $value)
 		{
-			Route::pattern($value, '[0-9]+');
+			Route::pattern($value, '[A-Za-z0-9-_]+');
 		}
 		// end resource pattern
 
@@ -121,6 +121,10 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		Route::resource('user', 'Admin_UserController');
 
 		// Page
+		Route::get('page/edit-order', array(
+			'as' 		=> 'admin.page.editOrder',
+			'uses' 		=> 'Admin_PageController@editOrder'
+		));
 		Route::resource('page', 'Admin_PageController');
 
 		// Media
