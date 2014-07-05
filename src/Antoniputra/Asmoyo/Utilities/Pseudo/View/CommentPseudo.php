@@ -3,28 +3,24 @@
 use View, App;
 use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
-class PostPseudo extends Pseudo
+class CommentPseudo extends Pseudo
 {
 	public function translate($attr)
 	{
-		$repo = App::make('Antoniputra\Asmoyo\Posts\PostInterface');
+		$repo = App::make('Antoniputra\Asmoyo\Comments\CommentInterface');
 
 		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
 		$attr['sortir']	= array_get($attr, 'sortir') ?: 'new';
 		$attr['limit']	= array_get($attr, 'limit') ?: 3;
 		$attr['id']		= array_get($attr, 'id') ?: null;
-
+		
 		$data = array('attr' => $attr);
 
 		switch ($attr['type'])
 		{
 			case 'list':
 				$data['repo'] = $repo->getAll($attr['sortir'], $attr['limit']);
-				return View::make('asmoyo::pseudo.post', $data);
-			break;
-
-			case 'grid':
-				
+				return View::make('asmoyo::pseudo.comment', $data);
 			break;
 
 			case 'media-object':
@@ -34,15 +30,10 @@ class PostPseudo extends Pseudo
 			case 'detail':
 				
 			break;
-
-			case 'inline':
-				
-			break;
 			
 			default:
 				
 			break;
 		}
 	}
-
 }
