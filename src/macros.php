@@ -31,7 +31,7 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $is
     $output .= '>';
 
     if(isset($attr['icon'])) {
-        $output .= '<i class="'.$attr['icon'].'"></i>';
+        $output .= '<i class="'.$attr['icon'].'"></i> ';
     }
     
     $output .= $text .'</button>';
