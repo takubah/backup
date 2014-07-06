@@ -8,8 +8,17 @@ class AsmoyoController extends Controller {
 
 	public function setStructure($file, $type='public')
 	{
-		$theme = ($type == 'admin') ? app('asmoyo.web')['web_adminTemplate'] : app('asmoyo.web')['web_publicTemplate'] ;
-		$this->viewStructure = 'asmoyoTheme.'. $theme .'.'. $file;
+		$web = app('asmoyo.web');
+		if($type == 'public')
+		{
+			$this->viewStructure = 'asmoyoTheme.'. $web['web_publicTemplate'] .'.'. $file;
+		} elseif($type == 'admin' ) {
+			// check if there is not asmoyo:: str, add it !
+			$this->viewStructure =  (false === strpos($file, 'asmoyo::'))
+				? 'asmoyo::'. $web['web_adminTemplate'] .'.'. $file
+				: $file;
+		}
+
 		return $this;
 	}
 
@@ -26,10 +35,15 @@ class AsmoyoController extends Controller {
 				: 'asmoyoTheme.'. $web['web_publicTemplate'] .'.twoCollumn';
 		}
 
-		// check content path, if there is not asmoyoTheme str, add it !
-		if(false === strpos($content, 'asmoyoTheme') AND Request::segment(1) != 'admin')
+		// check content path for publicTemplate, if there is not asmoyoTheme str, add it !
+		if(false === strpos($content, 'asmoyoTheme') AND Request::segment(1) != Config::get('asmoyo::admin.url'))
 		{
 			$content = 'asmoyoTheme.'. $web['web_publicTemplate'] .'.'. $content;
+		}
+		// check content path for adminTemplate, if there is not asmoyoTheme str, add it !
+		elseif(false === strpos($content, 'asmoyo::') AND Request::segment(1) == Config::get('asmoyo::admin.url'))
+		{
+			$content = 'asmoyo::'. $web['web_adminTemplate'] .'.'. $content;
 		}
 
 		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data);
