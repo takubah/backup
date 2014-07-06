@@ -14,10 +14,11 @@
         </title>
 
         @section('stylesheets')
-            {{HTML::asmoyoTheme( 'css/bootstrap.min.css', 'css', true )}}
-            {{HTML::asmoyoTheme( 'css/bootstrap-theme.min.css', 'css', true )}}
-            {{HTML::asmoyoTheme( 'css/font-awesome.min.css', 'css', true )}}
-            {{--HTML::asmoyoTheme( 'css/style.css', 'css', true )--}}
+            {{asmoyoAsset( 'css/bootstrap.min.css', 'admin')}}
+            {{asmoyoAsset( 'css/bootstrap-theme.min.css', 'admin')}}
+            {{asmoyoAsset( 'css/font-awesome.min.css', 'admin')}}
+            
+            {{--asmoyoAsset( 'css/style.css', 'css', true )--}}
             {{HTML::style('admin-style.css')}}
         @show
 
@@ -48,8 +49,8 @@
     @show
 
     @section('javascripts')
-        {{HTML::asmoyoTheme( 'js/jquery.min.js', 'js', true )}}
-        {{HTML::asmoyoTheme( 'js/bootstrap.min.js', 'js', true )}}
+        {{asmoyoAsset( 'js/jquery.min.js', 'admin')}}
+        {{asmoyoAsset( 'js/bootstrap.min.js', 'admin')}}
     @show
 
 </body>

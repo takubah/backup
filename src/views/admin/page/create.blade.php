@@ -2,12 +2,12 @@
 
 @section('stylesheets')
 	@parent
-	{{HTML::asmoyoTheme( 'plugin/froala_editor/css/froala_editor.min.css', 'css', true )}}
+	{{asmoyoAsset('plugin/froala_editor/css/froala_editor.min.css', 'admin')}}
 @stop
 
 @section('javascripts')
 	@parent
-	{{HTML::asmoyoTheme( 'plugin/froala_editor/js/froala_editor.min.js', 'js', true )}}
+	{{asmoyoAsset('plugin/froala_editor/js/froala_editor.min.js', 'admin')}}
 
 	<script>
 		var froala_options = {

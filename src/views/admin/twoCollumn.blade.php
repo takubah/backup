@@ -12,7 +12,7 @@
                     <div class="col-md-9">
                         <div class="content">
                             @section('content')
-                            	{{$content}}                      
+                            	{{$content}}
                             @show
                         </div>
                     </div>
