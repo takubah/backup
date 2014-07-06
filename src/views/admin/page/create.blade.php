@@ -1,5 +1,30 @@
 @section('title') Buat Halaman @stop
 
+@section('stylesheets')
+	@parent
+	{{HTML::asmoyoTheme( 'plugin/froala_editor/css/froala_editor.min.css', 'css', true )}}
+@stop
+
+@section('javascripts')
+	@parent
+	{{HTML::asmoyoTheme( 'plugin/froala_editor/js/froala_editor.min.js', 'js', true )}}
+
+	<script>
+		var froala_options = {
+			imageUploadURL: "{{route('admin.page.store')}}",
+			height: 300
+		};
+
+	    $(function() {
+	        $('.froala_editor_inline').editable(froala_options);
+	    });
+
+	    $(function() {
+	        $('.froala_editor').editable( jQuery.extend({inlineMode: false}, froala_options) );
+	    });
+	</script>
+@stop
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
@@ -34,7 +59,7 @@
 					Content
 				</label>
 				<div class="col-sm-10">
-					{{Form::textarea('content', null, array('class' => 'form-control', 'id' => 'content', 'placeholder' => 'content'))}}
+					{{Form::textarea('content', null, array('class' => 'form-control froala_editor', 'id' => 'content', 'placeholder' => 'content', 'style' => 'height:500px;'))}}
 				</div>
 			</div>
 
