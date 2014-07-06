@@ -156,6 +156,17 @@ Route::pattern('username', '[A-Za-z0-9-_]+');
 		'uses'	=> 'Public_HomeController@index',
 	));
 
+	// Page
+	Route::get('/{slug}', array(
+		'as'	=> 'page.show',
+		'uses'	=> 'Public_PageController@show',
+	));
+
+	// Post
+	Route::resource('post', 'Public_PostController', array(
+		'except' => array('create', 'store', 'edit', 'update', 'destroy')
+	));
+
 /**
 * END PUBLIC ROUTING
 */
