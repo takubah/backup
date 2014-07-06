@@ -14,27 +14,27 @@ class MediaRepo extends RepoBase implements MediaInterface
 
 	public function getAll($sortir = null, $limit = null)
 	{
-		return $this->prepareData()->get();
+		return $this->prepareData($sortir, $limit)->get();
 	}
 
 	public function getAllPaginated($sortir = null, $limit = null)
 	{
-		return $this->prepareData()
+		return $this->prepareData($sortir, $limit)
 			->paginate( $this->repoLimit($limit) );
 	}
 
-	public function getByGallery($gallery_id, $limit=null)
+	public function getByGallery($gallery_id, $sortir = null, $limit = null)
 	{
-		return $this->prepareData()
+		return $this->prepareData($sortir, $limit)
 			->where('category_id', $gallery_id)
 			->paginate( $this->repoLimit($limit) );
 	}
 
-	public function getByType($type='internal', $limit=null)
+	public function getByType($type = 'internal', $sortir = null, $limit = null)
 	{
 		$type = (in_array( $type, $this->model->typeList )) ? $type : 'internal';
 
-		return $this->prepareData()
+		return $this->prepareData($sortir, $limit)
 			->where('type', $type)
 			->paginate( $this->repoLimit($limit) );
 	}

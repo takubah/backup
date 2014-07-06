@@ -6,9 +6,9 @@ interface MediaInterface {
 
 	public function getAllPaginated($sortir = null, $limit = null);
 
-	public function getByGallery($gallery_id, $limit=null);
+	public function getByGallery($gallery_id, $sortir = null, $limit = null);
 
-	public function getByType($type, $limit=null);
+	public function getByType($type, $sortir = null, $limit = null);
 	
 	public function getById($id);
 
