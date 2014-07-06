@@ -50,16 +50,29 @@ class AsmoyoController extends Controller {
 		return ($disabledPseudo) ? $view : Pseudo::render($view);
 	}
 
-	public function assetsAdmin($file)
+	protected function getAssets($theme, $file)
 	{
 		try
 		{
-			$web = app('asmoyo.web');
-			$content = file_get_contents(public_path( 
-				'packages/antoniputra/asmoyo/'. $web['web_adminTemplate'].'/'.$file
-			));
-			return Response::make($content)
-				->header('Content-Type', $this->assetHeader($file));
+			$web 	= app('asmoyo.web');
+
+			// admin
+			if($theme == $web['web_adminTemplate'])
+			{
+				$path 	= public_path('packages/antoniputra/asmoyo/'. $web['web_adminTemplate'].'/'.$file );
+			}
+			// public
+			elseif($theme == $web['web_publicTemplate'])
+			{
+				$path 	= public_path('themes/'. $web['web_publicTemplate'] .'/'.$file );
+			}
+			// other
+			else {
+				$path 	= public_path('themes/'. $theme .'/'. $file);
+			}
+
+			return Response::make( File::get($path) )
+				->header('Content-Type', getMime(File::extension($path)) );
 		}
 		catch(Exception $e)
 		{
@@ -67,53 +80,11 @@ class AsmoyoController extends Controller {
 		}
 	}
 
-	public function assetsTheme($theme, $file)
+	protected function getMedia($size, $file)
 	{
-		try
-		{
-			$web = app('asmoyo.web');
-			$content = file_get_contents(public_path( 
-				'themes/'. $web['web_publicTemplate'].'/'.$file
-			));
-			return Response::make($content)
-				->header('Content-Type', $this->assetHeader($file));
-		}
-		catch(Exception $e)
-		{
-			return App::abort(404, $e);
-		}
-	}
-
-	protected function assetHeader($file)
-	{
-		if( false !== strpos($file, 'css') )
-		{
-			return 'text/css';
-		}
-		elseif( false !== strpos($file, 'js') )
-		{
-			return 'text/javascript';
-		}
-		elseif( false !== strpos($file, 'font') )
-		{
-			return 'application/octet-stream';
-		}
-		elseif( false !== strpos($file, 'jpg') )
-		{
-			return 'image/jpg';
-		}
-		elseif( false !== strpos($file, 'jpeg') )
-		{
-			return 'image/jpeg';
-		}
-		elseif( false !== strpos($file, 'png') )
-		{
-			return 'image/png';
-		}
-		elseif( false !== strpos($file, 'gif') )
-		{
-			return 'image/gif';
-		}
+		$path 	= public_path('uploads/images/'. $size .'/'.$file );
+		return Response::make( File::get($path) )
+			->header('Content-Type', getMime(File::extension($path)) );
 	}
 
 }

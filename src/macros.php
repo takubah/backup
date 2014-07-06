@@ -1,12 +1,56 @@
 <?php
 
-HTML::macro('asmoyoTheme', function($file, $type='url', $admin = false)
+function getMime($ext, $default='text/html')
+{
+    $mimes = array(
+        'css'   => 'text/css',
+        'js'    => 'text/javascript',
+        'jpg'   => 'image/jpg',
+        'jpeg'  => 'image/jpeg',
+        'png'   => 'image/png',
+        'gif'   => 'image/gif',
+    );
+
+    if ( ! array_key_exists($ext, $mimes)) return $default;
+
+    return $mimes[$ext];
+}
+
+function getMedia($file, $size='medium')
+{
+    return route('getMedia', $size .'/'. $file);
+}
+
+function getAssetUrl($file, $theme='admin')
+{
+    $web    = app('asmoyo.web');
+    if($theme == 'admin')
+    {
+        $theme = $web['web_adminTemplate'];
+    } elseif($theme == 'public') {
+        $theme = $web['web_publicTemplate'];
+    }
+    return route('getAssets', $theme.'/'.$file);
+}
+
+function asmoyoAsset($file, $theme='admin')
+{
+    return HTML::asmoyoAsset($file, $theme);
+}
+
+HTML::macro('asmoyoAsset', function($file, $theme='admin')
 {
 	$web 	= app('asmoyo.web');
-	$theme 	= ($admin) ? $web['web_adminTemplate'] : $web['web_publicTemplate'];
-	$url 	= route('assets.theme.get', $theme) .'/'. $file;
+    if($theme == 'admin')
+    {
+        $theme = $web['web_adminTemplate'];
+    } elseif($theme == 'public') {
+        $theme = $web['web_publicTemplate'];
+    }
+	$url 	= route('getAssets', $theme.'/'.$file);
 
-    switch ($type) {
+    // get file extension
+    switch ( substr(strrchr($file, '.'), 1) ) {
         case 'css':
             return HTML::style($url);
         break;
