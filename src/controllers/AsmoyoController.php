@@ -16,12 +16,20 @@ class AsmoyoController extends Controller {
 	public function loadView($content, $data = array(), $disabledPseudo=false)
 	{
 		include __DIR__ . '/../composers.php';
+
+		$web = app('asmoyo.web');
 		
 		// set view structure if empty
 		if(!$this->viewStructure) {
 			$this->viewStructure = ( Request::segment(1) == 'admin' ) 
 				? 'asmoyo::admin.twoCollumn'
-				: 'asmoyoTheme.'. app('asmoyo.web')['web_publicTemplate'] .'.twoCollumn';
+				: 'asmoyoTheme.'. $web['web_publicTemplate'] .'.twoCollumn';
+		}
+
+		// check content path, if there is not asmoyoTheme str, add it !
+		if(false === strpos($content, 'asmoyoTheme') AND Request::segment(1) != 'admin')
+		{
+			$content = 'asmoyoTheme.'. $web['web_publicTemplate'] .'.'. $content;
 		}
 
 		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data);
