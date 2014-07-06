@@ -2,7 +2,7 @@
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
-		<i class="fa fa-files-o"></i>
+		<i class="fa fa-users"></i>
 		Daftar User
 	</h3>
 	<div class="box-content">
