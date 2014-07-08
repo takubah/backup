@@ -9,6 +9,7 @@ function getMime($ext, $default='text/html')
         'jpeg'  => 'image/jpeg',
         'png'   => 'image/png',
         'gif'   => 'image/gif',
+        'woff'  => 'application/x-font-woff',
     );
 
     if ( ! array_key_exists($ext, $mimes)) return $default;
