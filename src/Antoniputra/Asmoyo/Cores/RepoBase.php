@@ -70,7 +70,7 @@ abstract class RepoBase
 
 	protected function repoValidation($input, $custom_rules=array())
 	{
-		$rules = $this->prepareValidation( $input, array_merge($this->model->rules, $custom_rules) );
+		$rules = $this->prepareValidation( $input, array_merge($this->model->defaultRules(), $custom_rules) );
 
 		$messages   = Lang::get('validation.custom');
         $v          = Validator::make($input, $rules, $messages);
@@ -95,10 +95,6 @@ abstract class RepoBase
             if (false !== strpos($rule, "<id>"))
             {
                 $rule = str_replace("<id>", $input['id'], $rule);
-            }
-            elseif (false !== strpos($rule, "<url>"))
-            {
-                $rule = str_replace("<url>", $input['url'], $rule);
             }
             elseif (false !== strpos($rule, "<slug>"))
             {
