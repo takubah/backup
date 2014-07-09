@@ -1,15 +1,15 @@
 <?php namespace Antoniputra\Asmoyo\Medias;
 
 // use Closure;
+use Input, Str, Config;
 use Antoniputra\Asmoyo\Cores\RepoBase;
+use Antoniputra\Asmoyo\Medias\Image;
 
 class MediaRepo extends RepoBase implements MediaInterface
 {
-		
 	public function __construct(Media $model)
 	{
 		parent::__construct($model);
-		$this->model = $model;
 	}
 
 	public function getAll($sortir = null, $limit = null)
@@ -50,4 +50,27 @@ class MediaRepo extends RepoBase implements MediaInterface
 			->where('slug', $slug)->first();
 	}
 
+	public function store()
+	{
+		$input = Input::all();
+		if($this->repoValidation($input))
+		{
+			$image = new Image;
+			if( $img = $image->uploadImage($input) )
+			{
+				return $this->model->create(array(
+					'title' 		=> $img['title'],
+					'slug'	 		=> Str::slug($img['title']),
+					'description'	=> Input::get('description', ''),
+					'alt'			=> Input::get('alt', $img['title']),
+					'type'			=> $input['type'],
+					'file'			=> $img['fileName'],
+					'mime_type'		=> $img['mimeType'],
+					'extension'		=> $img['extension'],
+					'size'			=> $img['size'],
+				));
+			}
+		}
+		return false;
+	}
 }

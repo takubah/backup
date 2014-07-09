@@ -137,6 +137,7 @@ class OptionTableSeeder extends Seeder {
 				'name'			=> 'media_watermark',
 				'value'			=> json_encode(array(
 						'active'	=> 1,
+						'type'		=> 'image',
 						'text'		=> '',
 						'image'		=> 'watermark.png',
 						'position'	=> 'center',

@@ -11,10 +11,12 @@ class Admin_MediaController extends AsmoyoController
 
 	public function index()
 	{
+		return app('asmoyo.web');
+		
 		$data = array(
 			'medias'	=> $this->media->getAllPaginated(),
 		);
-		return $this->loadView('asmoyo::admin.media.index', $data);
+		return $this->setStructure('oneCollumn', 'admin')->loadView('media.index', $data, true);
 	}
 
 	public function create()
@@ -25,7 +27,14 @@ class Admin_MediaController extends AsmoyoController
 
 	public function store()
 	{
-		return 'here is store method';
+		if( ! Request::ajax()) { return App::abort(404); }
+
+		if( $process = $this->media->store() )
+		{
+			return Response::json(array('success' => $process), 200);
+		}
+
+		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
 	}
 
 	public function show($slug)

@@ -23,7 +23,7 @@ class Media extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('category_id', 'type', 'file', 'mime_type', 'size', 'title', 'slug', 'description');
+	protected $fillable = array('gallery_id', 'type', 'file', 'mime_type', 'size', 'title', 'slug', 'description');
 
 	/**
     * These are make collumn to Carbon instance
@@ -49,13 +49,9 @@ class Media extends EloquentBase
     {
         return array(
             'type'          => 'required|in:'.implode(',', $this->typeList),
-            'file'          => 'required',
-            'mime_type'     => 'required',
-            'size'          => 'required',
-            'title'         => 'required',
+            'file'          => 'required|mimes:jpeg,jpg,gif,png',
         );
     }
-
 
 
 	public function category()
