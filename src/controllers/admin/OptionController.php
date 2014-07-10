@@ -11,58 +11,31 @@ class Admin_OptionController extends AsmoyoController
 
 	public function index()
 	{
-		$data = array(
-			'options'	=> $this->option->get(),
-		);
-		return $this->loadView('asmoyo::admin.option.index', $data);
+		return app('asmoyo.web');
 	}
 
-	public function create()
-	{
-		$data = array();
-		return $this->loadView('asmoyo::admin.option.create', $data);
-	}
-
-	public function store()
-	{
-		return 'here is store method';
-	}
-
-	public function show($slug)
+	public function web()
 	{
 		$data = array(
 			'option'		=> $this->option->get(),
+			'dateFormatList' => $this->option->dateFormatList(),
+			'sortirList' 	=> $this->option->getSortirList(),
 		);
-
-		if( ! $data['option'] ) return App::abort(404);
-
-		return 'here is show method';
+		return $this->loadView('asmoyo::admin.option.web', $data);
 	}
 
-	public function edit($slug)
+	public function webSave()
+	{
+		return Input::all();
+	}
+
+	public function media()
 	{
 		$data = array(
-			'option'		=> $this->option->get(),
+			'option'	=> $this->option->get(),
 		);
-
-		if( ! $data['option'] ) return App::abort(404);
-
-		return $this->loadView('asmoyo::admin.option.edit', $data);
+		return $this->loadView('asmoyo::admin.option.media', $data);
 	}
 
-	public function update($slug)
-	{
-		$data = array(
-			'option'		=> $this->option->get(),
-		);
-
-		if( ! $data['option'] ) return App::abort(404);
-
-		return 'here is update method';
-	}
-
-	public function destroy($id)
-	{
-		return 'ini adalah method destroy';
-	}
+	
 }

@@ -141,7 +141,22 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		Route::resource('widget', 'Admin_WidgetController');
 
 		// Option
-		Route::resource('option', 'Admin_OptionController');
+		Route::get('option', array(
+			'as' 		=> 'admin.option.index',
+			'uses' 		=> 'Admin_OptionController@index'
+		));
+		Route::get('option/web', array(
+			'as' 		=> 'admin.option.web',
+			'uses' 		=> 'Admin_OptionController@web'
+		));
+		Route::put('option/webSave', array(
+			'as' 		=> 'admin.option.webSave',
+			'uses' 		=> 'Admin_OptionController@webSave'
+		));
+		Route::get('option/media', array(
+			'as' 		=> 'admin.option.media',
+			'uses' 		=> 'Admin_OptionController@media'
+		));
 	});
 
 /**

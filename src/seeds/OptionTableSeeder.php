@@ -42,7 +42,7 @@ class OptionTableSeeder extends Seeder {
 			),
 			array(
 				'name'			=> 'web_itemSortir',
-				'value'			=> 'desc',
+				'value'			=> 'new',
 				'description'	=> 'Sortir item for global list data',
 				'type'			=> '',
 			),

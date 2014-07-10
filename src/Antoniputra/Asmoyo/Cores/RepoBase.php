@@ -158,4 +158,15 @@ abstract class RepoBase
         return is_numeric($limit) ? $limit : 10;
     }
 
+    public function getSortirList()
+    {
+        return array(
+            'new'               => 'new',
+            'latest-updated'    => 'latest-updated',
+            'title-ascending'   => 'title-ascending',
+            'title-descending'  => 'title-descending',
+            'popular'           => 'popular',
+        );
+    }
+
 }

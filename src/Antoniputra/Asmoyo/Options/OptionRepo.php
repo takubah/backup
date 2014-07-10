@@ -38,4 +38,15 @@ class OptionRepo extends RepoBase implements OptionInterface
 		
 		return ( !$key ) ? $cachedResult : $cachedResult[$key];
 	}
+
+	public function dateFormatList()
+	{
+		return array(
+			'l, jS F Y - H:i A'	=> date('l, jS F Y - H:i A'),
+			'l, j/F/Y - H:i A'	=> date('l, j/F/Y - H:i A'),
+			'D, j/F/Y - H:i A'	=> date('D, j/F/Y - H:i A'),
+			'j/F/Y - H:i A'		=> date('j/F/Y - H:i A'),
+			'd-m-Y - H:i A'		=> date('d-m-Y - H:i A'),
+		);
+	}
 }
