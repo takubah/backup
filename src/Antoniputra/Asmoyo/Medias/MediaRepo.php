@@ -53,6 +53,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 	public function store()
 	{
 		$input = Input::all();
+		$input['type'] = isset($input['type']) ? $input['type'] : 'internal';
 		if($this->repoValidation($input))
 		{
 			$image = new Image;
