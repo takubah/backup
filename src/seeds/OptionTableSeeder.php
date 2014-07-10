@@ -18,7 +18,7 @@ class OptionTableSeeder extends Seeder {
 			),
 			array(
 				'name'			=> 'web_logo',
-				'value'			=> 'laravel.jpg',
+				'value'			=> 'example.jpg',
 				'description'	=> 'My Logo',
 				'type'			=> '',
 			),
