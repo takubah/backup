@@ -23,7 +23,7 @@
 							Email
 						</label>
 						<div class="col-sm-10">
-							{{Form::text('email', null, array('class' => 'form-control', 'id' => 'email', 'placeholder' => 'email'))}}
+							{{Form::text('email', null, array('class' => 'form-control', 'id' => 'email', 'placeholder' => 'email', 'autofocus' => true))}}
 						</div>
 					</div>
 					<div class="form-group">
