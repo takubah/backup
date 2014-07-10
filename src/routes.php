@@ -129,6 +129,7 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 
 		// Media
 		Route::resource('media', 'Admin_MediaController');
+		Route::post('media/storeFroala', array('as' => 'admin.media.storeFroala', 'uses' => 'Admin_MediaController@storeFroala'));
 
 		// Category
 		Route::resource('category', 'Admin_CategoryController');

@@ -11,8 +11,6 @@ class Admin_MediaController extends AsmoyoController
 
 	public function index()
 	{
-		return app('asmoyo.web');
-		
 		$data = array(
 			'medias'	=> $this->media->getAllPaginated(),
 		);
@@ -32,6 +30,17 @@ class Admin_MediaController extends AsmoyoController
 		if( $process = $this->media->store() )
 		{
 			return Response::json(array('success' => $process), 200);
+		}
+
+		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
+	}
+
+	public function storeFroala()
+	{
+		if( $process = $this->media->store() )
+		{
+			// return Response::json(array('success' => $process), 200);
+			return Response::json( array('link' => getMedia('e5e7fa671096d379df330cf9c8c54412.jpg') ), 200);
 		}
 
 		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
