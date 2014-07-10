@@ -72,11 +72,16 @@ class Image {
 			// if watermark image
 			if($wmark['type'] == 'image')
 			{
-				$wmark_image = public_path('uploads/images/watermark.png');
+				$wmarkFile = public_path('uploads/images/watermark.png');
+				
+				$wmark_imageLg = $this->getWatermarkImage($wmarkFile, 'large');
+				$lg->insert( $wmark_imageLg, $wmark['position']);
 
-				$lg->insert( $wmark_image, $wmark['position']);
-				$md->insert( $wmark_image, $wmark['position']);
-				$sm->insert( $wmark_image, $wmark['position']);
+				$wmark_imageMd = $this->getWatermarkImage($wmarkFile, 'medium');
+				$md->insert( $wmark_imageMd, $wmark['position']);
+
+				$wmark_imageSm = $this->getWatermarkImage($wmarkFile, 'small');
+				$sm->insert( $wmark_imageSm, $wmark['position']);
 			}
 			// if watermark text
 			elseif($wmark['type'] == 'text')
@@ -100,6 +105,27 @@ class Image {
 		$sm->save( $this->path('small/'.$fileName) );
 
 		return true;
+	}
+
+	public function getWatermarkImage($file, $size = 'medium')
+	{
+		$web = app('asmoyo.web');
+		$size = ($size == 'large')
+			? $web['media_largeSize']
+			: ($size == 'medium')
+				? $web['media_mediumSize']
+				: $web['media_smallSize'];
+
+		return InterventionImage::make($file)->resize($size['w'], null, function ($constraint)
+		{
+		    $constraint->aspectRatio();
+		    $constraint->upsize();
+		});
+	}
+
+	public function getWatermarkText($file)
+	{
+
 	}
 
 	public function stripExtension($filename)
