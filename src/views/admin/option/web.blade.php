@@ -1,5 +1,7 @@
 @section('title') Pengaturan Web @stop
 
+@include('asmoyo::admin.partials.modalAjax')
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
@@ -28,11 +30,18 @@
 						Web Logo
 					</label>
 					<div class="col-sm-10">
-						{{Form::hidden('web_logo', null, array('id' => 'web_logo'))}}
-						{{Form::file('web_logo', array('class' => 'form-control', 'id' => 'web_logo'))}}
+						{{Form::hidden('web_logo', null, array('id' => 'web_logo', 'class'=>'form-control'))}}
+						
+						{{Form::hidden('asmoyo_image_new', null, array('id' => 'asmoyo_image_new', 'class'=>'form-control'))}}
+						
+						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; background-size:cover;"> </a>
+
+						<a href="{{route('admin.media.ajaxIndex')}}" class="btn btn-default" data-toggle="modal" data-target="#mediaModal">
+							Select Media
+						</a>
 					</div>
 				</div>
-				
+
 				<div class="form-group">
 					<label for="web_email" class="col-sm-2 control-label">
 						Web Email

@@ -1,6 +1,6 @@
 <?php namespace Antoniputra\Asmoyo\Options;
 
-use Config, Cache;
+use Config, Cache, Input;
 use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class OptionRepo extends RepoBase implements OptionInterface
@@ -37,6 +37,41 @@ class OptionRepo extends RepoBase implements OptionInterface
 		$cachedResult = $this->cacheStore($cacheKey, $result);
 		
 		return ( !$key ) ? $cachedResult : $cachedResult[$key];
+	}
+
+	public function update($attr=null)
+	{
+		$attr = $attr ?: Input::all();
+		if($attr)
+		{
+			if( isset($attr['change_watermark_image']) )
+			{
+				$attr['media_watermark']['image'] = '';
+			}
+
+			foreach($attr as $key => $val)
+			{
+				if(is_array($val) AND !empty($val))
+				{
+					$this->model->where('name', $key)->update(array('value' => json_encode($val)));
+				} else {
+					$this->model->where('name', $key)->update(array('value' => $val));
+				}
+			}
+
+			// handle if do upload watermark image
+			if ( $w_img = \Input::file('watermark_image') )
+			{
+				$this->watermarkImage($w_img);
+			}
+
+			// forget cache
+			$this->cacheForget('asmoyo.web');
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public function dateFormatList()

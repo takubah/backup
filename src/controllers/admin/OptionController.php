@@ -26,7 +26,13 @@ class Admin_OptionController extends AsmoyoController
 
 	public function webSave()
 	{
-		return Input::all();
+		$input = Input::all();
+		$input['web_logo'] = $input['asmoyo_image_new'] ?: $input['web_logo'];
+		if( $this->option->update($input) )
+		{
+			return $this->redirectAlert('admin.option.web');
+		}
+		return $this->redirectAlert(false, 'danger', 'Error');
 	}
 
 	public function media()

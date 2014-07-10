@@ -128,8 +128,12 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		Route::resource('page', 'Admin_PageController');
 
 		// Media
-		Route::resource('media', 'Admin_MediaController');
+		Route::get('media/ajaxIndex', array(
+			'as' 		=> 'admin.media.ajaxIndex',
+			'uses' 		=> 'Admin_MediaController@ajaxIndex'
+		));
 		Route::post('media/storeFroala', array('as' => 'admin.media.storeFroala', 'uses' => 'Admin_MediaController@storeFroala'));
+		Route::resource('media', 'Admin_MediaController');
 
 		// Category
 		Route::resource('category', 'Admin_CategoryController');

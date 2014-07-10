@@ -83,4 +83,14 @@ class Admin_MediaController extends AsmoyoController
 	{
 		return 'ini adalah method destroy';
 	}
+
+	public function ajaxIndex()
+	{
+		if( ! Request::ajax()) { return App::abort(404); }
+
+		$data = array(
+			'medias'	=> $this->media->getAllPaginated(),
+		);
+		return View::make('asmoyo::admin.media.ajaxIndex', $data);
+	}
 }

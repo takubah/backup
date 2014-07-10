@@ -23,6 +23,5 @@ View::composer(array('*'), function($view)
 	$theme = ( Request::segment(1) == 'admin' ) 
 			? 'asmoyo::admin.twoCollumn'
 			: 'asmoyo-theme.'. $web['web_publicTemplate'] .'.';
-
 	$view->with('theme',  $theme);
 });
