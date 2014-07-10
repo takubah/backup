@@ -54,7 +54,7 @@ class OptionTableSeeder extends Seeder {
 			),
 			array(
 				'name'			=> 'web_dateFormat',
-				'value'			=> 'Y-m-d',
+				'value'			=> 'l, jS F Y - H:i A',
 				'description'	=> 'Web Date Format',
 				'type'			=> '',
 			),

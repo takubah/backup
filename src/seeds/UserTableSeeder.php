@@ -4,6 +4,8 @@ class UserTableSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('users')->truncate();
+
 		$users 	= array(
 			array(
 				'email'       	=> 'admin@admin.com',
