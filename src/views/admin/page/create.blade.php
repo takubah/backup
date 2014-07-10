@@ -11,7 +11,7 @@
 
 	<script>
 		var froala_options = {
-			imageUploadURL: "{{route('admin.page.store')}}",
+			imageUploadURL: "{{route('admin.media.storeFroala')}}",
 			height: 300
 		};
 
