@@ -18,7 +18,7 @@ class OptionTableSeeder extends Seeder {
 			),
 			array(
 				'name'			=> 'web_logo',
-				'value'			=> 'example.jpg',
+				'value'			=> 'logo.png',
 				'description'	=> 'My Logo',
 				'type'			=> '',
 			),
@@ -106,6 +106,12 @@ class OptionTableSeeder extends Seeder {
 
 
 			// Media
+			array(
+				'name'			=> 'media_imageDefault',
+				'value'			=> 'default.jpg',
+				'description'	=> 'Image default',
+				'type'			=> '',
+			),
 			array(
 				'name'			=> 'media_smallSize',
 				'value'			=> json_encode(array('w' => 180, 'h' => 135)),
