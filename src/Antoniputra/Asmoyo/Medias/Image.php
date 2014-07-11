@@ -72,7 +72,7 @@ class Image {
 			// if watermark image
 			if($wmark['type'] == 'image')
 			{
-				$wmarkFile = public_path('uploads/images/watermark.png');
+				$wmarkFile = public_path('uploads/images/original/watermark.png');
 				
 				$wmark_imageLg = $this->getWatermarkImage($wmarkFile, 'large');
 				$lg->insert( $wmark_imageLg, $wmark['position']);

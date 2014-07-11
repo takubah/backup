@@ -12,6 +12,12 @@
 				Media
 			</a>
 		</li>
+		<li>
+			<a href="{{route('admin.option.media')}}">
+				<i class="fa fa-laptop"></i>
+				Template
+			</a>
+		</li>
 	</ul>
 </div>
 <hr>

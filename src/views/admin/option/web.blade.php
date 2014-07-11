@@ -4,7 +4,7 @@
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
-		<i class="fa fa-files-o"></i>
+		<i class="fa fa-globe"></i>
 		Pengaturan Web
 	</h3>
 	<div class="box-content">
@@ -37,6 +37,7 @@
 						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; "> </a>
 
 						<a href="{{route('admin.media.ajaxIndex')}}" class="btn btn-default" data-toggle="modal" data-target="#mediaModal">
+							<i class="fa fa-picture-o"></i>
 							Select Media
 						</a>
 					</div>
