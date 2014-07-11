@@ -12,8 +12,8 @@
             
             var myDropzone = new Dropzone("#dropzone", {
                 // config here....
-                // previewsContainer: "#previews", 
-                // clickable: "#clickable",
+                previewsContainer: "#uploadPreview", 
+                clickable: "#uploadBtn",
                 // autoProcessQueue: false,
 
                 init: function() {
@@ -29,6 +29,8 @@
                     });
 
                     this.on("complete", function(file) {
+                        $('#title').val('');
+                        $('#description').val('');
                         // window.location = "./Dashboard/Report/";
                     });
                 }

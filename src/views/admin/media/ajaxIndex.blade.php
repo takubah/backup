@@ -12,7 +12,7 @@
 	@foreach($medias as $media)
 		<div class="col-sm-6 col-md-3">
 	        <div class="thumbnail">
-	            <a href="#" class="thumbnail media_item" data-image="{{$media['file']}}" style="background:url( {{getMedia($media['file'])}} ) center; background-size: cover; height:170px; margin:0px;" data-dismiss="modal" ></a>
+	            <a href="#" class="thumbnail media_item" data-image="{{$media['file']}}" data-image-url="{{getMedia($media['file'])}}" style="background:url( {{getMedia($media['file'])}} ) center; background-size: cover; height:170px; margin:0px;" data-dismiss="modal" ></a>
 	        </div>
 	    </div>
 	@endforeach
@@ -28,14 +28,7 @@
 </div>
 
 <script type="text/javascript">
-	$(function(){
-		$('.media_item').click(function() {
-			var mediaSelected = $(this).attr('data-image');
-			var urlMediaSelected = "{{route('getMedia', 'medium')}}/"+mediaSelected;
-			console.log( mediaSelected );
+	
+	$('.media_item').asmoyoMediaModal();
 
-			$('#asmoyo_image_new').val(mediaSelected);
-			$('#asmoyo_image_preview').css('background', 'url("'+ urlMediaSelected +'") center no-repeat');
-		});
-	});
 </script>

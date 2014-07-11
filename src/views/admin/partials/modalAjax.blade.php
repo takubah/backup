@@ -1,6 +1,6 @@
 @section('javascripts')
 	<!-- Modal -->
-	<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalAjax" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -19,18 +19,4 @@
 	</div>
 
 	@parent
-
-	<script type="text/javascript">
-		/*$(function(){
-			$('#mediaModal').on('loaded.bs.modal', function () {
-				alert('loaded event fired!');
-			});
-
-			$('#mediaModal').on('hide.bs.modal', function (e) {
-				$('.media_item').click(function() {
-					console.log( $(this).attr('data-image') );
-				});
-			});
-		});*/
-	</script>
 @stop
