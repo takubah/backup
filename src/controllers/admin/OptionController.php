@@ -30,9 +30,9 @@ class Admin_OptionController extends AsmoyoController
 		$input['web_logo'] = $input['asmoyo_image_new'] ?: $input['web_logo'];
 		if( $this->option->update($input) )
 		{
-			return $this->redirectAlert('admin.option.web');
+			return $this->redirectAlert('admin.option.web', 'success', 'Berhasil !!');
 		}
-		return $this->redirectAlert(false, 'danger', 'Error');
+		return $this->redirectAlert(false, 'danger', 'Gagal !');
 	}
 
 	public function media()
@@ -43,5 +43,16 @@ class Admin_OptionController extends AsmoyoController
 		return $this->loadView('asmoyo::admin.option.media', $data);
 	}
 
+	public function mediaSave()
+	{
+		$input = Input::all();
+
+		$input['media_watermark']['image'] = $input['asmoyo_image_new'] ?: $input['media_watermark']['image'];
+		if( $this->option->update($input) )
+		{
+			return $this->redirectAlert('admin.option.media', 'success', 'Berhasil !!');
+		}
+		return $this->redirectAlert(false, 'danger', 'Gagal !');
+	}
 	
 }

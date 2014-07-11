@@ -105,19 +105,19 @@ class AsmoyoController extends Controller {
 		// if null, do redirect back and add withInput
 		if( !$to )
 		{
-			return $redirect->with('flash_message', array(
-				'alertType'		=> $alertType,
-				'alertTitle'	=> $alertTitle,
-				'alertText'		=> $alertText
+			return $redirect->with('alert', array(
+				'type'		=> $alertType,
+				'title'		=> $alertTitle,
+				'text'		=> $alertText
 			))->withInput();
 		}
 		// if redUrl, that mean do Redirect::route and add alert
 		elseif( !is_null($alertTitle) )
 		{
-			return $redirect->with('flash_message', array(
-				'alertType'		=> $alertType,
-				'alertTitle'	=> $alertTitle,
-				'alertText'		=> $alertText
+			return $redirect->with('alert', array(
+				'type'		=> $alertType,
+				'title'		=> $alertTitle,
+				'text'		=> $alertText
 			));
 		}
 

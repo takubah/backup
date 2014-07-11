@@ -11,7 +11,7 @@
 
 		@include('asmoyo::admin.option._menu')
 
-		{{Form::model($option, array('route' => 'admin.option.webSave', 'method' => 'PUT', 'class' => 'form-horizontal'))}}
+		{{Form::model($option, array('route' => 'admin.option.mediaSave', 'method' => 'PUT', 'class' => 'form-horizontal'))}}
 
 			<fieldset>
 				<legend>1. Images Size</legend>

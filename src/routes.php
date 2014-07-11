@@ -161,6 +161,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.option.media',
 			'uses' 		=> 'Admin_OptionController@media'
 		));
+		Route::put('option/mediaSave', array(
+			'as' 		=> 'admin.option.mediaSave',
+			'uses' 		=> 'Admin_OptionController@mediaSave'
+		));
 	});
 
 /**
