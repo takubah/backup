@@ -26,9 +26,7 @@ class Admin_OptionController extends AsmoyoController
 
 	public function webSave()
 	{
-		$input = Input::all();
-		$input['web_logo'] = $input['asmoyo_image_new'] ?: $input['web_logo'];
-		if( $this->option->update($input) )
+		if( $this->option->update( Input::all() ) )
 		{
 			return $this->redirectAlert('admin.option.web', 'success', 'Berhasil !!');
 		}
@@ -39,6 +37,7 @@ class Admin_OptionController extends AsmoyoController
 	{
 		$data = array(
 			'option'	=> $this->option->get(),
+			'watermarkPositionList' => $this->option->watermarkPositionList(),
 		);
 		return $this->loadView('asmoyo::admin.option.media', $data);
 	}
@@ -46,9 +45,10 @@ class Admin_OptionController extends AsmoyoController
 	public function mediaSave()
 	{
 		$input = Input::all();
+		$input['media_constraint']['aspectRatio'] = isset($input['media_constraint']['aspectRatio']) ? 1 : 0;
+		$input['media_constraint']['upsize'] = isset($input['media_constraint']['upsize']) ? 1 : 0;
 
-		$input['media_watermark']['image'] = $input['asmoyo_image_new'] ?: $input['media_watermark']['image'];
-		if( $this->option->update($input) )
+		if( $this->option->update( $input ) )
 		{
 			return $this->redirectAlert('admin.option.media', 'success', 'Berhasil !!');
 		}

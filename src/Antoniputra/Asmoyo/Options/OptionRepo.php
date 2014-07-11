@@ -44,11 +44,6 @@ class OptionRepo extends RepoBase implements OptionInterface
 		$attr = $attr ?: Input::all();
 		if($attr)
 		{
-			if( isset($attr['change_watermark_image']) )
-			{
-				$attr['media_watermark']['image'] = '';
-			}
-
 			foreach($attr as $key => $val)
 			{
 				if(is_array($val) AND !empty($val))
@@ -57,12 +52,6 @@ class OptionRepo extends RepoBase implements OptionInterface
 				} else {
 					$this->model->where('name', $key)->update(array('value' => $val));
 				}
-			}
-
-			// handle if do upload watermark image
-			if ( $w_img = \Input::file('watermark_image') )
-			{
-				$this->watermarkImage($w_img);
 			}
 
 			// forget cache
