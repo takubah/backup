@@ -1,7 +1,5 @@
 @section('title') Pengaturan Media @stop
 
-@include('asmoyo::admin.partials.modalAjax')
-
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-picture-o"></i>
@@ -110,7 +108,7 @@
 			<fieldset>
 				<legend>2. Images Watermark</legend>
 
-				<div class="form-group">
+				{{-- <div class="form-group">
 					<label for="media_watermark[type]" class="col-sm-2 control-label">
 						Watermark Type
 					</label>
@@ -126,23 +124,41 @@
 					<div class="col-sm-10">
 						{{Form::text('media_watermark[text]', null, array('class' => 'form-control', 'id' => 'media_watermark[text]'))}}
 					</div>
-				</div>
+				</div> --}}
 
+				<div class="form-group">
+					<label for="media_imageDefault" class="col-sm-2 control-label">
+						Image Default
+					</label>
+					<div class="col-sm-10">
+
+						{{Form::hidden('media_imageDefault', null, array('id' => 'media_imageDefault', 'class'=>'form-control'))}}
+
+						<a id="media_imageDefault_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_imageDefault'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
+
+						<a href="{{route('admin.media.ajaxIndex')}}" id="indicatorImageDefault" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
+							<i class="fa fa-picture-o"></i>
+							Select Media
+						</a>
+
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label for="media_watermark[image]" class="col-sm-2 control-label">
 						Watermark Image
 					</label>
 					<div class="col-sm-10">
-						{{Form::hidden('media_watermark[image]', null, array('id' => 'media_watermark[image]', 'class'=>'form-control'))}}
-						
-						{{Form::hidden('asmoyo_image_new', null, array('id' => 'asmoyo_image_new', 'class'=>'form-control'))}}
-						
-						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_watermark']['image'], 'original')}}') center no-repeat; background-size:cover; "> </a>
 
-						<a href="{{route('admin.media.ajaxIndex')}}" class="btn btn-default" data-toggle="modal" data-target="#mediaModal">
+						{{Form::hidden('media_watermark[image]', null, array('id' => 'target_media_watermark', 'class'=>'form-control'))}}
+
+						<a id="image_watermark_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_watermark']['image'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
+
+						<a href="{{route('admin.media.ajaxIndex')}}" id="indicator" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
 							<i class="fa fa-picture-o"></i>
 							Select Media
 						</a>
+
 					</div>
 				</div>
 				
@@ -151,7 +167,7 @@
 						Watermark Position
 					</label>
 					<div class="col-sm-10">
-						{{Form::select('media_watermark[position]', array('left'=>'left','center'=>'center','bottom'=>'bottom'), null, array('class' => 'form-control', 'id' => 'media_watermark[position]'))}}
+						{{Form::select('media_watermark[position]', $watermarkPositionList, null, array('class' => 'form-control', 'id' => 'media_watermark[position]'))}}
 					</div>
 				</div>
 
@@ -170,3 +186,23 @@
 
 	</div>
 </div>
+
+@include('asmoyo::admin.partials.modalAjax')
+
+@section('javascripts')
+	@parent
+
+	{{asmoyoAsset( 'js/asmoyo-media.js', 'admin')}}
+	<script type="text/javascript">	
+
+		$( "#indicatorImageDefault" ).setAsmoyoMediaModal(
+			'#media_imageDefault',
+			'#media_imageDefault_preview'
+		);
+
+		$( "#indicator" ).setAsmoyoMediaModal(
+			'#target_media_watermark',
+			'#image_watermark_preview'
+		);
+	</script>
+@stop

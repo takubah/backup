@@ -32,11 +32,9 @@
 					<div class="col-sm-10">
 						{{Form::hidden('web_logo', null, array('id' => 'web_logo', 'class'=>'form-control'))}}
 						
-						{{Form::hidden('asmoyo_image_new', null, array('id' => 'asmoyo_image_new', 'class'=>'form-control'))}}
-						
-						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; "> </a>
+						<a id="web_logo_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; "> </a>
 
-						<a href="{{route('admin.media.ajaxIndex')}}" class="btn btn-default" data-toggle="modal" data-target="#mediaModal">
+						<a href="{{route('admin.media.ajaxIndex')}}" id="forWebLogo" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
 							<i class="fa fa-picture-o"></i>
 							Select Media
 						</a>
@@ -151,3 +149,15 @@
 
 	</div>
 </div>
+
+@section('javascripts')
+	@parent
+
+	{{asmoyoAsset( 'js/asmoyo-media.js', 'admin')}}
+	<script type="text/javascript">	
+		$( "#forWebLogo" ).setAsmoyoMediaModal(
+			'#web_logo',
+			'#web_logo_preview'
+		);
+	</script>
+@stop
