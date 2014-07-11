@@ -59,11 +59,12 @@ class MediaRepo extends RepoBase implements MediaInterface
 			$image = new Image;
 			if( $img = $image->uploadImage($input) )
 			{
+				$title = Input::get('title', $img['title']);
 				return $this->model->create(array(
-					'title' 		=> $img['title'],
-					'slug'	 		=> Str::slug($img['title']),
+					'title' 		=> $title,
+					'slug'	 		=> Str::slug($title),
 					'description'	=> Input::get('description', ''),
-					'alt'			=> Input::get('alt', $img['title']),
+					'alt'			=> Input::get('alt', $title),
 					'type'			=> $input['type'],
 					'file'			=> $img['fileName'],
 					'mime_type'		=> $img['mimeType'],
