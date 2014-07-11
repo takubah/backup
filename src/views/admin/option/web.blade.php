@@ -34,7 +34,7 @@
 						
 						{{Form::hidden('asmoyo_image_new', null, array('id' => 'asmoyo_image_new', 'class'=>'form-control'))}}
 						
-						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; background-size:cover;"> </a>
+						<a id="asmoyo_image_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['web_logo'])}}') center no-repeat; "> </a>
 
 						<a href="{{route('admin.media.ajaxIndex')}}" class="btn btn-default" data-toggle="modal" data-target="#mediaModal">
 							Select Media
