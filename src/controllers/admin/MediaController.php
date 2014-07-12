@@ -57,10 +57,10 @@ class Admin_MediaController extends AsmoyoController
 		return 'here is show method';
 	}
 
-	public function edit($slug)
+	public function edit($id)
 	{
 		$data = array(
-			'media'		=> $this->media->getBySlug($slug),
+			'media'		=> $this->media->getById($id),
 		);
 
 		if( ! $data['media'] ) return App::abort(404);
@@ -68,9 +68,9 @@ class Admin_MediaController extends AsmoyoController
 		return $this->loadView('asmoyo::admin.media.edit', $data);
 	}
 
-	public function update($slug)
+	public function update($id)
 	{
-		if( $process = $this->media->update($slug) )
+		if( $process = $this->media->update($id) )
 		{
 			if( ! Request::ajax() ) return $this->redirectAlert('admin.media.index', 'success', 'Berhasil !!');
 
@@ -84,7 +84,11 @@ class Admin_MediaController extends AsmoyoController
 
 	public function destroy($id)
 	{
-		return 'ini adalah method destroy';
+		if( $process = $this->media->delete($id) ) {
+			return $this->redirectAlert('admin.media.index', 'success', 'Berhasil Dihapus !!');
+		}
+
+		return $this->redirectAlert('admin.media.index', 'danger', 'Gagal Dihapus !!');
 	}
 
 	public function ajaxIndex()

@@ -73,7 +73,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 		return false;
 	}
 
-	public function update($slug)
+	public function update($id)
 	{
 		$input = Input::all();
 		if($this->repoValidation( $input, array('file' => 'mimes:jpeg,jpg,gif,png') ))
@@ -99,8 +99,32 @@ class MediaRepo extends RepoBase implements MediaInterface
 				}
 			}
 			
-			return $this->model->where('slug', $slug)->update($data);
+			return $this->model->where('id', $id)->update($data);
 		}
 		return false;
+	}
+
+	public function delete($id)
+	{
+		$media = $this->model->find($id);
+		$image = new Image;
+
+		// delete original img
+    	$original = $image->path('original/'.$media['file']);
+    	if( file_exists($original) ) unlink($original);
+
+    	// delete small img
+    	$small = $image->path('small/'.$media['file']);
+    	if( file_exists($small) ) unlink($small);
+
+    	// delete medium img
+    	$medium = $image->path('medium/'.$media['file']);
+    	if( file_exists($medium) ) unlink($medium);
+
+    	// delete large img
+    	$large = $image->path('large/'.$media['file']);
+    	if( file_exists($large) ) unlink($large);
+
+    	return $media->delete();
 	}
 }

@@ -13,7 +13,7 @@
 
 		{{ Form::model($media, array(
             'method'    => 'PUT',
-            'url'       => route('admin.media.update', $media['slug']),
+            'url'       => route('admin.media.update', $media['id']),
             'class'     => 'form-horizontal',
             'id'        => 'dropzone',
             'files'     => true

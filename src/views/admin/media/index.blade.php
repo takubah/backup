@@ -21,13 +21,13 @@
                     <div style="background:url( {{getMedia($media['file'])}} ); background-size: cover; height:200px;"> &nbsp; </div>
                     <div class="caption">
                         <div class="text-center">
-                            <a href="{{ URL::route('admin.media.edit', $media['slug']) }}" class="btn btn-primary">
+                            <a href="{{ URL::route('admin.media.edit', $media['id']) }}" class="btn btn-primary">
                                 <i class="fa fa-pencil"></i> Edit
                             </a>
                             {{ Form::asmoyoLink(
                                 ' Hapus',
                                 'DELETE',
-                                route('admin.media.destroy', $media['id']) .'?file='.$media['file'],
+                                route('admin.media.destroy', $media['id']),
                                 array(
                                     'class' => 'btn btn-danger',
                                     'icon'  => 'fa fa-trash-o',
