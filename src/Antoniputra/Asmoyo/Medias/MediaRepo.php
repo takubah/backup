@@ -53,7 +53,6 @@ class MediaRepo extends RepoBase implements MediaInterface
 	public function store()
 	{
 		$input = Input::all();
-		$input['type'] = isset($input['type']) ? $input['type'] : 'internal';
 		if($this->repoValidation($input))
 		{
 			$image = new Image;
@@ -64,14 +63,43 @@ class MediaRepo extends RepoBase implements MediaInterface
 					'title' 		=> $title,
 					'slug'	 		=> Str::slug($title),
 					'description'	=> Input::get('description', ''),
-					'alt'			=> Input::get('alt', $title),
 					'type'			=> $input['type'],
 					'file'			=> $img['fileName'],
 					'mime_type'		=> $img['mimeType'],
-					'extension'		=> $img['extension'],
 					'size'			=> $img['size'],
 				));
 			}
+		}
+		return false;
+	}
+
+	public function update($slug)
+	{
+		$input = Input::all();
+		if($this->repoValidation( $input, array('file' => 'mimes:jpeg,jpg,gif,png') ))
+		{
+			$data = array(
+				'title' 		=> Input::get('title'),
+				'slug'	 		=> Str::slug( Input::get('title') ),
+				'description'	=> Input::get('description', ''),
+				'type'			=> $input['type'],
+			);
+
+			if( Input::hasFile('file') )
+			{
+				$image = new Image;
+				if( $img = $image->uploadImage($input, $input['fileName']) )
+				{
+					$imageData = array(
+						'file'			=> $img['fileName'],
+						'mime_type'		=> $img['mimeType'],
+						'size'			=> $img['size'],
+					);
+					$data = array_merge($data, $imageData);
+				}
+			}
+			
+			return $this->model->where('slug', $slug)->update($data);
 		}
 		return false;
 	}

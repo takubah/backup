@@ -70,13 +70,16 @@ class Admin_MediaController extends AsmoyoController
 
 	public function update($slug)
 	{
-		$data = array(
-			'media'		=> $this->media->getBySlug($slug),
-		);
+		if( $process = $this->media->update($slug) )
+		{
+			if( ! Request::ajax() ) return $this->redirectAlert('admin.media.index', 'success', 'Berhasil !!');
 
-		if( ! $data['media'] ) return App::abort(404);
+			return Response::json(array('success' => $process), 200);
+		}
 
-		return 'here is update method';
+		if( ! Request::ajax() ) return $this->redirectAlert('admin.media.index', 'danger', 'Gagal !!');
+
+		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
 	}
 
 	public function destroy($id)

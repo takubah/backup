@@ -5,15 +5,13 @@ use Intervention\Image\ImageManagerStatic as InterventionImage;
 
 class Image {
 
-	public function uploadImage($input)
+	public function uploadImage($input, $fileName = null)
 	{
 		$file 		= Input::file('file');
 		$mimeType	= $file->getMimeType();
 		$extension 	= $file->getClientOriginalExtension();
 		$size 		= $file->getSize();
-		$fileName 	= (isset($input['currentFile']))
-			? $input['currentFile']
-			: md5(time() . str_random(20)) .'.'.$extension;
+		$fileName 	= $fileName ?: md5(time() . str_random(20)) .'.'.$extension;
 
 		// resizing original file by configuration size
 		if( ! $this->generateImage($file->getRealPath(), $fileName) ) return false;

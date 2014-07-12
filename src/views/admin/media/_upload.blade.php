@@ -14,6 +14,8 @@
                 // config here....
                 previewsContainer: "#uploadPreview", 
                 clickable: "#uploadBtn",
+
+                maxFiles: @if($media['id']) 1 @endif,
                 // autoProcessQueue: false,
 
                 init: function() {
@@ -31,7 +33,10 @@
                     this.on("complete", function(file) {
                         $('#title').val('');
                         $('#description').val('');
-                        // window.location = "./Dashboard/Report/";
+
+                        @if($media['id'])
+                            window.location = "{{route('admin.media.index')}}";
+                        @endif
                     });
                 }
             });

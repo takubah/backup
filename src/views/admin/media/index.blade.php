@@ -1,5 +1,9 @@
 @section('title') Daftar Media @stop
 
+<script type="text/javascript">
+    
+</script>
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-picture-o"></i>
