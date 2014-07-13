@@ -72,13 +72,13 @@ HTML::macro('asmoyoAsset', function($file, $theme='admin')
 });
 
 // Form Link
-Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $is_confirm=false)
+Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $confirm_message=null)
 {
     // attribute for form
     $formAttr = array('method' => $method, 'url' => $action, 'style' => 'display:inline-block;');
 
     // append onSubmit
-    if($is_confirm) $formAttr = array_merge( $formAttr, array('onsubmit' => 'return confirm("Are you sure ?");') );
+    if($confirm_message) $formAttr = array_merge( $formAttr, array('onsubmit' => 'return confirm("'.$confirm_message.'");') );
 
     $output = Form::open($formAttr);
 

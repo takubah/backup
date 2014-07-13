@@ -34,7 +34,7 @@
                                     'data-placement' => 'right',
                                     'title'     => 'right'
                                 ),
-                                true
+                                'Apakah anda yakin ?'
                             ) }}
                         </div>
                     </div>
