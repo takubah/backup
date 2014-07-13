@@ -50,7 +50,12 @@
 					Slug
 				</label>
 				<div class="col-sm-10">
-					{{Form::text('slug', null, array('class' => 'form-control', 'id' => 'slug', 'placeholder' => 'slug'))}}
+					<div class="input-group">
+						<div class="input-group-addon">
+							{{url()}}
+						</div>
+						{{Form::text('slug', null, array('class' => 'form-control', 'id' => 'slug', 'placeholder' => 'slug'))}}
+					</div>
 				</div>
 			</div>
 

@@ -125,6 +125,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.page.editOrder',
 			'uses' 		=> 'Admin_PageController@editOrder'
 		));
+		Route::put('page/edit-order-save', array(
+			'as' 		=> 'admin.page.editOrderSave',
+			'uses' 		=> 'Admin_PageController@editOrderSave'
+		));
 		Route::resource('page', 'Admin_PageController');
 
 		// Media
