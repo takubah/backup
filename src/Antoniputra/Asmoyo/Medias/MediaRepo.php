@@ -50,9 +50,9 @@ class MediaRepo extends RepoBase implements MediaInterface
 			->where('slug', $slug)->first();
 	}
 
-	public function store()
+	public function store($input = array(), $rules = array())
 	{
-		$input = Input::all();
+		$input = $input ?: Input::all();
 		if($this->repoValidation($input))
 		{
 			$image = new Image;
@@ -73,10 +73,11 @@ class MediaRepo extends RepoBase implements MediaInterface
 		return false;
 	}
 
-	public function update($id)
+	public function update($id, $input = array(), $rules = array())
 	{
-		$input = Input::all();
-		if($this->repoValidation( $input, array('file' => 'mimes:jpeg,jpg,gif,png') ))
+		$input = $input ?: Input::all();
+		$rules = $rules ?: array('file' => 'mimes:jpeg,jpg,gif,png');
+		if($this->repoValidation( $input, $rules ))
 		{
 			$data = array(
 				'title' 		=> Input::get('title'),

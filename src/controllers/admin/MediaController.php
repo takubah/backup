@@ -37,10 +37,11 @@ class Admin_MediaController extends AsmoyoController
 
 	public function storeFroala()
 	{
-		if( $process = $this->media->store() )
+		$input = Input::all();
+		$input['type'] = 'internal';
+		if( $process = $this->media->store($input) )
 		{
-			// return Response::json(array('success' => $process), 200);
-			return Response::json( array('link' => getMedia('e5e7fa671096d379df330cf9c8c54412.jpg') ), 200);
+			return Response::json( array('link' => getMedia($process['file'], 'original') ), 200);
 		}
 
 		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
