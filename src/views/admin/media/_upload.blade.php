@@ -15,7 +15,7 @@
                 previewsContainer: "#uploadPreview", 
                 clickable: "#uploadBtn",
 
-                maxFiles: @if($media['id']) 1 @endif,
+                maxFiles: @if( isset($media['id']) ) 1 @endif,
                 // autoProcessQueue: false,
 
                 init: function() {
@@ -34,7 +34,7 @@
                         $('#title').val('');
                         $('#description').val('');
 
-                        @if($media['id'])
+                        @if( isset($media['id']) )
                             window.location = "{{route('admin.media.index')}}";
                         @endif
                     });
