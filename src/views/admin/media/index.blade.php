@@ -18,7 +18,7 @@
 		@foreach($medias as $media)
 			<div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
-                    <div style="background:url( {{getMedia($media['file'])}} ); background-size: cover; height:200px;"> &nbsp; </div>
+                    <div style="background:url( {{getMedia($media['file'])}} ) center center; background-size: cover; height:200px;"> &nbsp; </div>
                     <div class="caption">
                         <div class="text-center">
                             <a href="{{ URL::route('admin.media.edit', $media['id']) }}" class="btn btn-primary">
