@@ -8,19 +8,14 @@ class OptionRepo extends RepoBase implements OptionInterface
 	
 	public function __construct(Option $model)
 	{
-		$this->model 		= $model;
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
+		parent::__construct($model);
 	}
 
-	public function get($key=null)
+	public function get($name=null)
 	{
-		$cacheKey		= 'asmoyo.web';
-
 		// check cache
-		if($cachedResult = $this->cacheGet($cacheKey))
-		{
-			return ( !$key ) ? $cachedResult : $cachedResult[$key];
-		}
+		$key = 'asmoyo.web';
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
 
 		$result = array();
 		foreach( \Antoniputra\Asmoyo\Options\Option::all() as $opt )
@@ -33,10 +28,10 @@ class OptionRepo extends RepoBase implements OptionInterface
 			}
 		}
 
-		// save item to cache
-		$cachedResult = $this->cacheStore($cacheKey, $result);
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
 		
-		return ( !$key ) ? $cachedResult : $cachedResult[$key];
+		return ( !$name ) ? $result : $result[$name];
 	}
 
 	public function update($attr=null)
@@ -55,8 +50,7 @@ class OptionRepo extends RepoBase implements OptionInterface
 			}
 
 			// forget cache
-			$this->cacheForget('asmoyo.web');
-
+			$this->cacheFlush(__CLASS__);
 			return true;
 		}
 

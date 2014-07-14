@@ -1,29 +1,6 @@
 @section('title') Buat Halaman @stop
 
-@section('stylesheets')
-	@parent
-	{{asmoyoAsset('plugin/froala_editor/css/froala_editor.min.css', 'admin')}}
-@stop
-
-@section('javascripts')
-	@parent
-	{{asmoyoAsset('plugin/froala_editor/js/froala_editor.min.js', 'admin')}}
-
-	<script>
-		var froala_options = {
-			imageUploadURL: "{{route('admin.media.storeFroala')}}",
-			height: 300
-		};
-
-	    $(function() {
-	        $('.froala_editor_inline').editable(froala_options);
-	    });
-
-	    $(function() {
-	        $('.froala_editor').editable( jQuery.extend({inlineMode: false}, froala_options) );
-	    });
-	</script>
-@stop
+@include('asmoyo::admin.partials.confFroala')
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
@@ -35,6 +12,8 @@
 		@include('asmoyo::admin.page._menu')
 
 		{{Form::open(array('route' => 'admin.page.store', 'class' => 'form-horizontal'))}}
+
+			{{Form::hidden('status', 'published')}}
 
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">

@@ -8,21 +8,18 @@ body.dragging, body.dragging * {
     z-index: 2000;
 }
 
-.sortable li {
-    background:#e5e5e5;
-    border-bottom: 1px solid #c7c7c7;
+#page-sortir li {
     margin: 0px 0px 1px 0px;
 }
 
-.sortable li.placeholder {
+#page-sortir li.placeholder {
     position: relative;
     margin: 2px 0px;
     padding: 5px 2px;
-    background: #d0d0d0;
     display:block;
     /** More li styles **/
 }
-.sortable li.placeholder:before {
+#page-sortir li.placeholder:before {
     position: absolute;
     /** Define arrowhead **/
     content: "";
@@ -32,8 +29,7 @@ body.dragging, body.dragging * {
     left: -5px;
     top: -4px;
     border: 5px solid transparent;
-    border-left-color: $error;
+    border-left-color:none;
     border-right: none;
     background-color: red;
-    
 }

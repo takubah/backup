@@ -4,11 +4,14 @@ use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class UserRepo extends RepoBase implements UserInterface
 {
-	
+	protected $editRules = array(
+		'username'	=> 'required|unique:users,username,<id>',
+        'email'		=> 'required|unique:users,email,<id>',
+	);
+
 	public function __construct(User $model)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getAll($sortir = null, $limit = null)
@@ -28,36 +31,30 @@ class UserRepo extends RepoBase implements UserInterface
 
 	public function getByUsername($username)
 	{
-		$cacheKey = __FUNCTION__.'|'.$username;
-
 		// check cache
-		if($cachedResult = $this->cacheGet($cacheKey)) {
-			return $cachedResult;
-		}
+		$key = __FUNCTION__.'|username:'.$username;
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
 		
-		return $this->cacheStore( $cacheKey, $this->model->where('username', $username)->first() );
+		$result = $this->model->where('username', $username)->first();
+
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
+		return $result;
 	}
 
 	public function auth()
 	{
-		// if($cachedResult = $this->cacheGet(__FUNCTION__)) 
-		// 	return $cachedResult;
-
 		$user = \Auth::user();
-
 		if( $user )
 		{
 			$user = $user->toArray();
 			$user['permissions'] 	= json_decode($user['permissions'], true);
 		}
-
-		// return $this->cacheStore( __FUNCTION__, $user );
 		return $user;
 	}
 
 	public function logout()
 	{
-		$this->cacheForget('auth');
 		return \Auth::logout();
 	}
 

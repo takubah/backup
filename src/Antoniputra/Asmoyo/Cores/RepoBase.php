@@ -6,66 +6,25 @@ abstract class RepoBase
 {
 	public $model;
 
-	public $webOption;
-
-	public $cacheObjTag;
+	public $errors;
 
 	public function __construct($model=null)
 	{
 		$this->model      = $model;
-		$this->webOption  = app('asmoyo.web');
 	}
 
-	/**
-	* manage cache tag for all repo
-	* @param array
-	* @return Cache Object
-	*/
-	protected function repoCacheTag($cacheObjTag=array())
+	public function cacheTag($tag)
 	{
-		$cacheTags = array(Config::get('asmoyo::cache.base_name'));
-
-		if( !is_array($cacheObjTag) ) {
-			$cacheObjTag = array($cacheObjTag);
-		}
-
-		$cacheTags = array_merge($cacheTags, $cacheObjTag);
-
-		return Cache::tags( $cacheTags );
+		$baseTag 	= Config::get('asmoyo::cache.base_name');
+		$tag 		= $baseTag.'.'.$tag;
+		return Cache::tags( array($baseTag, $tag) );
 	}
 
-	protected function cacheStore($key, $value)
+	public function cacheFlush($tag)
 	{
-		$cacheTime = Config::get('asmoyo::cache.time');
-		
-		if( is_integer($cacheTime) )
-		{
-			$this->cacheObjTag->put($key, $value, $cacheTime);
-		}
-		else
-		{
-			$this->cacheObjTag->forever($key, $value);
-		}
-
-		return $value;
-	}
-
-	protected function cacheGet($key)
-	{
-		if( $this->cacheObjTag->has($key) )
-		{
-			return $this->cacheObjTag->get($key);
-		}
-
-		return false;
-	}
-
-	protected function cacheForget($key)
-	{
-		if( $this->cacheObjTag->has($key) )
-		{
-			return $this->cacheObjTag->forget($key);
-		}
+		$baseTag 	= Config::get('asmoyo::cache.base_name');
+		$tag 		= $baseTag.'.'.$tag;
+		return Cache::tags($tag)->flush();
 	}
 
 	protected function repoValidation($input, $custom_rules=array())
@@ -153,7 +112,8 @@ abstract class RepoBase
 	*/
 	protected function repoLimit($limit=null)
 	{
-		$limit = Input::get('limit', $limit) ?: $this->webOption['web_itemPerPage'];
+		$web = app('asmoyo.web');
+		$limit = Input::get('limit', $limit) ?: $web['web_itemPerPage'];
 
 		return is_numeric($limit) ? $limit : 10;
 	}

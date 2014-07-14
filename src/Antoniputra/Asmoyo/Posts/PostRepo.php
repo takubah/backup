@@ -4,23 +4,27 @@ use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class PostRepo extends RepoBase implements PostInterface
 {
-	
+	protected $editRules = array(
+		'title'		=> 'required|unique:posts,title,<id>',
+        'slug'		=> 'required|unique:posts,slug,<id>',
+	);
+
 	public function __construct(Post $model)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getAll($sortir = null, $limit = null)
 	{
-		$cacheKey = __FUNCTION__.'|sortir:'.$sortir.'|limit:'.$limit;
-		if($cachedResult = $this->cacheGet($cacheKey)) {
-			return $cachedResult;
-		}
+		// check cache
+		$key = __FUNCTION__.'|sortir:'.$sortir.'|limit:'.$limit;
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
 
 		$result = $this->prepareData($sortir, $limit)->with('groupable', 'cover')->get();
 
-		return $this->cacheStore($cacheKey, $result);
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
+		return $result;
 	}
 
 	public function getAllPaginated($sortir = null, $limit = null)

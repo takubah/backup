@@ -7,6 +7,11 @@ use Antoniputra\Asmoyo\Medias\Image;
 
 class MediaRepo extends RepoBase implements MediaInterface
 {
+	protected $editRules = array(
+		'title'		=> 'required|unique:medias,title,<id>',
+        'slug'		=> 'required|unique:medias,slug,<id>',
+	);
+
 	public function __construct(Media $model)
 	{
 		parent::__construct($model);

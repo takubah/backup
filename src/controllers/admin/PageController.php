@@ -14,7 +14,7 @@ class Admin_PageController extends AsmoyoController
 		$data = array(
 			'pages'		=> $this->page->getAllPaginated(),
 		);
-		return $this->loadView('asmoyo::admin.page.index', $data);
+		return $this->loadView('asmoyo::admin.page.index', $data, true);
 	}
 
 	public function create()
@@ -25,7 +25,13 @@ class Admin_PageController extends AsmoyoController
 
 	public function store()
 	{
-		return 'here is store method';
+		$input = Input::all();
+		if ( $this->page->store( $input ) )
+		{
+			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil !!');
+		}
+
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->page->errors);
 	}
 
 	public function show($slug)
@@ -52,13 +58,13 @@ class Admin_PageController extends AsmoyoController
 
 	public function update($slug)
 	{
-		$data = array(
-			'page'		=> $this->page->getBySlug($slug),
-		);
+		$input = Input::all();
+		if ( $this->page->update( $input['id'], $input ) )
+		{
+			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Diperbarui !!');
+		}
 
-		if( ! $data['page'] ) return App::abort(404);
-
-		return 'here is update method';
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->page->errors);
 	}
 
 	public function editOrder()
@@ -84,7 +90,7 @@ class Admin_PageController extends AsmoyoController
 			}
 		}
 
-		return $this->redirectAlert('admin.page.editOrder', 'success', 'Berhasil !!');
+		return $this->redirectAlert('admin.page.editOrder', 'success', 'Berhasil Diperbarui !!');
 	}
 
 	public function destroy($id)

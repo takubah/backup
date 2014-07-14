@@ -4,11 +4,13 @@ use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class CommentRepo extends RepoBase implements CommentInterface
 {
-	
+	protected $editRules = array(
+		
+	);
+
 	public function __construct(Comment $model)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getAll($sortir = null, $limit = null)

@@ -5,11 +5,14 @@ use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class PageRepo extends RepoBase implements PageInterface
 {
-	
+	protected $editRules = array(
+		'title'		=> 'required|unique:pages,title,<id>',
+        'slug'		=> 'required|unique:pages,slug,<id>',
+	);
+
 	public function __construct(Page $model)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getAll($sortir = null, $limit = null)
@@ -24,27 +27,35 @@ class PageRepo extends RepoBase implements PageInterface
 
 	public function getById($id)
 	{
-		return $this->model->find($id);
+		// check cache
+		$key = __FUNCTION__.'|id:'.$id;
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+
+		$result = $this->model->find($id);
+
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
+		return $result;
 	}
 
 	public function getBySlug($slug)
 	{
-		$cacheKey = __FUNCTION__.'|'.$slug;
-
 		// check cache
-		if($cachedResult = $this->cacheGet($cacheKey)) {
-			return $cachedResult;
-		}
+		$key = __FUNCTION__.'|slug:'.$slug;
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+
+		$result = $this->model->where('slug', $slug)->first();
 		
-		return $this->cacheStore( $cacheKey, $this->model->where('slug', $slug)->first() );
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
+		return $result;
 	}
 
 	public function getAsMenu()
 	{
 		// check cache
-		if($cachedResult = $this->cacheGet(__FUNCTION__)) {
-			return $cachedResult;
-		}
+		$key = __FUNCTION__;
+		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
 
 		$result 	= array();
 		$pageParent = $this->model->where('parent_id', 0)->get()->toArray();
@@ -60,7 +71,9 @@ class PageRepo extends RepoBase implements PageInterface
 			}
 		}
 
-		return $this->cacheStore(__FUNCTION__, $result);
+		// save cache
+		$this->cacheTag(__CLASS__)->forever($key, $result);
+		return $result;
 	}
 
 	private function childPage($parent_id)
@@ -69,4 +82,28 @@ class PageRepo extends RepoBase implements PageInterface
 			->get()->toArray();
 	}
 
+	public function store($input = array(), $rules = array())
+	{
+		$input = $input ?: Input::all();
+		if($this->repoValidation($input))
+		{
+			return $this->model->create($input);
+		}
+
+		return false;
+	}
+
+	public function update($id, $input = array(), $rules = array())
+	{
+		$input = $input ?: Input::all();
+		$rules = array_merge($this->editRules, $rules);
+		if($this->repoValidation($input, $rules))
+		{
+			$this->model->find($id)->update($input);
+			$this->cacheFlush(__CLASS__);
+			return true;
+		}
+
+		return false;
+	}
 }

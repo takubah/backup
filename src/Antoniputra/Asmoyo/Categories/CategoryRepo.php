@@ -4,11 +4,14 @@ use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class CategoryRepo extends RepoBase implements CategoryInterface
 {
-	
+	protected $editRules = array(
+		'title'		=> 'required|unique:categories,title,<id>',
+        'slug'		=> 'required|unique:categories,slug,<id>',
+	);
+
 	public function __construct(Category $model)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
 	}
 
 	public function getAll($sortir = null, $limit = null)

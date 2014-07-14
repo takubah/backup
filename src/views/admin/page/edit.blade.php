@@ -1,5 +1,7 @@
 @section('title') Edit Halaman {{$page['title']}} @stop
 
+@include('asmoyo::admin.partials.confFroala')
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
@@ -10,6 +12,9 @@
 		@include('asmoyo::admin.page._menu')
 
 		{{Form::model($page, array('route' => array('admin.page.update', $page['slug']), 'method' => 'PUT', 'class' => 'form-horizontal'))}}
+
+			{{Form::hidden('id', null)}}
+			{{Form::hidden('status', null)}}
 
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">
@@ -34,7 +39,7 @@
 					Content
 				</label>
 				<div class="col-sm-10">
-					{{Form::textarea('content', null, array('class' => 'form-control', 'id' => 'content', 'placeholder' => 'content'))}}
+					{{Form::textarea('content', null, array('class' => 'form-control froala_editor', 'id' => 'content', 'placeholder' => 'content', 'style' => 'height:500px;'))}}
 				</div>
 			</div>
 

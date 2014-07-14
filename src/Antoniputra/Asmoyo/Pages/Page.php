@@ -4,7 +4,7 @@ use Antoniputra\Asmoyo\Cores\EloquentBase;
 
 class Page extends EloquentBase {
 	
-	protected $table = 'pages';
+	public $table = 'pages';
 
 	/**
     * Morph relation name
@@ -27,7 +27,7 @@ class Page extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('parent_id', 'status', 'title', 'url', 'content', 'side_left', 'side_right', 'footer', 'order','meta_title', 'meta_keyword', 'meta_description');
+	protected $fillable = array('parent_id', 'status', 'title', 'slug', 'content', 'side_left', 'side_right', 'footer', 'order','meta_title', 'meta_keyword', 'meta_description');
 
 	/**
     * These are make collumn to Carbon instance
@@ -52,8 +52,8 @@ class Page extends EloquentBase {
     public function defaultRules()
     {
         return array(
-            'title'         => 'required',
-            'url'			=> 'required',
+            'title'         => 'required|unique:'.$this->table,
+            'slug'			=> 'required|unique:'.$this->table,
             'content'		=> 'required',
             'status'        => 'required|in:'.implode(',', $this->statusList),
         );
