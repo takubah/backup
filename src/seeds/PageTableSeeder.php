@@ -10,6 +10,9 @@ class PageTableSeeder extends Seeder {
 			array(
 				'parent_id' 		=> 0,
 				'status' 			=> 'published',
+				'type'	 			=> 'standard',
+				'structure'			=> 'oneCollumn',
+				'order'				=> 0,
 				'title' 			=> 'Home',
 				'slug' 				=> 'home',
 				'content'			=> json_encode(array(
@@ -18,7 +21,6 @@ class PageTableSeeder extends Seeder {
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
-				'order'				=> 0,
 				'meta_title'		=> null,
 				'meta_keyword' 		=> null,
 				'meta_description'	=> null,
@@ -26,6 +28,9 @@ class PageTableSeeder extends Seeder {
 			array(
 				'parent_id' 		=> 0,
 				'status' 			=> 'published',
+				'type'	 			=> 'standard',
+				'structure'			=> 'twoCollumn',
+				'order'				=> 0,
 				'title' 			=> 'About',
 				'slug' 				=> 'about',
 				'content'			=> json_encode(array(
@@ -34,7 +39,6 @@ class PageTableSeeder extends Seeder {
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
-				'order'				=> 0,
 				'meta_title'		=> null,
 				'meta_keyword' 		=> null,
 				'meta_description'	=> null,

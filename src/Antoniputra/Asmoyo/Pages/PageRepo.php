@@ -106,4 +106,22 @@ class PageRepo extends RepoBase implements PageInterface
 
 		return false;
 	}
+
+	protected function getTypeList()
+	{
+		return array(
+			'standard' 	=> 'Standard',
+			'category' 	=> 'Category',
+			'post'		=> 'Post',
+		);
+	}
+
+	protected function getStructureList()
+	{
+		return array(
+			'oneCollumn' 	=> 'One Collumn',
+			'twoCollumn'	=> 'Two Collumn',
+			'threeCollumn'	=> 'Three Collumn',
+		);
+	}
 }

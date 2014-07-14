@@ -27,7 +27,7 @@ class Page extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('parent_id', 'status', 'title', 'slug', 'content', 'side_left', 'side_right', 'footer', 'order','meta_title', 'meta_keyword', 'meta_description');
+	protected $fillable = array('parent_id', 'status', 'type', 'structure', 'title', 'slug', 'content', 'side_left', 'side_right', 'footer', 'order','meta_title', 'meta_keyword', 'meta_description');
 
 	/**
     * These are make collumn to Carbon instance
@@ -44,6 +44,22 @@ class Page extends EloquentBase {
     */
     public $statusList = array(
         'published', 'privated', 'drafted'
+    );
+
+    /**
+    * list type support
+    * @var array
+    */
+    public $typeList = array(
+        'standard', 'category', 'post'
+    );
+
+    /**
+    * list structure
+    * @var array
+    */
+    public $structureList = array(
+        'oneCollumn', 'twoCollumn', 'threeCollumn',
     );
 	
 	/**
