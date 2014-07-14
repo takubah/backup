@@ -8,8 +8,6 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	public function __construct(Widget $model, WidgetGroup $widgetGroup, WidgetItem $widgetItem)
 	{
 		parent::__construct($model);
-		$this->cacheObjTag 	= $this->repoCacheTag( get_class() );
-
 		$this->widgetGroup 	= $widgetGroup;
 		$this->widgetItem 	= $widgetItem;
 	}
