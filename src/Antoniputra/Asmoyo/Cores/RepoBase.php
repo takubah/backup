@@ -29,10 +29,22 @@ abstract class RepoBase
 		return Cache::tags($tag);
 	}
 
-	public function cacheFlush($tag)
+	public function cacheFlush($tag, $is_reset_all=false)
 	{
 		$baseTag 	= Config::get('asmoyo::cache.base_name');
-		$tag 		= $baseTag.'.'.$tag;
+		if( is_array($tag) )
+		{
+			foreach ($tag as $value) {
+				$tag[]	= $baseTag.'.'.$value;
+			}
+			$tag = $tag;
+		} else {
+			$tag 	= $baseTag.'.'.$tag;
+			$tag 	= array($tag);
+		}
+
+		if ($is_reset_all) $tag = array_merge(array($baseTag), $tag);
+
 		return Cache::tags($tag)->flush();
 	}
 

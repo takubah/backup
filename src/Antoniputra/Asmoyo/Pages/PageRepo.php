@@ -39,12 +39,13 @@ class PageRepo extends RepoBase implements PageInterface
 	{
 		// check cache
 		$key = __FUNCTION__.'|id:'.$id;
-		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
 
 		$result = $this->model->find($id);
 
 		// save cache
-		$this->cacheTag(__CLASS__)->forever($key, $result);
+		$this->cacheTag( $tag )->forever($key, $result);
 		return $result;
 	}
 
@@ -52,12 +53,13 @@ class PageRepo extends RepoBase implements PageInterface
 	{
 		// check cache
 		$key = __FUNCTION__.'|slug:'.$slug;
-		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result = $this->model->where('slug', $slug)->first();
 		
 		// save cache
-		$this->cacheTag(__CLASS__)->forever($key, $result);
+		$this->cacheTag($tag)->forever($key, $result);
 		return $result;
 	}
 
@@ -65,7 +67,8 @@ class PageRepo extends RepoBase implements PageInterface
 	{
 		// check cache
 		$key = __FUNCTION__;
-		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result 	= array();
 		$pageParent = $this->model->where('parent_id', 0)->get()->toArray();
@@ -82,7 +85,7 @@ class PageRepo extends RepoBase implements PageInterface
 		}
 
 		// save cache
-		$this->cacheTag(__CLASS__)->forever($key, $result);
+		$this->cacheTag($tag)->forever($key, $result);
 		return $result;
 	}
 
@@ -97,7 +100,7 @@ class PageRepo extends RepoBase implements PageInterface
 		$input = $input ?: Input::all();
 		if($this->repoValidation($input))
 		{
-			$this->cacheFlush(__CLASS__);
+			$this->cacheFlush( $this->getCacheTag('many') );
 			return $this->model->create($input);
 		}
 
@@ -111,7 +114,7 @@ class PageRepo extends RepoBase implements PageInterface
 		if($this->repoValidation($input, $rules))
 		{
 			$this->model->find($id)->update($input);
-			$this->cacheFlush(__CLASS__);
+			$this->cacheFlush( $this->getCacheTag('both') );
 			return true;
 		}
 
@@ -124,13 +127,30 @@ class PageRepo extends RepoBase implements PageInterface
 		{
 			if($is_permanent)
 				$data->forceDelete();
-			else 
+			else
 				$data->delete();
 
-			$this->cacheFlush(__CLASS__);
+			$this->cacheFlush( $this->getCacheTag('both') );
 			return true;
 		}
 		return false;
+	}
+
+	public function getCacheTag($key = 'one')
+	{
+		$one 	= __CLASS__ .'_oneData';
+		$many 	= __CLASS__ .'_manyData';
+
+		$tags 	= array(
+			'one'	=> $one,
+			'many'	=> $many,
+			'both'	=> array($one, $many),
+		);
+
+		if( ! isset($tags[$key]) )
+			throw new \Exception($key ." Key not available", 1);
+
+		return $tags[$key];
 	}
 
 	public function getStatusList()
