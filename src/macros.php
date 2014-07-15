@@ -27,9 +27,9 @@ function getAssetUrl($file, $theme='admin')
     $web    = app('asmoyo.web');
     if($theme == 'admin')
     {
-        $theme = $web['web_adminTemplate'];
+        $theme = $web['web_adminTemplate']['name'];
     } elseif($theme == 'public') {
-        $theme = $web['web_publicTemplate'];
+        $theme = $web['web_publicTemplate']['name'];
     }
     return route('getAssets', $theme.'/'.$file);
 }
@@ -44,9 +44,9 @@ HTML::macro('asmoyoAsset', function($file, $theme='admin')
 	$web 	= app('asmoyo.web');
     if($theme == 'admin')
     {
-        $theme = $web['web_adminTemplate'];
+        $theme = $web['web_adminTemplate']['name'];
     } elseif($theme == 'public') {
-        $theme = $web['web_publicTemplate'];
+        $theme = $web['web_publicTemplate']['name'];
     }
 	$url 	= route('getAssets', $theme.'/'.$file);
 

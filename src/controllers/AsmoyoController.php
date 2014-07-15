@@ -11,11 +11,11 @@ class AsmoyoController extends Controller {
 		$web = app('asmoyo.web');
 		if($type == 'public')
 		{
-			$this->viewStructure = 'asmoyoTheme.'. $web['web_publicTemplate'] .'.'. $file;
+			$this->viewStructure = 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.'. $file;
 		} elseif($type == 'admin' ) {
 			// check if there is not asmoyo:: str, add it !
 			$this->viewStructure =  (false === strpos($file, 'asmoyo::'))
-				? 'asmoyo::'. $web['web_adminTemplate'] .'.'. $file
+				? 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $file
 				: $file;
 		}
 
@@ -32,18 +32,18 @@ class AsmoyoController extends Controller {
 		if(!$this->viewStructure) {
 			$this->viewStructure = ( Request::segment(1) == 'admin' ) 
 				? 'asmoyo::admin.twoCollumn'
-				: 'asmoyoTheme.'. $web['web_publicTemplate'] .'.twoCollumn';
+				: 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.twoCollumn';
 		}
 
 		// check content path for publicTemplate, if there is not asmoyoTheme str, add it !
 		if(false === strpos($content, 'asmoyoTheme') AND Request::segment(1) != Config::get('asmoyo::admin.url'))
 		{
-			$content = 'asmoyoTheme.'. $web['web_publicTemplate'] .'.'. $content;
+			$content = 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.'. $content;
 		}
 		// check content path for adminTemplate, if there is not asmoyoTheme str, add it !
 		elseif(false === strpos($content, 'asmoyo::') AND Request::segment(1) == Config::get('asmoyo::admin.url'))
 		{
-			$content = 'asmoyo::'. $web['web_adminTemplate'] .'.'. $content;
+			$content = 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $content;
 		}
 
 		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data);
@@ -57,14 +57,14 @@ class AsmoyoController extends Controller {
 			$web 	= app('asmoyo.web');
 
 			// admin
-			if($theme == $web['web_adminTemplate'])
+			if($theme == $web['web_adminTemplate']['name'])
 			{
-				$path 	= public_path('packages/antoniputra/asmoyo/'. $web['web_adminTemplate'].'/'.$file );
+				$path 	= public_path('packages/antoniputra/asmoyo/'. $web['web_adminTemplate']['name'].'/'.$file );
 			}
 			// public
-			elseif($theme == $web['web_publicTemplate'])
+			elseif($theme == $web['web_publicTemplate']['name'])
 			{
-				$path 	= public_path('themes/'. $web['web_publicTemplate'] .'/'.$file );
+				$path 	= public_path('themes/'. $web['web_publicTemplate']['name'] .'/'.$file );
 			}
 			// other
 			else {

@@ -2,6 +2,13 @@
 
 @include('asmoyo::admin.partials.confFroala')
 
+@section('javascripts')
+	@parent
+	<script type="text/javascript">
+		alert('testing');
+	</script>
+@stop
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
@@ -21,6 +28,15 @@
 				</label>
 				<div class="col-sm-10">
 					{{Form::text('title', null, array('class' => 'form-control', 'id' => 'title', 'placeholder' => 'title'))}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">
+					Structure
+				</label>
+				<div class="col-sm-10">
+					{{Form::select('title', null, array('class' => 'form-control', 'id' => 'title', 'placeholder' => 'title'))}}
 				</div>
 			</div>
 

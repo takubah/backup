@@ -84,7 +84,12 @@ class OptionTableSeeder extends Seeder {
 			),
 			array(
 				'name'			=> 'web_publicTemplate',
-				'value'			=> 'baretshow',
+				'value'			=> json_encode(array(
+					'name'	=> 'baretshow',
+					'info'	=> array(
+						'structure'	=> array('oneCollumn', 'twoCollumn'),
+					),
+				)),
 				'description'	=> nl2br('Elegant Company Profile Template
 
 					<ul>
@@ -93,15 +98,20 @@ class OptionTableSeeder extends Seeder {
 						<li>Support Widget (latest article list, service list) </li>
 					</ul>
 				'),
-				'type'			=> '',
+				'type'			=> 'json',
 			),
 			array(
 				'name'			=> 'web_adminTemplate',
-				'value'			=> 'admin',
+				'value'			=> json_encode(array(
+					'name'	=> 'admin',
+					'info'	=> array(
+						'structure'	=> array('oneCollumn', 'twoCollumn'),
+					),
+				)),
 				'description'	=> nl2br('Elegant Admin Template
 					bla bla
 				'),
-				'type'			=> '',
+				'type'			=> 'json',
 			),
 
 

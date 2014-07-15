@@ -22,6 +22,6 @@ View::composer(array('*'), function($view)
 	// variable global for theme path
 	$theme = ( Request::segment(1) == 'admin' ) 
 			? 'asmoyo::admin.twoCollumn'
-			: 'asmoyo-theme.'. $web['web_publicTemplate'] .'.';
+			: 'asmoyo-theme.'. $web['web_publicTemplate']['name'] .'.';
 	$view->with('theme',  $theme);
 });
