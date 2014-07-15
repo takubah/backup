@@ -67,12 +67,13 @@ abstract class RepoBase
 	}
 
 
-	protected function prepareData($sortir = null, $limit = null)
+	protected function prepareData($sortir = null, $limit = null, $status = null)
 	{
 		$data = $this->model;
 
 		$sortir = $sortir ?: Input::get('sortir');
 		$limit  = $limit ?: Input::get('limit');
+		$status = $status ?: Input::get('status');
 		
 		switch ( $sortir ) {
 			case 'new':
@@ -98,6 +99,28 @@ abstract class RepoBase
 			default:
 				// default by new
 				$data = $data->orderBy('created_at', 'desc');
+			break;
+		}
+
+		switch ( $status ) {
+			case 'published':
+				$data = $data->where('status', 'published');
+			break;
+
+			case 'privated':
+				$data = $data->where('status', 'privated');
+			break;
+			
+			case 'drafted':
+				$data = $data->where('status', 'drafted');
+			break;
+			
+			case 'pending':
+				$data = $data->where('status', 'pending');
+			break;
+			
+			default:
+				
 			break;
 		}
 

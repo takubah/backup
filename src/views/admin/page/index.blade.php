@@ -14,6 +14,7 @@
 				<tr>
 					<th style="width:40px;"> No. </th>
 					<th> Title </th>
+					<th> Status </th>
 					<th> Opsi </th>
 				</tr>
 			</thead>
@@ -23,14 +24,17 @@
 					<tr>
 						<td> {{$itemNumber++}} </td>
 						<td> {{$page['title']}} </td>
+						<td> {{$page['status']}} </td>
 						<td>
 							<a href="{{route('admin.page.edit', $page['slug'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit
 							</a>
 							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.page.destroy', $page['id']), array(
-								'icon'	=> 'fa fa-trash-o',
-								'class'	=> 'btn btn-danger btn-sm'
-							))}}
+									'icon'	=> 'fa fa-trash-o',
+									'class'	=> 'btn btn-danger btn-sm'
+								),
+								'Anda yakin ?'
+							)}}
 						</td>
 					</tr>
 				@endforeach

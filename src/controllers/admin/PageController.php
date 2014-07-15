@@ -14,19 +14,28 @@ class Admin_PageController extends AsmoyoController
 		$data = array(
 			'pages'		=> $this->page->getAllPaginated(),
 		);
-		return $this->loadView('asmoyo::admin.page.index', $data, true);
+		return $this->loadView('asmoyo::admin.page.index', $data);
 	}
 
 	public function create()
 	{
-		$data = array();
+		$data = array(
+			'structureList'	=> $this->page->getStructureList(),
+			'statusList'	=> $this->page->getStatusList(),
+			'typeList'		=> $this->page->getTypeList(),
+		);
 		return $this->loadView('asmoyo::admin.page.create', $data);
 	}
 
 	public function store()
 	{
 		$input = Input::all();
-		if ( $this->page->store( $input ) )
+		// disable validation content if type value is not standard
+		$rules = ($input['type'] != 'standard')
+			? array('content' => '')
+			: array();
+
+		if ( $this->page->store($input, $rules ) )
 		{
 			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil !!');
 		}
@@ -49,6 +58,9 @@ class Admin_PageController extends AsmoyoController
 	{
 		$data = array(
 			'page'		=> $this->page->getBySlug($slug),
+			'structureList'	=> $this->page->getStructureList(),
+			'statusList'	=> $this->page->getStatusList(),
+			'typeList'		=> $this->page->getTypeList(),
 		);
 
 		if( ! $data['page'] ) return App::abort(404);
@@ -59,7 +71,12 @@ class Admin_PageController extends AsmoyoController
 	public function update($slug)
 	{
 		$input = Input::all();
-		if ( $this->page->update( $input['id'], $input ) )
+		// disable validation content if type value is not standard
+		$rules = ($input['type'] != 'standard')
+			? array('content' => '')
+			: array();
+
+		if ( $this->page->update( $input['id'], $input, $rules ) )
 		{
 			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Diperbarui !!');
 		}
@@ -70,7 +87,7 @@ class Admin_PageController extends AsmoyoController
 	public function editOrder()
 	{
 		$data = array(
-			'pages'		=> $this->page->getAll(),
+			'pages'		=> $this->page->getAll(null, null, 'published'),
 		);
 
 		if( ! $data['pages'] ) return App::abort(404);

@@ -2,13 +2,6 @@
 
 @include('asmoyo::admin.partials.confFroala')
 
-@section('javascripts')
-	@parent
-	<script type="text/javascript">
-		alert('testing');
-	</script>
-@stop
-
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
@@ -20,23 +13,12 @@
 
 		{{Form::open(array('route' => 'admin.page.store', 'class' => 'form-horizontal'))}}
 
-			{{Form::hidden('status', 'published')}}
-
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">
 					Title
 				</label>
 				<div class="col-sm-10">
-					{{Form::text('title', null, array('class' => 'form-control', 'id' => 'title', 'placeholder' => 'title'))}}
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="title" class="col-sm-2 control-label">
-					Structure
-				</label>
-				<div class="col-sm-10">
-					{{Form::select('title', null, array('class' => 'form-control', 'id' => 'title', 'placeholder' => 'title'))}}
+					{{Form::text('title', null, array('class' => 'form-control', 'id' => 'title', 'asmoyo-helper' => 'GenerateSlug', 'placeholder' => 'title'))}}
 				</div>
 			</div>
 
@@ -55,11 +37,40 @@
 			</div>
 
 			<div class="form-group">
-				<label for="content" class="col-sm-2 control-label">
-					Content
+				<label for="structure" class="col-sm-2 control-label">
+					Structure
 				</label>
 				<div class="col-sm-10">
-					{{Form::textarea('content', null, array('class' => 'form-control froala_editor', 'id' => 'content', 'placeholder' => 'content', 'style' => 'height:500px;'))}}
+					{{Form::select('structure', $structureList, null, array('class' => 'form-control', 'id' => 'structure', 'placeholder' => 'structure'))}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="status" class="col-sm-2 control-label">
+					Status
+				</label>
+				<div class="col-sm-10">
+					{{Form::select('status', $statusList, null, array('class' => 'form-control', 'id' => 'status', 'placeholder' => 'status'))}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="type" class="col-sm-2 control-label">
+					Type
+				</label>
+				<div class="col-sm-10">
+					{{Form::select('type', $typeList, null, array('class' => 'form-control', 'id' => 'type', 'placeholder' => 'type'))}}
+				</div>
+			</div>
+
+			<div id="typeStandard">
+				<div class="form-group">
+					<label for="content" class="col-sm-2 control-label">
+						Content
+					</label>
+					<div class="col-sm-10">
+						{{Form::textarea('content', null, array('class' => 'form-control froala_editor', 'id' => 'content', 'placeholder' => 'content', 'style' => 'height:500px;'))}}
+					</div>
 				</div>
 			</div>
 
@@ -104,3 +115,35 @@
 
 	</div>
 </div>
+
+@section('javascripts')
+	@parent
+	<script type="text/javascript">
+
+		// generate slug
+		$('#title').asmoyoHelper();
+
+		var inputType = $('#type'),
+			containerType = $('#typeStandard');
+		if( inputType.val() != 'standard' )
+		{
+			containerType.css('display', 'none');
+		}
+
+		// event
+		inputType.change(function() {
+			if( inputType.val() != 'standard' )
+			{
+				// containerType.css('display', 'none');
+				containerType.slideUp('slow', function(){
+
+				});
+			} else {
+				// containerType.css('display', 'block');
+				containerType.slideDown('slow', function(){
+
+				});
+			}
+		});
+	</script>
+@stop

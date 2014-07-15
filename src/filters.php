@@ -41,7 +41,7 @@ Route::filter('AdminFilter', function()
 {
 	$user = app('Antoniputra\Asmoyo\Users\UserInterface')->auth();
 
-	if( !$user ) return App::abort(403, 'you don\'t have permission bro');
+	if( !$user ) return Redirect::route('admin.login');
 
 	if( !isset($user['permissions']['superuser']) )
 	{

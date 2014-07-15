@@ -1,6 +1,6 @@
 <?php namespace Antoniputra\Asmoyo\Pages;
 
-use Closure, Config, Cache;
+use Closure, Config, Cache, Input;
 use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class PageRepo extends RepoBase implements PageInterface
@@ -15,14 +15,24 @@ class PageRepo extends RepoBase implements PageInterface
 		parent::__construct($model);
 	}
 
-	public function getAll($sortir = null, $limit = null)
+	public function getAll($sortir = null, $limit = null, $status = null)
 	{
-		return $this->model->orderBy('order', 'asc')->get();
+		$status = $status ?: Input::get('status');
+		$result = $this->model->orderBy('order', 'asc');
+		if($status)
+			$result = $result->where('status', $status);
+
+		return $result->get();
 	}
 
-	public function getAllPaginated($sortir = null, $limit = null)
+	public function getAllPaginated($sortir = null, $limit = null, $status = null)
 	{
-		return $this->model->orderBy('order', 'asc')->paginate( $this->repoLimit($limit) );
+		$status = $status ?: Input::get('status');
+		$result = $this->model->orderBy('order', 'asc');
+		if($status)
+			$result = $result->where('status', $status);
+
+		return $result->paginate( $this->repoLimit($limit) );
 	}
 
 	public function getById($id)
@@ -107,7 +117,16 @@ class PageRepo extends RepoBase implements PageInterface
 		return false;
 	}
 
-	protected function getTypeList()
+	public function getStatusList()
+	{
+		return array(
+			'published'	=> 'Published',
+			'privated'	=> 'Privated',
+			// 'drafted'	=> 'Drafted'
+		);
+	}
+
+	public function getTypeList()
 	{
 		return array(
 			'standard' 	=> 'Standard',
@@ -116,12 +135,20 @@ class PageRepo extends RepoBase implements PageInterface
 		);
 	}
 
-	protected function getStructureList()
+	public function getStructureList($type='public')
 	{
-		return array(
+		$structure = array(
 			'oneCollumn' 	=> 'One Collumn',
 			'twoCollumn'	=> 'Two Collumn',
 			'threeCollumn'	=> 'Three Collumn',
+			'fourCollumn'	=> 'Four Collumn',
 		);
+		
+		$web = app('asmoyo.web');
+		$theme = ($type == 'public') ? $web['web_publicTemplate'] : $web['web_adminTemplate'] ;
+		foreach ($theme['info']['structure'] as $value) {
+			$result[$value]	= $structure[$value];
+		}
+		return $result;
 	}
 }

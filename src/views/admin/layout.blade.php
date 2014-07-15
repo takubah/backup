@@ -51,6 +51,7 @@
     @section('javascripts')
         {{asmoyoAsset( 'js/jquery.min.js', 'admin')}}
         {{asmoyoAsset( 'js/bootstrap.min.js', 'admin')}}
+        {{asmoyoAsset( 'js/asmoyo.js', 'admin')}}
     @show
 
 </body>
