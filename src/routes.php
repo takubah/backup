@@ -129,6 +129,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.page.editOrderSave',
 			'uses' 		=> 'Admin_PageController@editOrderSave'
 		));
+		Route::delete('page/forceDelete/{id}', array(
+			'as' 		=> 'admin.page.forceDelete',
+			'uses' 		=> 'Admin_PageController@forceDelete'
+		));
 		Route::resource('page', 'Admin_PageController');
 
 		// Media

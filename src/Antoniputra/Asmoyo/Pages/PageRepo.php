@@ -97,6 +97,7 @@ class PageRepo extends RepoBase implements PageInterface
 		$input = $input ?: Input::all();
 		if($this->repoValidation($input))
 		{
+			$this->cacheFlush(__CLASS__);
 			return $this->model->create($input);
 		}
 
@@ -114,6 +115,21 @@ class PageRepo extends RepoBase implements PageInterface
 			return true;
 		}
 
+		return false;
+	}
+
+	public function delete($id, $is_permanent=false)
+	{
+		if( $data = $this->model->find($id) )
+		{
+			if($is_permanent)
+				$data->forceDelete();
+			else 
+				$data->delete();
+
+			$this->cacheFlush(__CLASS__);
+			return true;
+		}
 		return false;
 	}
 

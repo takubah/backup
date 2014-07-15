@@ -112,6 +112,21 @@ class Admin_PageController extends AsmoyoController
 
 	public function destroy($id)
 	{
-		return 'ini adalah method destroy';
+		if( $this->page->delete($id) )
+		{
+			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Dihapus !!');
+		}
+
+		return $this->redirectAlert('admin.page.index', 'danger', 'Gagal Dihapus !!');
+	}
+
+	public function forceDelete($id)
+	{
+		if( $this->page->delete($id, true) )
+		{
+			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Dihapus Permanent !!');
+		}
+
+		return $this->redirectAlert('admin.page.index', 'danger', 'Gagal Dihapus Permanent !!');
 	}
 }
