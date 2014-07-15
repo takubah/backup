@@ -16,8 +16,17 @@ abstract class RepoBase
 	public function cacheTag($tag)
 	{
 		$baseTag 	= Config::get('asmoyo::cache.base_name');
-		$tag 		= $baseTag.'.'.$tag;
-		return Cache::tags( array($baseTag, $tag) );
+		if( is_array($tag) )
+		{
+			foreach ($tag as $value) {
+				$tag[]	= $baseTag.'.'.$value;
+			}
+			$tag = array_merge(array($baseTag), $tag);
+		} else {
+			$tag 	= $baseTag.'.'.$tag;
+			$tag 	= array($baseTag, $tag);
+		}
+		return Cache::tags($tag);
 	}
 
 	public function cacheFlush($tag)
