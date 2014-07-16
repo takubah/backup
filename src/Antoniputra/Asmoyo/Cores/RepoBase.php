@@ -91,12 +91,12 @@ abstract class RepoBase
 	protected function prepareData($sortir = null, $limit = null, $status = null)
 	{
 		$data = $this->model;
-
-		$sortir = $sortir ?: Input::get('sortir');
-		$limit  = $limit ?: Input::get('limit');
-		$status = $status ?: Input::get('status');
-		
-		switch ( $sortir ) {
+		$sortir = $sortir ?: $this->repoSortir($sortir);
+		$limit  = $limit ?: $this->repoLimit($limit);
+		$status = $status ?: $this->repoStatus($status);
+		// dd($sortir, $limit, $status);
+		switch ($sortir)
+		{
 			case 'new':
 				$data = $data->orderBy('created_at', 'desc');
 			break;
@@ -118,12 +118,16 @@ abstract class RepoBase
 			break;
 			
 			default:
-				// default by new
-				$data = $data->orderBy('created_at', 'desc');
+				// do nothing
 			break;
 		}
 
-		switch ( $status ) {
+		switch ($status)
+		{
+			case 'all':
+				$data = $data;
+			break;
+
 			case 'published':
 				$data = $data->where('status', 'published');
 			break;
@@ -141,13 +145,25 @@ abstract class RepoBase
 			break;
 			
 			default:
-				
+				// do nothing
 			break;
 		}
 
-		$data = $data->limit( $this->repoLimit($limit) );
+		$data = $data->limit($limit);
 
 		return $data;
+	}
+
+	/**
+	* Set global page segment for all object
+	* @param $page integer|numeric
+	*/
+	protected function repoPage($page=null)
+	{
+		$web 	= app('asmoyo.web');
+		$page 	= $page ?: Input::get('page');
+		$result = is_numeric($page) ? $page : 1;
+		return (integer) $result;
 	}
 
 	/**
@@ -156,11 +172,34 @@ abstract class RepoBase
 	*/
 	protected function repoLimit($limit=null)
 	{
-		$web = app('asmoyo.web');
-		$limit = Input::get('limit', $limit) ?: $web['web_itemPerPage'];
-
-		return is_numeric($limit) ? $limit : 10;
+		$web 	= app('asmoyo.web');
+		$limit 	= $limit ?: Input::get('limit');
+		$result = is_numeric($limit) ? $limit : $web['web_itemPerPage'];
+		return (integer) $result;
 	}
+
+	/**
+	* Set global sortir data for all object
+	* @param $sortir integer|numeric
+	*/
+	protected function repoSortir($sortir=null)
+	{
+		$web 	= app('asmoyo.web');
+		$sortir = $sortir ?: Input::get('sortir');
+
+		return $sortir ?: $web['web_itemSortir'];
+	}
+
+	/**
+	* Set global status for all object
+	* @param $status integer|numeric
+	*/
+	protected function repoStatus($status=null)
+	{
+		return $status ?: Input::get('status', 'all');
+	}
+
+
 
 	public function getSortirList()
 	{
