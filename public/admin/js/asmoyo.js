@@ -34,12 +34,12 @@
             {    
                 var settings = $.extend({
                     field_id: false, // "#media_id"
-                    field_file: "#media_file",
-                    preview: "#media_preview",
+                    field_file: false, // "#media_file",
+                    preview: false, // "#media_preview",
                 }, options );
 
                 asmoyoMediaModalParam = settings;
-                console.log(asmoyoMediaModalParam);
+                // console.log(asmoyoMediaModalParam);
             });
         };
 
