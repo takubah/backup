@@ -12,27 +12,77 @@ class PageRepo extends RepoBase implements PageInterface
 
 	public function __construct(Page $model)
 	{
-		parent::__construct($model);
+		$this->model = $model;
 	}
 
-	public function getAll($sortir = null, $limit = null, $status = null)
-	{
-		$status = $status ?: Input::get('status');
-		$result = $this->model->orderBy('order', 'asc');
-		if($status)
-			$result = $result->where('status', $status);
 
-		return $result->get();
+	public function getCacheTag($key = 'one')
+	{
+		$one 	= $this->model->getTable() .'_oneData';
+		$many 	= $this->model->getTable();
+		$tags 	= array(
+			'one'	=> $one,
+			'many'	=> $many,
+			'both'	=> array($one, $many),
+		);
+
+		if( ! isset($tags[$key]) )
+			throw new \Exception($key ." Key not available", 1);
+
+		return $tags[$key];
 	}
 
-	public function getAllPaginated($sortir = null, $limit = null, $status = null)
+	public function getAll($limit = null, $sortir = null, $status = null)
 	{
-		$status = $status ?: Input::get('status');
-		$result = $this->model->orderBy('order', 'asc');
-		if($status)
-			$result = $result->where('status', $status);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
 
-		return $result->paginate( $this->repoLimit($limit) );
+		// check cache
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status)->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
+	}
+
+	public function getAllPaginated($page = null, $limit = null, $sortir = null, $status = null)
+	{
+		$page 	= $this->repoPage($page);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$data 	= $this->prepareData($limit, $sortir, $status);
+		$result = array(
+			'total'	=> $data->count(),
+			'page' 	=> $page,
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+		);
+		$result['items'] = $data->skip( $limit * ($page-1) )
+	                ->take($limit)
+	                ->get();
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+
+		return $result;
 	}
 
 	public function getById($id)
@@ -45,7 +95,8 @@ class PageRepo extends RepoBase implements PageInterface
 		$result = $this->model->find($id);
 
 		// save cache
-		$this->cacheTag( $tag )->forever($key, $result);
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+
 		return $result;
 	}
 
@@ -59,7 +110,8 @@ class PageRepo extends RepoBase implements PageInterface
 		$result = $this->model->where('slug', $slug)->first();
 		
 		// save cache
-		$this->cacheTag($tag)->forever($key, $result);
+		if($result) $this->cacheTag($tag)->forever($key, $result);
+
 		return $result;
 	}
 
@@ -71,28 +123,58 @@ class PageRepo extends RepoBase implements PageInterface
 		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result 	= array();
-		$pageParent = $this->model->where('parent_id', 0)->get()->toArray();
-		
+		$pageParent = $this->model->where('parent_id', 0)
+					->where('status', 'published')
+					->orderBy('order','asc')
+					->get()->toArray();
+
 		if ($pageParent)
 		{
 			foreach ($pageParent as $p)
 			{
 				$p 				= $p;
 				$p['dropdown']	= $this->childPage($p['id']);
-
-				$result[]	= $p;
+				$result[] = $p;
 			}
 		}
 
 		// save cache
-		$this->cacheTag($tag)->forever($key, $result);
+		if($result) $this->cacheTag($tag)->forever($key, $result);
 		return $result;
 	}
 
 	private function childPage($parent_id)
 	{
 		return $this->model->where('parent_id', $parent_id)
+			->where('status', 'published')
+			->orderBy('order','asc')
 			->get()->toArray();
+	}
+
+	public function updateMenu($data_json)
+	{
+		if($data_json)
+		{
+			foreach ($data_json[0] as $order => $parent)
+			{
+				if( isset($parent['children']) )
+				{
+					$this->model->where('id', $parent['id'])->update(array('order' => $order));
+					foreach ($parent['children'][0] as $order => $child)
+					{
+						$this->model->where('id', $child['id'])->update(array('parent_id' => $parent['id'], 'order' => $order));
+					}
+				} else {
+					$data = array('order' => $order);
+					
+					// handle if change child to parent
+					if(isset($parent['setparent'])) $data = array_merge($data, array('parent_id' => $parent['setparent']));
+					$this->model->where('id', $parent['id'])->update($data);
+				}
+			}
+		}
+		// reset cache
+		$this->cacheFlush($this->getCacheTag('many'));
 	}
 
 	public function store($input = array(), $rules = array())
@@ -100,7 +182,6 @@ class PageRepo extends RepoBase implements PageInterface
 		$input = $input ?: Input::all();
 		if($this->repoValidation($input))
 		{
-			$this->cacheFlush( $this->getCacheTag('many') );
 			return $this->model->create($input);
 		}
 
@@ -113,8 +194,12 @@ class PageRepo extends RepoBase implements PageInterface
 		$rules = array_merge($this->editRules, $rules);
 		if($this->repoValidation($input, $rules))
 		{
-			$this->model->find($id)->update($input);
-			$this->cacheFlush( $this->getCacheTag('both') );
+			$prevData = $this->model->find($id);
+
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
+
+			$prevData->update($input);
 			return true;
 		}
 
@@ -130,27 +215,9 @@ class PageRepo extends RepoBase implements PageInterface
 			else
 				$data->delete();
 
-			$this->cacheFlush( $this->getCacheTag('both') );
 			return true;
 		}
 		return false;
-	}
-
-	public function getCacheTag($key = 'one')
-	{
-		$one 	= __CLASS__ .'_oneData';
-		$many 	= __CLASS__ .'_manyData';
-
-		$tags 	= array(
-			'one'	=> $one,
-			'many'	=> $many,
-			'both'	=> array($one, $many),
-		);
-
-		if( ! isset($tags[$key]) )
-			throw new \Exception($key ." Key not available", 1);
-
-		return $tags[$key];
 	}
 
 	public function getStatusList()

@@ -2,9 +2,9 @@
 
 interface PageInterface {
 
-	public function getAll($sortir = null, $limit = null, $status = null);
+	public function getAll($limit = null, $sortir = null, $status = null);
 
-	public function getAllPaginated($sortir = null, $limit = null, $status = null);
+	public function getAllPaginated($page = null, $sortir = null, $limit = null, $status = null);
 
 	public function getById($id);
 
