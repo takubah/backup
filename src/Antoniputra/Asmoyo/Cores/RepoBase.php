@@ -15,7 +15,7 @@ abstract class RepoBase
 
 	public function cacheTag($tag)
 	{
-		$baseTag 	= Config::get('asmoyo::cache.base_name');
+		$baseTag = Config::get('asmoyo::cache.base_name');
 		if( is_array($tag) )
 		{
 			foreach ($tag as $value) {
@@ -37,7 +37,6 @@ abstract class RepoBase
 			foreach ($tag as $value) {
 				$tag[]	= $baseTag.'.'.$value;
 			}
-			$tag = $tag;
 		} else {
 			$tag 	= $baseTag.'.'.$tag;
 			$tag 	= array($tag);
@@ -88,65 +87,75 @@ abstract class RepoBase
 	}
 
 
-	protected function prepareData($sortir = null, $limit = null, $status = null)
+	protected function prepareData($limit = null, $sortir = null, $status = null)
 	{
 		$data = $this->model;
 		$sortir = $sortir ?: $this->repoSortir($sortir);
 		$limit  = $limit ?: $this->repoLimit($limit);
 		$status = $status ?: $this->repoStatus($status);
-		// dd($sortir, $limit, $status);
-		switch ($sortir)
+
+		if(is_array($sortir))
 		{
-			case 'new':
-				$data = $data->orderBy('created_at', 'desc');
-			break;
-			
-			case 'latest-updated':
-				$data = $data->orderBy('updated_at', 'desc');
-			break;
+			$data = $data->orderBy($sortir[0], $sortir[1]);
+		} else {
+			switch ($sortir)
+			{
+				case 'new':
+					$data = $data->orderBy('created_at', 'desc');
+				break;
+				
+				case 'latest-updated':
+					$data = $data->orderBy('updated_at', 'desc');
+				break;
 
-			case 'title-ascending':
-				$data = $data->orderBy('title', 'asc');
-			break;
+				case 'title-ascending':
+					$data = $data->orderBy('title', 'asc');
+				break;
 
-			case 'title-descending':
-				$data = $data->orderBy('title', 'desc');
-			break;
+				case 'title-descending':
+					$data = $data->orderBy('title', 'desc');
+				break;
 
-			case 'popular':
-				$data = $data->orderBy('title', 'desc');
-			break;
-			
-			default:
-				// do nothing
-			break;
+				case 'popular':
+					$data = $data->orderBy('title', 'desc');
+				break;
+				
+				default:
+					// do nothing
+				break;
+			}
 		}
 
-		switch ($status)
+		if(is_array($status))
 		{
-			case 'all':
-				$data = $data;
-			break;
+			$data = $data->where($status[0], $status[1]);
+		} else {
+			switch ($status)
+			{
+				case 'all':
+					$data = $data;
+				break;
 
-			case 'published':
-				$data = $data->where('status', 'published');
-			break;
+				case 'published':
+					$data = $data->where('status', 'published');
+				break;
 
-			case 'privated':
-				$data = $data->where('status', 'privated');
-			break;
-			
-			case 'drafted':
-				$data = $data->where('status', 'drafted');
-			break;
-			
-			case 'pending':
-				$data = $data->where('status', 'pending');
-			break;
-			
-			default:
-				// do nothing
-			break;
+				case 'privated':
+					$data = $data->where('status', 'privated');
+				break;
+				
+				case 'drafted':
+					$data = $data->where('status', 'drafted');
+				break;
+				
+				case 'pending':
+					$data = $data->where('status', 'pending');
+				break;
+				
+				default:
+					// do nothing
+				break;
+			}
 		}
 
 		$data = $data->limit($limit);
@@ -184,6 +193,8 @@ abstract class RepoBase
 	*/
 	protected function repoSortir($sortir=null)
 	{
+		if(is_array($sortir)) return $sortir;
+
 		$web 	= app('asmoyo.web');
 		$sortir = $sortir ?: Input::get('sortir');
 
