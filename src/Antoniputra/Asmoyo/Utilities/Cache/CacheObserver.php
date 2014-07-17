@@ -2,7 +2,7 @@
 
 use Cache, Config;
 
-class ModelObserver {
+class CacheObserver {
 
     protected function clearCacheTags($tags)
     {

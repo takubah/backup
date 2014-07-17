@@ -33,7 +33,7 @@ class FirstSeeder extends Seeder {
 				'title'			=> 'Uncategorized',
 				'slug'			=> 'uncategorized',
 				'description'	=> 'Uncategorized Item',
-				'status'		=> 'publish',
+				'status'		=> 'published',
 			),
 			array(
 				'media_id'		=> 1,
@@ -41,7 +41,7 @@ class FirstSeeder extends Seeder {
 				'title'			=> 'My First Category',
 				'slug'			=> 'my-first-category',
 				'description'	=> 'bla bla bla description',
-				'status'		=> 'publish',
+				'status'		=> 'published',
 			),
 		);
 
@@ -57,14 +57,14 @@ class FirstSeeder extends Seeder {
 				'title'			=> 'Album Default',
 				'slug'			=> 'album-default',
 				'description'	=> 'Uncategorized Item',
-				'status'		=> 'publish',
+				'status'		=> 'published',
 			),
 			array(
 				'media_id'		=> 1,
 				'title'			=> 'My First Album',
 				'slug'			=> 'my-first-album',
 				'description'	=> 'bla bla bla description',
-				'status'		=> 'publish',
+				'status'		=> 'published',
 			),
 		);
 
