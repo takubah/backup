@@ -68,10 +68,13 @@ class Page extends EloquentBase {
     public function defaultRules()
     {
         return array(
+            'parent_id'     => 'integer',
             'title'         => 'required|unique:'.$this->table,
             'slug'			=> 'required|unique:'.$this->table,
             'content'		=> 'required',
             'status'        => 'required|in:'.implode(',', $this->statusList),
+            'type'          => 'required|in:'.implode(',', $this->typeList),
+            'structure'     => 'required|in:'.implode(',', $this->structureList),
         );
     }
 

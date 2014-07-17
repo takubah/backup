@@ -16,7 +16,7 @@ class PageRepo extends RepoBase implements PageInterface
 	}
 
 
-	public function getCacheTag($key = 'one')
+	protected function getCacheTag($key = 'one')
 	{
 		$one 	= $this->model->getTable() .'_oneData';
 		$many 	= $this->model->getTable();
@@ -123,17 +123,14 @@ class PageRepo extends RepoBase implements PageInterface
 		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result 	= array();
-		$pageParent = $this->model->where('parent_id', 0)
-					->where('status', 'published')
-					->orderBy('order','asc')
-					->get()->toArray();
+		$pageParent = $this->getParentPage();
 
 		if ($pageParent)
 		{
 			foreach ($pageParent as $p)
 			{
 				$p 				= $p;
-				$p['dropdown']	= $this->childPage($p['id']);
+				$p['dropdown']	= $this->getChildPage($p['id']);
 				$result[] = $p;
 			}
 		}
@@ -143,9 +140,35 @@ class PageRepo extends RepoBase implements PageInterface
 		return $result;
 	}
 
-	private function childPage($parent_id)
+	public function getParentPage($toForm=false, $forgetId=false)
 	{
-		return $this->model->where('parent_id', $parent_id)
+		$parent = $this->model->select(array('id', 'parent_id', 'status', 'type', 'order', 'title', 'slug'))
+					->where('parent_id', 0)
+					->where('status', 'published')
+					->orderBy('order','asc');
+
+		if($forgetId) {
+			$parent = $parent->where('id', '!=', $forgetId);
+		}
+
+		$parent = $parent->get()->toArray();
+
+		if($toForm)
+		{
+			$result = array(0 => 'Tidak ada');
+			foreach ($parent as $p)	{
+				$result[$p['id']] = $p['title'];
+			}
+			return $result;
+		}
+
+		return $parent;
+	}
+
+	public function getChildPage($parent_id)
+	{
+		return $this->model->select(array('id', 'parent_id', 'status', 'type', 'order', 'title', 'slug'))
+			->where('parent_id', $parent_id)
 			->where('status', 'published')
 			->orderBy('order','asc')
 			->get()->toArray();

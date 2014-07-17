@@ -39,6 +39,15 @@
 			</div>
 
 			<div class="form-group">
+				<label for="parent_id" class="col-sm-2 control-label">
+					Parent Kategori
+				</label>
+				<div class="col-sm-10">
+					{{Form::select('parent_id', $parentList, null, array('class' => 'form-control', 'id' => 'parent_id', 'placeholder' => 'parent category ?'))}}
+				</div>
+			</div>
+			
+			<div class="form-group">
 				<label for="structure" class="col-sm-2 control-label">
 					Structure
 				</label>
