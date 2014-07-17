@@ -132,11 +132,11 @@
 					</label>
 					<div class="col-sm-10">
 
-						{{Form::hidden('media_imageDefault', null, array('id' => 'media_imageDefault', 'class'=>'form-control'))}}
+						{{Form::hidden('media_imageDefault', null, array('id' => 'imageDefaultFieldImage', 'class'=>'form-control'))}}
 
-						<a id="media_imageDefault_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_imageDefault'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
+						<a id="imageDefaultPreview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_imageDefault'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
 
-						<a href="{{route('admin.media.ajaxIndex')}}" id="indicatorImageDefault" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
+						<a href="{{route('admin.media.ajaxIndex')}}" id="forImageDefault" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
 							<i class="fa fa-picture-o"></i>
 							Select Media
 						</a>
@@ -150,11 +150,11 @@
 					</label>
 					<div class="col-sm-10">
 
-						{{Form::hidden('media_watermark[image]', null, array('id' => 'target_media_watermark', 'class'=>'form-control'))}}
+						{{Form::hidden('media_watermark[image]', null, array('id' => 'watermarkFieldImage', 'class'=>'form-control'))}}
 
-						<a id="image_watermark_preview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_watermark']['image'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
+						<a id="watermarkPreview" class="thumbnail" style="margin:0px; height:300px; background:url('{{getMedia($option['media_watermark']['image'], 'medium')}}') center no-repeat; background-size:cover; "> </a>
 
-						<a href="{{route('admin.media.ajaxIndex')}}" id="indicator" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
+						<a href="{{route('admin.media.ajaxIndex')}}" id="forWatermark" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
 							<i class="fa fa-picture-o"></i>
 							Select Media
 						</a>
@@ -192,17 +192,17 @@
 @section('javascripts')
 	@parent
 
-	{{asmoyoAsset( 'js/asmoyo-media.js', 'admin')}}
+	{{asmoyoAsset( 'js/asmoyo.js', 'admin')}}
 	<script type="text/javascript">	
 
-		$( "#indicatorImageDefault" ).setAsmoyoMediaModal(
-			'#media_imageDefault',
-			'#media_imageDefault_preview'
-		);
+		$( "#forImageDefault" ).asmoyoMediaModal({
+			field_file: '#imageDefaultFieldImage',
+			preview: '#imageDefaultPreview'
+		}, true);
 
-		$( "#indicator" ).setAsmoyoMediaModal(
-			'#target_media_watermark',
-			'#image_watermark_preview'
-		);
+		$( "#forWatermark" ).asmoyoMediaModal({
+			field_file: '#watermarkFieldImage',
+			preview: '#watermarkPreview'
+		}, true);
 	</script>
 @stop
