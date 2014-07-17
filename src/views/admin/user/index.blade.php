@@ -9,6 +9,18 @@
 
 		@include('asmoyo::admin.user._menu')
 
+		<ul class="nav nav-pills">
+			<li class="disabled">
+				<a>Total Data : <b>{{$users['total']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Sortir by : <b>{{$users['sortir']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Status by : <b>{{$users['status']}}</b></a>
+			</li>
+		</ul>
+
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -20,8 +32,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if($users->getTotal())
-				@foreach($users as $user)
+				@if($users['total'])
+				@foreach($users['items'] as $user)
 					<tr>
 						<td> {{$itemNumber++}} </td>
 						<td>
@@ -34,10 +46,13 @@
 							<a href="{{route('admin.user.edit', $user['username'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit
 							</a>
-							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.user.destroy', $user['id']), array(
-								'icon'	=> 'fa fa-trash-o',
-								'class'	=> 'btn btn-danger btn-sm'
-							))}}
+							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.user.destroy', $user['id']), 
+								array(
+									'icon'	=> 'fa fa-trash-o',
+									'class'	=> 'btn btn-danger btn-sm'
+								),
+								'apakah anda yakin ?'
+							)}}
 						</td>
 					</tr>
 				@endforeach

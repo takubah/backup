@@ -11,14 +11,7 @@
 
 		{{Form::model($user, array('route' => array('admin.user.update', $user['username']), 'method' => 'PUT', 'class' => 'form-horizontal'))}}
 
-			<div class="form-group">
-				<label for="fullname" class="col-sm-2 control-label">
-					Nama Lengkap
-				</label>
-				<div class="col-sm-10">
-					{{Form::text('fullname', null, array('class' => 'form-control', 'id' => 'fullname', 'placeholder' => 'fullname'))}}
-				</div>
-			</div>
+			{{Form::hidden('id', null)}}
 
 			<div class="form-group">
 				<label for="username" class="col-sm-2 control-label">
@@ -35,6 +28,42 @@
 				</label>
 				<div class="col-sm-10">
 					{{Form::text('email', null, array('class' => 'form-control', 'id' => 'email', 'placeholder' => 'email'))}}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="fullname" class="col-sm-2 control-label">
+					Nama Lengkap
+				</label>
+				<div class="col-sm-10">
+					{{Form::text('fullname', null, array('class' => 'form-control', 'id' => 'fullname', 'placeholder' => 'fullname'))}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="birthday" class="col-sm-2 control-label">
+					Birthday
+				</label>
+				<div class="col-sm-10">
+					{{Form::text('birthday', null, array('class' => 'form-control', 'id' => 'birthday', 'placeholder' => 'birthday'))}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="gender" class="col-sm-2 control-label">
+					Gender
+				</label>
+				<div class="col-sm-10">
+					<div class="radio">
+						<label>
+							{{Form::radio('gender', 'male', null)}} Male
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							{{Form::radio('gender', 'female', null)}} Female
+						</label>
+					</div>
 				</div>
 			</div>
 

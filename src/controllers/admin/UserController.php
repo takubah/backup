@@ -25,7 +25,7 @@ class Admin_UserController extends AsmoyoController
 	*/
 	public function postAdminLogin()
 	{
-		if (Auth::attempt( array('email' => Input::get('email'), 'password' => Input::get('password')), Input::get('remember') ))
+		if ($this->user->login(Input::all()))
 		{
 		    return Redirect::route('admin.home.dashboard');
 		}
@@ -53,8 +53,9 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function index()
 	{
+		$users = $this->user->getAllPaginated();
 		$data = array(
-			'users'		=> $this->user->getAllPaginated(),
+			'users'		=> Paginator::make($users, $users['total'], $users['limit']),
 		);
 		return $this->loadView('asmoyo::admin.user.index', $data);
 	}
@@ -127,13 +128,13 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function update($id)
 	{
-		$data = array(
-			'user'		=> $this->user->getBySlug($slug),
-		);
+		$input = Input::all();
+		if ( $this->user->update( $input['id'], $input) )
+		{
+			return $this->redirectAlert('admin.user.index', 'success', 'Berhasil Diperbarui !!');
+		}
 
-		if( ! $data['user'] ) return App::abort(404);
-
-		return 'here is update method';
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->user->errors);
 	}
 
 
@@ -145,7 +146,12 @@ class Admin_UserController extends AsmoyoController
 	 */
 	public function destroy($id)
 	{
-		return 'ini adalah method destroy';
+		if( $this->user->delete($id) )
+		{
+			return $this->redirectAlert('admin.user.index', 'success', 'Berhasil Dihapus !!');
+		}
+
+		return $this->redirectAlert('admin.user.index', 'danger', 'Gagal Dihapus !!');
 	}
 
 

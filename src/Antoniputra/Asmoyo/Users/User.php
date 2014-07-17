@@ -31,6 +31,16 @@ class User extends EloquentBase implements LaravelUserInterface, RemindableInter
      */
 	protected $fillable = array('email', 'username', 'password', 'permissions', 'last_login', 'remember_token', 'persist_code', 'reset_password_code', 'media_id', 'fullname', 'birthday', 'gender', 'city', 'address');
 
+    public function getPermissionsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setPermissionsAttribute($value)
+    {
+        $this->attributes['permissions'] = json_encode($value);
+    }
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -115,13 +125,13 @@ class User extends EloquentBase implements LaravelUserInterface, RemindableInter
     {
         return array(
             'email'         => 'required',
-            'username'		=> 'required',
+            'username'		=> 'required|min:5',
             'password'		=> 'required|confirmed|min:6',
             'fullname'		=> 'required',
-            'birthday'		=> 'required',
-            'gender'		=> 'required',
-            'city'			=> 'required',
-            'address'		=> 'required',
+            'birthday'      => 'required|date',
+            'gender'        => 'required|in:male,female',
+            'city'          => 'required',
+            'address'       => 'required',
         );
     }
 }

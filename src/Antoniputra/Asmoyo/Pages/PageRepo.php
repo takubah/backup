@@ -208,12 +208,15 @@ class PageRepo extends RepoBase implements PageInterface
 
 	public function delete($id, $is_permanent=false)
 	{
-		if( $data = $this->model->find($id) )
+		if( $prevData = $this->model->find($id) )
 		{
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
+
 			if($is_permanent)
-				$data->forceDelete();
+				$prevData->forceDelete();
 			else
-				$data->delete();
+				$prevData->delete();
 
 			return true;
 		}
