@@ -9,10 +9,17 @@
 
 		@include('asmoyo::admin.page._menu')
 
-		<div class="alert alert-info">
-			<p>Total Data : <b>{{$pages['total']}}</b> </p>
-			<p>Sortir by : <b>{{$pages['sortir']}}</b> </p>
-			<p>Status by : <b>{{$pages['status']}}</b> </p>
+		<ul class="nav nav-pills">
+			<li class="disabled">
+				<a>Total Data : <b>{{$pages['total']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Sortir by : <b>{{$pages['sortir']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Status by : <b>{{$pages['status']}}</b></a>
+			</li>
+		</ul>
 		</div>
 
 		<table class="table table-hover">
