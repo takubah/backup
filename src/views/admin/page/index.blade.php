@@ -20,7 +20,6 @@
 				<a>Status by : <b>{{$pages['status']}}</b></a>
 			</li>
 		</ul>
-		</div>
 
 		<table class="table table-hover">
 			<thead>
