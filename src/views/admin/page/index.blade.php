@@ -3,11 +3,17 @@
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-files-o"></i>
-		Halaman Website
+		Daftar Halaman
 	</h3>
 	<div class="box-content">
 
 		@include('asmoyo::admin.page._menu')
+
+		<div class="alert alert-info">
+			<p>Total Data : <b>{{$pages['total']}}</b> </p>
+			<p>Sortir by : <b>{{$pages['sortir']}}</b> </p>
+			<p>Status by : <b>{{$pages['status']}}</b> </p>
+		</div>
 
 		<table class="table table-hover">
 			<thead>
@@ -19,8 +25,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if($pages->getTotal())
-				@foreach($pages as $page)
+				@if($pages['total'])
+				@foreach($pages['items'] as $page)
 					<tr>
 						<td> {{$itemNumber++}} </td>
 						<td> {{$page['title']}} </td>

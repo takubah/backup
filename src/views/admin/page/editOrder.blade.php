@@ -13,40 +13,29 @@
 		@include('asmoyo::admin.page._menu')
 	
 		{{Form::open(array('method' => 'PUT', 'route' => 'admin.page.editOrderSave'))}}
-			<nav class="navbar navbar-inverse" role="navigation">
-				<div class="container-fluid">
-					
-					<ul id="page-sortir" class="nav navbar-nav">
-						@if($pages)
-						@foreach($pages as $page)
-
-							@if( ! $page['parent_id'])
-								<li data-id="{{$page['id']}}" data-title="{{$page['title']}}">
-									<a style="cursor:pointer;">
-										{{$page['title']}}
-									</a>
-								</li>
-							@else
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										Dropdown <span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">Action</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
-										<li class="divider"></li>
-										<li><a href="#">Separated link</a></li>
-										<li class="divider"></li>
-										<li><a href="#">One more separated link</a></li>
-									</ul>
-								</li>
+			
+			<ol class="serialization vertical">
+				@if($pages)
+					@foreach($pages as $page)
+						<li data-id="{{$page['id']}}" data-title="{{$page['title']}}">
+							<a style="cursor:move;">
+								{{$page['title']}}
+							</a>
+							@if( $page['dropdown'])
+								<ol>
+									@foreach($page['dropdown'] as $child)
+										<li data-id="{{$child['id']}}" data-title="{{$child['title']}}" data-setparent="0">
+											<a style="cursor:move;">
+												{{$child['title']}}
+											</a>
+										</li>
+									@endforeach
+								</ol>
 							@endif
-						@endforeach
-						@endif
-					</ul>
-				</div>
-			</nav>
+						</li>
+					@endforeach
+				@endif
+			</ol>
 
 			{{Form::textarea('result_sortir', null, array('id'=>'serialize_output', 'style'=>'visibility:hidden; position:absolute;'))}}
 
@@ -59,6 +48,7 @@
 			</div>
 
 		{{Form::close()}}
+
 	</div>
 </div>
 
@@ -66,29 +56,16 @@
 	@parent
 	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.js', 'admin')}}
 	<script type="text/javascript">
-		var group = $("#page-sortir").sortable({
-			group: 'nav',
-			nested: false,
-			vertical: false,
-			exclude: '.divider-vertical',
-			onDragStart: function($item, container, _super) {
-				$item.find('#page-sortir .dropdown-menu').sortable('disable')
-				_super($item, container)
-			},
-			onDrop: function($item, container, _super) {
-				$item.find('#page-sortir .dropdown-menu').sortable('enable');
-				_super($item, container);
-
+		var group = $("ol.serialization").sortable({
+			group: 'serialization',
+			onDrop: function (item, container, _super) {
 				var data = group.sortable("serialize").get();
 
-			    var jsonString = JSON.stringify(data, null, ' ');
+				var jsonString = JSON.stringify(data, null, ' ');
 
-			    $('#serialize_output').text(jsonString);
-			    // _super(item, container)
+				$('#serialize_output').text(jsonString);
+				_super(item, container);
 			}
-		});
-		$("#page-sortir .dropdown-menu").sortable({
-			group: 'nav'
 		});
 	</script>
 @stop

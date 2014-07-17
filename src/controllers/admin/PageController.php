@@ -11,10 +11,11 @@ class Admin_PageController extends AsmoyoController
 
 	public function index()
 	{
-		$data = array(
-			'pages'		=> $this->page->getAllPaginated(),
+		$pages 	= $this->page->getAllPaginated();
+		$data 	= array(
+			'pages'		=> Paginator::make($pages, $pages['total'], $pages['limit']),
 		);
-		return $this->loadView('asmoyo::admin.page.index', $data);
+		return $this->loadView('asmoyo::admin.page.index', $data, true);
 	}
 
 	public function create()
@@ -87,26 +88,20 @@ class Admin_PageController extends AsmoyoController
 	public function editOrder()
 	{
 		$data = array(
-			'pages'		=> $this->page->getAll(null, null, 'published'),
+			'pages'		=> $this->page->getAsMenu(),
 		);
+		// return $data['pages'];
 
 		if( ! $data['pages'] ) return App::abort(404);
 
-		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.page.editOrder', $data);
+		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.page.editOrder', $data, true);
 	}
 
 	public function editOrderSave()
 	{
 		$result_sortir = json_decode(Input::get('result_sortir'), true);
-
-		if($result_sortir)
-		{
-			foreach ($result_sortir[0] as $order => $value)
-			{
-				$this->page->model->where('id', $value['id'])->update(array('order' => $order));
-			}
-		}
-
+		$this->page->updateMenu($result_sortir);
+		
 		return $this->redirectAlert('admin.page.editOrder', 'success', 'Berhasil Diperbarui !!');
 	}
 
