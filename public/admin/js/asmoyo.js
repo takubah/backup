@@ -1,5 +1,8 @@
 (function ( $ ) {
 
+	/**
+    * Asmoyo Helper
+    */
 	$.fn.asmoyoHelper = function(options)
     {
         var settings 	= $.extend({
@@ -14,6 +17,54 @@
 	 	}
 	 	return runFunction(settings);
     };
+    /**
+    * End Asmoyo Helper
+    */
+
+
+    /**
+    * Asmoyo Media Modal
+    */
+    var asmoyoMediaModalParam = {field_id:"", field_file:"", preview:""};
+    $.fn.asmoyoMediaModal = function(options, is_initialize)
+    {
+        var is_initialize = (is_initialize) ? true : false;
+        if (is_initialize){
+            return $( this ).click(function()
+            {    
+                var settings = $.extend({
+                    field_id: false, // "#media_id"
+                    field_file: "#media_file",
+                    preview: "#media_preview",
+                }, options );
+
+                asmoyoMediaModalParam = settings;
+                console.log(asmoyoMediaModalParam);
+            });
+        };
+
+        return $(this).click(function() {
+
+            var mediaSelectedId     = $(this).attr('data-id'),
+                mediaSelectedFile   = $(this).attr('data-image'),
+                mediaSelectedUrl    = $(this).attr('data-image-url');
+
+            if (asmoyoMediaModalParam.field_id) {
+                $( asmoyoMediaModalParam.field_id ).val(mediaSelectedId);
+            };
+
+            if (asmoyoMediaModalParam.field_file) {
+                $( asmoyoMediaModalParam.field_file ).val(mediaSelectedFile);
+            };
+
+            if (asmoyoMediaModalParam.preview) {
+                $( asmoyoMediaModalParam.preview ).css('background', 'url("'+ mediaSelectedUrl +'") center no-repeat');
+            };
+        });
+    };
+    /**
+    * End Asmoyo Media Modal
+    */
 
 }( jQuery ));
 
