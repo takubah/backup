@@ -59,7 +59,7 @@
 			</tbody>
 		</table>
 
-		{{$categories->links()}}
+		{{$categories->appends(array('sortir' => $categories['sortir'], 'status' => $categories['status']))->links()}}
 
 	</div>
 </div>

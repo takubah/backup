@@ -60,7 +60,7 @@
 			</tbody>
 		</table>
 
-		{{$pages->links()}}
+		{{$pages->appends(array('sortir' => $pages['sortir'], 'status' => $pages['status']))->links()}}
 
 	</div>
 </div>

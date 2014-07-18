@@ -24,7 +24,15 @@
 		</a>
 
 		<h4>{{$alert['title']}}</h4>
-		<p>{{$alert['text']}}</p>
+		<p>
+			@if(is_array($alert['text']))
+				@foreach($alert['text'] as $m)
+					<li>{{$m}}</li>
+				@endforeach
+			@else
+				{{$alert['text']}}
+			@endif
+		</p>
 	</div>
 @endif
 

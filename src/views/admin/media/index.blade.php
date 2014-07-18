@@ -13,6 +13,18 @@
 
 		@include('asmoyo::admin.media._menu')
 
+        <ul class="nav nav-pills">
+            <li class="disabled">
+                <a>Total Data : <b>{{$medias['total']}}</b></a>
+            </li>
+            <li class="disabled">
+                <a>Sortir by : <b>{{$medias['sortir']}}</b></a>
+            </li>
+            <li class="disabled">
+                <a>Status by : <b>{{$medias['status']}}</b></a>
+            </li>
+        </ul>
+
 		<div class="row">
 		@if($medias['total'])
 		@foreach($medias['items'] as $media)
@@ -47,7 +59,7 @@
 		@endif
 		</div>
 
-		{{$medias->links()}}
+		{{$medias->appends(array('sortir' => $medias['sortir']))->links()}}
 
 	</div>
 </div>

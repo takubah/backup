@@ -72,12 +72,15 @@ class Admin_MediaController extends AsmoyoController
 
 	public function update($id)
 	{
-		if( ! Request::ajax() ) return App::abort(404);
 
 		if( $process = $this->media->update($id) )
 		{
+			if( ! Request::ajax() ) return $this->redirectAlert('admin.media.index', 'success', 'Berhasil diperbarui !!');
+
 			return Response::json(array('success' => $process), 200);
 		}
+
+		if( ! Request::ajax() ) return $this->redirectAlert(false, 'danger', 'Gagal diperbarui !!', $this->media->errors);
 
 		return Response::json(array('error' => $this->media->errors), 400);
 	}
