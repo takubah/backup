@@ -1,11 +1,20 @@
 @section('title') Edit Posting {{$post['title']}} @stop
 
 @include('asmoyo::admin.partials.confFroala')
+@include('asmoyo::admin.partials.modalAjax')
 @section('javascripts')
 	@parent
 	<script type="text/javascript">
+
 		// generate slug
 		$('#title').asmoyoHelper();
+
+		// media modal
+		$( "#forMediaId" ).asmoyoMediaModal({
+			field_id: '#media_id',
+			preview: '#media_id_preview'
+		}, true);
+
 	</script>
 @stop
 
