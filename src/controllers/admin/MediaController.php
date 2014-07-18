@@ -40,6 +40,9 @@ class Admin_MediaController extends AsmoyoController
 	{
 		$input = Input::all();
 		$input['type'] = 'internal';
+		$input['title'] = str_random('40');
+		$input['slug'] = Str::slug($input['title']);
+
 		if( $process = $this->media->store($input) )
 		{
 			return Response::json( array('link' => getMedia($process['file'], 'original') ), 200);
