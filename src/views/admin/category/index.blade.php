@@ -9,6 +9,18 @@
 
 		@include('asmoyo::admin.category._menu')
 
+		<ul class="nav nav-pills">
+			<li class="disabled">
+				<a>Total Data : <b>{{$categories['total']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Sortir by : <b>{{$categories['sortir']}}</b></a>
+			</li>
+			<li class="disabled">
+				<a>Status by : <b>{{$categories['status']}}</b></a>
+			</li>
+		</ul>
+
 		<table class="table table-hover">
 			<thead>
 				<tr>
