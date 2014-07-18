@@ -16,7 +16,7 @@ class AjaxPresenter extends Presenter {
 
     public function getPageLinkWrapper($url, $page)
     {
-        return "<li><a onClick='ajaxPaginationLink(\"$url\")' >$page</a></li>";
+        return "<li><a onClick='ajaxPaginationLink(\"$url\")' style='cursor:pointer;' >$page</a></li>";
     }
 
 }
