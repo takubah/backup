@@ -22,7 +22,7 @@ class Admin_CategoryController extends AsmoyoController
 	public function create()
 	{
 		$data = array(
-			'parentList'	=> $this->category->getParentPage(true),
+			'parentList'	=> $this->category->getParent(true),
 			'statusList'	=> $this->category->getStatusList(),
 		);
 		return $this->loadView('asmoyo::admin.category.create', $data);
@@ -56,7 +56,7 @@ class Admin_CategoryController extends AsmoyoController
 		$category 	= $this->category->getBySlug($slug);
 		$data 		= array(
 			'category'		=> $category,
-			'parentList'	=> $this->category->getParentPage(true, $category['id']),
+			'parentList'	=> $this->category->getParent(true, $category['id']),
 			'statusList'	=> $this->category->getStatusList(),
 		);
 

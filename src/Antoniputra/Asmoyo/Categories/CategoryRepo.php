@@ -11,7 +11,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 
 	public function __construct(Category $model)
 	{
-		parent::__construct($model);
+		$this->model = $model;
 	}
 
 	protected function getCacheTag($key = 'one')
@@ -170,7 +170,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 	public function store($input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		if($this->repoValidation($input))
+		if($this->repoValidation($input, $rules))
 		{
 			return $this->model->create($input);
 		}
@@ -181,8 +181,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 	public function update($id, $input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		$rules = array_merge($this->editRules, $rules);
-		if($this->repoValidation($input, $rules))
+		if($this->repoValidation( $input, array_merge($this->editRules, $rules) ))
 		{
 			$prevData = $this->model->find($id);
 
@@ -197,7 +196,17 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 		return false;
 	}
 
-	public function getParentPage($toForm=false, $forgetId=false)
+	public function getAsDropdown()
+	{
+		$data = $this->model->get();
+		$result = array();
+		foreach ($data as $d)	{
+			$result[$d['id']] = $d['title'];
+		}
+		return $result;
+	}
+
+	public function getParent($toForm=false, $forgetId=false)
 	{
 		$parent = $this->model->where('parent_id', 0)->where('status', 'published');
 
@@ -219,7 +228,7 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 		return $parent;
 	}
 
-	public function getChildPage($parent_id)
+	public function getChild($parent_id)
 	{
 		return $this->model->where('parent_id', $parent_id)
 			->where('status', 'published')

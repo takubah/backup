@@ -4,7 +4,7 @@ use Antoniputra\Asmoyo\Cores\EloquentBase;
 
 class Post extends EloquentBase {
 	
-	protected $table = 'posts';
+	public $table = 'posts';
 
 	/**
     * Morph relation name
@@ -60,8 +60,8 @@ class Post extends EloquentBase {
     public function defaultRules()
     {
         return array(
-            'title'         => 'required',
-            'slug'			=> 'required',
+            'title'         => 'required|unique:'.$this->table,
+            'slug'          => 'required|unique:'.$this->table,
             'description'	=> 'required',
             'body'			=> 'required',
             'type'          => 'required|in:'.implode(',', $this->typeList),

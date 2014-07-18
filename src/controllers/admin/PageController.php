@@ -21,7 +21,7 @@ class Admin_PageController extends AsmoyoController
 	public function create()
 	{
 		$data = array(
-			'parentList'	=> $this->page->getParentPage(true),
+			'parentList'	=> $this->page->getParent(true),
 			'structureList'	=> $this->page->getStructureList(),
 			'statusList'	=> $this->page->getStatusList(),
 			'typeList'		=> $this->page->getTypeList(),
@@ -61,7 +61,7 @@ class Admin_PageController extends AsmoyoController
 		$page = $this->page->getBySlug($slug);
 		$data = array(
 			'page'			=> $page,
-			'parentList'	=> $this->page->getParentPage(true, $page['id']),
+			'parentList'	=> $this->page->getParent(true, $page['id']),
 			'structureList'	=> $this->page->getStructureList(),
 			'statusList'	=> $this->page->getStatusList(),
 			'typeList'		=> $this->page->getTypeList(),

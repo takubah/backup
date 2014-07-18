@@ -15,7 +15,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 
 	public function __construct(Media $model)
 	{
-		parent::__construct($model);
+		$this->model = $model;
 	}
 
 	protected function getCacheTag($key = 'one')
@@ -138,7 +138,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 	public function store($input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		if($this->repoValidation($input))
+		if($this->repoValidation($input, $rules))
 		{
 			$image = new Image;
 			if( $img = $image->uploadImage($input) )
@@ -162,7 +162,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 	public function update($id, $input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		if($this->repoValidation( $input, $this->editRules ))
+		if($this->repoValidation( $input, array_merge($this->editRules, $rules) ))
 		{
 			$data = array(
 				'title' 		=> Input::get('title'),

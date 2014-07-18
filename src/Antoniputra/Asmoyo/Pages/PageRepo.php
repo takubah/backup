@@ -123,14 +123,14 @@ class PageRepo extends RepoBase implements PageInterface
 		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result 	= array();
-		$pageParent = $this->getParentPage();
+		$pageParent = $this->getParent();
 
 		if ($pageParent)
 		{
 			foreach ($pageParent as $p)
 			{
 				$p 				= $p;
-				$p['dropdown']	= $this->getChildPage($p['id']);
+				$p['dropdown']	= $this->getChild($p['id']);
 				$result[] = $p;
 			}
 		}
@@ -140,7 +140,7 @@ class PageRepo extends RepoBase implements PageInterface
 		return $result;
 	}
 
-	public function getParentPage($toForm=false, $forgetId=false)
+	public function getParent($toForm=false, $forgetId=false)
 	{
 		$parent = $this->model->select(array('id', 'parent_id', 'status', 'type', 'order', 'title', 'slug'))
 					->where('parent_id', 0)
@@ -165,7 +165,7 @@ class PageRepo extends RepoBase implements PageInterface
 		return $parent;
 	}
 
-	public function getChildPage($parent_id)
+	public function getChild($parent_id)
 	{
 		return $this->model->select(array('id', 'parent_id', 'status', 'type', 'order', 'title', 'slug'))
 			->where('parent_id', $parent_id)
@@ -203,7 +203,7 @@ class PageRepo extends RepoBase implements PageInterface
 	public function store($input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		if($this->repoValidation($input))
+		if($this->repoValidation($input, $rules))
 		{
 			return $this->model->create($input);
 		}
@@ -214,8 +214,7 @@ class PageRepo extends RepoBase implements PageInterface
 	public function update($id, $input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		$rules = array_merge($this->editRules, $rules);
-		if($this->repoValidation($input, $rules))
+		if($this->repoValidation( $input, array_merge($this->editRules, $rules) ))
 		{
 			$prevData = $this->model->find($id);
 

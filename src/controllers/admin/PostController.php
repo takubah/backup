@@ -11,21 +11,30 @@ class Admin_PostController extends AsmoyoController
 
 	public function index()
 	{
+		$posts = $this->post->getAllPaginated();
 		$data = array(
-			'posts'		=> $this->post->getAllPaginated(),
+			'posts'		=> Paginator::make($posts, $posts['total'], $posts['limit']),
 		);
-		return $this->loadView('asmoyo::admin.post.index', $data);
+		return $this->loadView('asmoyo::admin.post.index', $data, true);
 	}
 
 	public function create()
 	{
-		$data = array();
+		$data = array(
+			'categoryList' 	=> app('Antoniputra\Asmoyo\Categories\CategoryInterface')->getAsDropdown(),
+			'statusList'	=> $this->post->getStatusList(),
+		);
 		return $this->loadView('asmoyo::admin.post.create', $data);
 	}
 
 	public function store()
 	{
-		return 'here is store method';
+		$input = Input::all();
+		if ( $this->post->store($input) )
+		{
+			return $this->redirectAlert('admin.post.index', 'success', 'Berhasil dibuat !!');
+		}
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->post->errors);
 	}
 
 	public function show($slug)
@@ -42,29 +51,42 @@ class Admin_PostController extends AsmoyoController
 	public function edit($slug)
 	{
 		$data = array(
-			'post'		=> $this->post->getBySlug($slug),
+			'post'			=> $this->post->getBySlug($slug),
+			'categoryList' 	=> app('Antoniputra\Asmoyo\Categories\CategoryInterface')->getAsDropdown(),
+			'statusList'	=> $this->post->getStatusList(),
 		);
 
 		if( ! $data['post'] ) return App::abort(404);
-
-		// return $data['post'];
 
 		return $this->loadView('asmoyo::admin.post.edit', $data);
 	}
 
 	public function update($slug)
 	{
-		$data = array(
-			'post'		=> $this->post->getBySlug($slug),
-		);
+		$input = Input::all();
+		if ( $this->post->update( $input['id'], $input ) )
+		{
+			return $this->redirectAlert('admin.post.index', 'success', 'Berhasil Diperbarui !!');
+		}
 
-		if( ! $data['post'] ) return App::abort(404);
-
-		return 'here is update method';
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->post->errors);
 	}
 
 	public function destroy($id)
 	{
-		return 'ini adalah method destroy';
+		if( $this->post->delete($id) )
+		{
+			return $this->redirectAlert('admin.post.index', 'success', 'Berhasil Dihapus !!');
+		}
+		return $this->redirectAlert('admin.post.index', 'danger', 'Gagal Dihapus !!');
+	}
+
+	public function forceDelete($id)
+	{
+		if( $this->post->delete($id, true) )
+		{
+			return $this->redirectAlert('admin.post.index', 'success', 'Berhasil Dihapus Permanent !!');
+		}
+		return $this->redirectAlert('admin.post.index', 'danger', 'Gagal Dihapus Permanent !!');
 	}
 }
