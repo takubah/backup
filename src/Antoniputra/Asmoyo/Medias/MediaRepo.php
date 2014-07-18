@@ -10,6 +10,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 	protected $editRules = array(
 		'title'		=> 'required|unique:medias,title,<id>',
         'slug'		=> 'required|unique:medias,slug,<id>',
+        'file'		=> 'mimes:jpeg,jpg,gif,png'
 	);
 
 	public function __construct(Media $model)
@@ -161,8 +162,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 	public function update($id, $input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		$rules = $rules ?: array('file' => 'mimes:jpeg,jpg,gif,png');
-		if($this->repoValidation( $input, $rules ))
+		if($this->repoValidation( $input, $this->editRules ))
 		{
 			$data = array(
 				'title' 		=> Input::get('title'),

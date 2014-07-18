@@ -61,13 +61,27 @@
 
         	<div class="form-group">
         		<label for="title" class="col-sm-3 control-label">
-					Gunakan Watermark
+					
 				</label>
 				<div class="col-sm-9">
 		        	<div class="checkbox">
 						<label>
 							{{Form::checkbox('withWatermark', 1, null)}}
-							Watermark
+							<b>Watermark</b>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							{{Form::hidden('withUpsize', 0)}}
+							{{Form::checkbox('withUpsize', 1, $web['media_constraint']['upsize'])}}
+							<b>Upsize</b> (Menjaga ukuran gambar ketika diperbesar, agar tetap baik)
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							{{Form::hidden('withAspectRatio', 0)}}
+							{{Form::checkbox('withAspectRatio', 1, $web['media_constraint']['aspectRatio'])}}
+							<b>Aspect Ratio</b> (Menjaga ukuran gambar (W x H) agar tetep sesuai)
 						</label>
 					</div>
 				</div>

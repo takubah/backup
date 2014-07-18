@@ -46,6 +46,8 @@ class Image {
 		$wmark 			= $web['media_watermark'];
 		$med_const		= $web['media_constraint'];
 		$wmarkFile		= public_path('uploads/images/original/'. $wmark['image']);
+		$med_const['aspectRatio'] 	= Input::get('withAspectRatio', $med_const['aspectRatio']);
+		$med_const['upsize'] 		= Input::get('withUpsize', $med_const['upsize']);
 
 		// prepare large
 		$l 	= $web['media_largeSize'];
@@ -72,7 +74,7 @@ class Image {
 		});
 
 		// if need watermark?
-		if(Input::get('withWatermark', false))
+		if(Input::get('withWatermark'))
 		{
 			// if watermark image
 			if(file_exists($wmarkFile))
@@ -104,10 +106,14 @@ class Image {
 				? $web['media_mediumSize']
 				: $web['media_smallSize'];
 
-		return InterventionImage::make($file)->resize($size['w'] - 80, null, function ($constraint)
+		$med_const		= $web['media_constraint'];
+		$med_const['aspectRatio'] 	= Input::get('withAspectRatio', $med_const['aspectRatio']);
+		$med_const['upsize'] 		= Input::get('withUpsize', $med_const['upsize']);
+
+		return InterventionImage::make($file)->resize($size['w'] - 30, null, function ($constraint) use($med_const)
 		{
-		    $constraint->aspectRatio();
-		    $constraint->upsize();
+		    if($med_const['aspectRatio']) $constraint->aspectRatio();
+			if($med_const['upsize']) $constraint->upsize();
 		});
 	}
 

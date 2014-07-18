@@ -16,7 +16,6 @@
 </div>
 <hr>
 
-
 @if($alert = Session::get('alert'))
 	<div class="alert alert-{{$alert['type']}}">
 		<a class="close" data-dismiss="alert">
@@ -28,3 +27,8 @@
 		<p>{{$alert['text']}}</p>
 	</div>
 @endif
+
+<div class="alert alert-info">
+    Jika ada gambar yang telah diperbarui tetapi tidak berubah.
+    tekan ( <a class="btn btn-default btn-xs">CTRL</a> + <a class="btn btn-default btn-xs">F5</a> )
+</div>
