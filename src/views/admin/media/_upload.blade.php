@@ -15,7 +15,9 @@
                 previewsContainer: "#uploadPreview", 
                 clickable: "#uploadBtn",
 
-                maxFiles: @if( isset($media['id']) ) 1 @endif,
+                @if( isset($media['id']) )
+                    maxFiles: 1,
+                @endif
                 // autoProcessQueue: false,
 
                 init: function() {
@@ -30,11 +32,26 @@
                         }
                     });
 
-                    this.on("complete", function(file) {
-                        $('#title').val('');
-                        $('#description').val('');
+                    this.on("complete", function(file)
+                    {
+                        @if( ! isset($media['id']) )
+                            setTimeout(function()
+                            {
+                                $('#title').val('');
+                                $('#slug').val('');
+                                $('#description').val('');
+                                this.removeFile(file);
+                            }, 1000);
+                        @endif
+                    });
 
-                        @if( isset($media['id']) )
+                    this.on("success", function(file, responseText)
+                    {
+                        @if( ! isset($media['id']) )
+                            file.previewTemplate.appendChild(
+                                document.createTextNode(responseText)
+                            );
+                        @else
                             window.location = "{{route('admin.media.index')}}";
                         @endif
                     });

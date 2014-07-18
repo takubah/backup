@@ -5,6 +5,8 @@ use Intervention\Image\ImageManagerStatic as InterventionImage;
 
 class Image {
 
+	public $errors;
+
 	public function uploadImage($input, $fileName = null)
 	{
 		$file 		= Input::file('file');
@@ -14,7 +16,10 @@ class Image {
 		$fileName 	= $fileName ?: md5(time() . str_random(20)) .'.'.$extension;
 
 		// resizing original file by configuration size
-		if( ! $this->generateImage($file->getRealPath(), $fileName) ) return false;
+		if( ! $this->generateImage($file->getRealPath(), $fileName) ) {
+			$this->errors = 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png';
+			return false;
+		}
 
 		// store file
 		if ( $file->move($this->path('original'), $fileName) )
@@ -27,6 +32,7 @@ class Image {
 				'title'		=> $this->stripExtension($file->getClientOriginalName()),
 			);
 		}
+		$this->errors = 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png';
 		return false;
 	}
 

@@ -13,9 +13,14 @@
 
 		@include('asmoyo::admin.media._menu')
 
+        <div class="alert alert-info">
+            Jika ada gambar yang telah diperbarui tetapi tidak berubah.
+            tekan ( <a class="btn btn-default btn-xs">CTRL</a> + <a class="btn btn-default btn-xs">F5</a> )
+        </div>
+
 		<div class="row">
-		@if($medias->getTotal())
-		@foreach($medias as $media)
+		@if($medias['total'])
+		@foreach($medias['items'] as $media)
 			<div class="col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <div style="background:url( {{getMedia($media['file'])}} ) center center; background-size: cover; height:200px;"> &nbsp; </div>

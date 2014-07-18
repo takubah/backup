@@ -48,6 +48,8 @@ class Media extends EloquentBase
     public function defaultRules()
     {
         return array(
+            'title'         => 'required|unique:'.$this->table,
+            'slug'          => 'required|unique:'.$this->table,
             'type'          => 'required|in:'.implode(',', $this->typeList),
             'file'          => 'required|mimes:jpeg,jpg,gif,png',
         );

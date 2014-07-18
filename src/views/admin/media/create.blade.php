@@ -1,6 +1,13 @@
 @section('title') Tambah Media @stop
 
 @include('asmoyo::admin.media._upload')
+@section('javascripts')
+	@parent
+	<script type="text/javascript">
+		// generate slug
+		$('#title').asmoyoHelper();
+	</script>
+@stop
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
@@ -26,7 +33,20 @@
 					Title
 				</label>
 				<div class="col-sm-9">
-					{{Form::text('title', null, array('class' => 'form-control', 'id' => 'title', 'placeholder' => 'Title'))}}
+					{{Form::text('title', null, array('class' => 'form-control', 'id' => 'title', 'asmoyo-helper' => 'GenerateSlug', 'placeholder' => 'Title'))}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="slug" class="col-sm-3 control-label">
+					Slug
+				</label>
+				<div class="col-sm-9">
+					<div class="input-group">
+						<div class="input-group-addon">
+							{{route('admin.media.index')}}
+						</div>
+						{{Form::text('slug', null, array('class' => 'form-control', 'id' => 'slug', 'placeholder' => 'slug'))}}
+					</div>
 				</div>
 			</div>
 

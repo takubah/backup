@@ -17,19 +17,79 @@ class MediaRepo extends RepoBase implements MediaInterface
 		parent::__construct($model);
 	}
 
-	public function getAll($sortir = null, $limit = null)
+	protected function getCacheTag($key = 'one')
 	{
-		return $this->prepareData($sortir, $limit)->get();
+		$one 	= $this->model->getTable() .'_oneData';
+		$many 	= $this->model->getTable();
+		$tags 	= array(
+			'one'	=> $one,
+			'many'	=> $many,
+			'both'	=> array($one, $many),
+		);
+
+		if( ! isset($tags[$key]) )
+			throw new \Exception($key ." Key not available", 1);
+
+		return $tags[$key];
 	}
 
-	public function getAllPaginated($sortir = null, $limit = null)
+	public function getAll($limit = null, $sortir = null, $status = null)
 	{
-		return $this->prepareData($sortir, $limit)
-			->paginate( $this->repoLimit($limit) );
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status)->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
+	}
+
+	public function getAllPaginated($page = null, $limit = null, $sortir = null, $status = null)
+	{
+		$page 	= $this->repoPage($page);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$data 	= $this->prepareData($limit, $sortir, $status);
+		$result = array(
+			'total'	=> $data->count(),
+			'page' 	=> $page,
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+		);
+		$result['items'] = $data->skip( $limit * ($page-1) )
+	                ->take($limit)
+	                ->get();
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+
+		return $result;
 	}
 
 	public function getByGallery($gallery_id, $sortir = null, $limit = null)
 	{
+		die( __FUNCTION__ .'comming sooon');
+
 		return $this->prepareData($sortir, $limit)
 			->where('category_id', $gallery_id)
 			->paginate( $this->repoLimit($limit) );
@@ -46,13 +106,32 @@ class MediaRepo extends RepoBase implements MediaInterface
 
 	public function getById($id)
 	{
-		return $this->model->with('category')->find($id);
+		// check cache
+		$key = __FUNCTION__.'|id:'.$id;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
+
+		$result = $this->model->find($id);
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+
+		return $result;
 	}
 
 	public function getBySlug($slug)
 	{
-		return $this->model->with('category')
-			->where('slug', $slug)->first();
+		// check cache
+		$key = __FUNCTION__.'|slug:'.$slug;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = $this->model->where('slug', $slug)->first();
+		
+		// save cache
+		if($result) $this->cacheTag($tag)->forever($key, $result);
+
+		return $result;
 	}
 
 	public function store($input = array(), $rules = array())
@@ -74,6 +153,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 					'size'			=> $img['size'],
 				));
 			}
+			$this->errors = $this->image->errors;
 		}
 		return false;
 	}
@@ -104,33 +184,45 @@ class MediaRepo extends RepoBase implements MediaInterface
 					$data = array_merge($data, $imageData);
 				}
 			}
+
+			$prevData = $this->model->find($id);
+
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
 			
-			return $this->model->where('id', $id)->update($data);
+			$prevData->update($data);
+			return true;
 		}
 		return false;
 	}
 
 	public function delete($id)
 	{
-		$media = $this->model->find($id);
-		$image = new Image;
+		if( $prevData = $this->model->find($id) )
+		{
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
 
-		// delete original img
-    	$original = $image->path('original/'.$media['file']);
-    	if( file_exists($original) ) unlink($original);
+			$image = new Image;
 
-    	// delete small img
-    	$small = $image->path('small/'.$media['file']);
-    	if( file_exists($small) ) unlink($small);
+			// delete original img
+	    	$original = $image->path('original/'.$prevData['file']);
+	    	if( file_exists($original) ) unlink($original);
 
-    	// delete medium img
-    	$medium = $image->path('medium/'.$media['file']);
-    	if( file_exists($medium) ) unlink($medium);
+	    	// delete small img
+	    	$small = $image->path('small/'.$prevData['file']);
+	    	if( file_exists($small) ) unlink($small);
 
-    	// delete large img
-    	$large = $image->path('large/'.$media['file']);
-    	if( file_exists($large) ) unlink($large);
+	    	// delete medium img
+	    	$medium = $image->path('medium/'.$prevData['file']);
+	    	if( file_exists($medium) ) unlink($medium);
 
-    	return $media->delete();
+	    	// delete large img
+	    	$large = $image->path('large/'.$prevData['file']);
+	    	if( file_exists($large) ) unlink($large);
+
+	    	return $prevData->delete();
+    	}
+    	return false;
 	}
 }

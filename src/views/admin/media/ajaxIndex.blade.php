@@ -8,8 +8,8 @@
 
 <div class="modal-body" id="modal_body">
     <div class="row">
-	@if($medias->getTotal())
-	@foreach($medias as $media)
+	@if($medias['total'])
+	@foreach($medias['items'] as $media)
 		<div class="col-sm-6 col-md-3">
 	        <div class="thumbnail">
 	            <a href="#" class="thumbnail media_item" data-id="{{$media['id']}}" data-image="{{$media['file']}}" data-image-url="{{getMedia($media['file'])}}" style="background:url( {{getMedia($media['file'])}} ) center; background-size: cover; height:170px; margin:0px;" data-dismiss="modal" ></a>
