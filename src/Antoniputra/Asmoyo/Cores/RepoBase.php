@@ -210,7 +210,14 @@ abstract class RepoBase
 		return $status ?: Input::get('status', 'all');
 	}
 
-
+	public function getStatusList()
+	{
+		return array(
+			'published'	=> 'Published',
+			'privated'	=> 'Privated',
+			// 'drafted'	=> 'Drafted'
+		);
+	}
 
 	public function getSortirList()
 	{

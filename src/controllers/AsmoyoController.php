@@ -82,9 +82,17 @@ class AsmoyoController extends Controller {
 
 	protected function getMedia($size, $file)
 	{
-		$path 	= public_path('uploads/images/'. $size .'/'.$file );
-		return Response::make( File::get($path) )
-			->header('Content-Type', getMime(File::extension($path)) );
+		$path 	= public_path('uploads/images/'. $size .'/' );
+		$requestedFile = $path . $file;
+		if( is_file($requestedFile) )
+		{
+			return Response::make( File::get($requestedFile) )
+				->header('Content-Type', getMime(File::extension($requestedFile)));
+		} else {
+			$default = $path . app('asmoyo.web')['media_imageDefault'];
+			return Response::make( File::get($default) )
+				->header('Content-Type', getMime(File::extension($default)) );
+		}
 	}
 
 	protected function redirectAlert($to=null, $alertType='info', $alertTitle=null, $alertText=null)

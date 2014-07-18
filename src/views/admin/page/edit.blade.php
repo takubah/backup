@@ -40,10 +40,10 @@
 
 			<div class="form-group">
 				<label for="parent_id" class="col-sm-2 control-label">
-					Parent Kategori
+					Induk Halaman
 				</label>
 				<div class="col-sm-10">
-					{{Form::select('parent_id', $parentList, null, array('class' => 'form-control', 'id' => 'parent_id', 'placeholder' => 'parent category ?'))}}
+					{{Form::select('parent_id', $parentList, null, array('class' => 'form-control', 'id' => 'parent_id', 'placeholder' => 'Induk Halaman'))}}
 				</div>
 			</div>
 			

@@ -246,15 +246,6 @@ class PageRepo extends RepoBase implements PageInterface
 		return false;
 	}
 
-	public function getStatusList()
-	{
-		return array(
-			'published'	=> 'Published',
-			'privated'	=> 'Privated',
-			// 'drafted'	=> 'Drafted'
-		);
-	}
-
 	public function getTypeList()
 	{
 		return array(
