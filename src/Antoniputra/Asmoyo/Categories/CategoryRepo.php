@@ -14,28 +14,131 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 		parent::__construct($model);
 	}
 
-	public function getAll($sortir = null, $limit = null)
+	protected function getCacheTag($key = 'one')
 	{
-		return $this->prepareData($sortir, $limit)->with('cover')
-			->paginate( $this->repoLimit($limit) );
+		$one 	= $this->model->getTable() .'_oneData';
+		$many 	= $this->model->getTable();
+		$tags 	= array(
+			'one'	=> $one,
+			'many'	=> $many,
+			'both'	=> array($one, $many),
+		);
+
+		if( ! isset($tags[$key]) )
+			throw new \Exception($key ." Key not available", 1);
+
+		return $tags[$key];
 	}
 
-	public function getAllWithPosts($page = null, $limit = null)
+	public function getAll($limit = null, $sortir = null, $status = null)
 	{
-		return $this->prepareData($sortir, $limit)->with('cover', 'posts')
-			->paginate( $this->repoLimit($limit) );
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status)
+					->with('cover')
+					->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
+	}
+
+	public function getAllWithPosts($limit = null, $sortir = null, $status = null)
+	{
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status)
+					->with('cover', 'posts')
+					->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
 	}
 	
-	public function getAllPaginated($sortir = null, $limit = null)
+	public function getAllPaginated($page = null, $limit = null, $sortir = null, $status = null)
 	{
-		return $this->prepareData()->with('cover')
-			->paginate( $this->repoLimit($limit) );
+		$page 	= $this->repoPage($page);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$data 	= $this->prepareData($limit, $sortir, $status);
+		$result = array(
+			'total'	=> $data->count(),
+			'page' 	=> $page,
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+		);
+		$result['items'] = $data->with('cover')->skip( $limit * ($page-1) )
+	                ->take($limit)
+	                ->get();
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+
+		return $result;
 	}
 
-	public function getAllPaginatedWithPosts($page = null, $limit = null)
+	public function getAllPaginatedWithPosts($page = null, $limit = null, $sortir = null, $status = null)
 	{
-		return $this->prepareData()->with('cover', 'posts')
-			->paginate( $this->repoLimit($limit) );
+		$page 	= $this->repoPage($page);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$data 	= $this->prepareData($limit, $sortir, $status);
+		$result = array(
+			'total'	=> $data->count(),
+			'page' 	=> $page,
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+		);
+		$result['items'] = $data->with('cover', 'post')
+					->skip( $limit * ($page-1) )
+	                ->take($limit)
+	                ->get();
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+
+		return $result;
 	}
 
 	public function getById($id)
@@ -62,6 +165,84 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 		return $this->model->with('cover', 'posts')
 			->where('slug', $slug)
 			->first();
+	}
+
+	public function store($input = array(), $rules = array())
+	{
+		$input = $input ?: Input::all();
+		if($this->repoValidation($input))
+		{
+			return $this->model->create($input);
+		}
+
+		return false;
+	}
+
+	public function update($id, $input = array(), $rules = array())
+	{
+		$input = $input ?: Input::all();
+		$rules = array_merge($this->editRules, $rules);
+		if($this->repoValidation($input, $rules))
+		{
+			$prevData = $this->model->find($id);
+
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getByIdWithPosts|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlugWithPosts|slug:'.$prevData['slug']);
+
+			$prevData->update($input);
+			return true;
+		}
+		return false;
+	}
+
+	public function getParentPage($toForm=false, $forgetId=false)
+	{
+		$parent = $this->model->where('parent_id', 0)->where('status', 'published');
+
+		if($forgetId) {
+			$parent = $parent->where('id', '!=', $forgetId);
+		}
+
+		$parent = $parent->get()->toArray();
+
+		if($toForm)
+		{
+			$result = array(0 => 'Tidak ada');
+			foreach ($parent as $p)	{
+				$result[$p['id']] = $p['title'];
+			}
+			return $result;
+		}
+
+		return $parent;
+	}
+
+	public function getChildPage($parent_id)
+	{
+		return $this->model->where('parent_id', $parent_id)
+			->where('status', 'published')
+			->get()->toArray();
+	}
+
+	public function delete($id, $is_permanent=false)
+	{
+		if( $prevData = $this->model->find($id) )
+		{
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getByIdWithPosts|id:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlug|slug:'.$prevData['slug']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getBySlugWithPosts|slug:'.$prevData['slug']);
+
+			if($is_permanent)
+				$prevData->forceDelete();
+			else
+				$prevData->delete();
+
+			return true;
+		}
+		return false;
 	}
 
 }

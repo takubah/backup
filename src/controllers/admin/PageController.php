@@ -114,7 +114,6 @@ class Admin_PageController extends AsmoyoController
 		{
 			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Dihapus !!');
 		}
-
 		return $this->redirectAlert('admin.page.index', 'danger', 'Gagal Dihapus !!');
 	}
 
@@ -124,7 +123,6 @@ class Admin_PageController extends AsmoyoController
 		{
 			return $this->redirectAlert('admin.page.index', 'success', 'Berhasil Dihapus Permanent !!');
 		}
-
 		return $this->redirectAlert('admin.page.index', 'danger', 'Gagal Dihapus Permanent !!');
 	}
 }

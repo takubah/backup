@@ -11,8 +11,9 @@ class Admin_CategoryController extends AsmoyoController
 
 	public function index()
 	{
+		$cats = $this->category->getAllPaginated();
 		$data = array(
-			'categories'	=> $this->category->getAllPaginated(),
+			'categories'	=> Paginator::make($cats, $cats['total'], $cats['limit']),
 		);
 		
 		return $this->loadView('asmoyo::admin.category.index', $data, true);
@@ -20,13 +21,23 @@ class Admin_CategoryController extends AsmoyoController
 
 	public function create()
 	{
-		$data = array();
+		$data = array(
+			'parentList'	=> $this->category->getParentPage(true),
+			'statusList'	=> $this->category->getStatusList(),
+		);
 		return $this->loadView('asmoyo::admin.category.create', $data);
 	}
 
 	public function store()
 	{
-		return 'here is store method';
+		$input = Input::all();
+
+		if ( $this->category->store($input) )
+		{
+			return $this->redirectAlert('admin.category.index', 'success', 'Berhasil !!');
+		}
+
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->category->errors);
 	}
 
 	public function show($slug)
@@ -42,8 +53,11 @@ class Admin_CategoryController extends AsmoyoController
 
 	public function edit($slug)
 	{
-		$data = array(
-			'category'		=> $this->category->getBySlug($slug),
+		$category 	= $this->category->getBySlug($slug);
+		$data 		= array(
+			'category'		=> $category,
+			'parentList'	=> $this->category->getParentPage(true, $category['id']),
+			'statusList'	=> $this->category->getStatusList(),
 		);
 
 		if( ! $data['category'] ) return App::abort(404);
@@ -53,17 +67,32 @@ class Admin_CategoryController extends AsmoyoController
 
 	public function update($slug)
 	{
-		$data = array(
-			'category'		=> $this->category->getBySlug($slug),
-		);
+		$input = Input::all();
+		$rules = array();
 
-		if( ! $data['category'] ) return App::abort(404);
+		if ( $this->category->update( $input['id'], $input, $rules ) )
+		{
+			return $this->redirectAlert('admin.category.index', 'success', 'Berhasil Diperbarui !!');
+		}
 
-		return 'here is update method';
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->category->errors);
 	}
 
 	public function destroy($id)
 	{
-		return 'ini adalah method destroy';
+		if( $this->category->delete($id) )
+		{
+			return $this->redirectAlert('admin.category.index', 'success', 'Berhasil Dihapus !!');
+		}
+		return $this->redirectAlert(false, 'danger', 'Gagal Dihapus !!');
+	}
+
+	public function forceDelete($id)
+	{
+		if( $this->category->delete($id, true) )
+		{
+			return $this->redirectAlert('admin.category.index', 'success', 'Berhasil Dihapus Permanent !!');
+		}
+		return $this->redirectAlert(false, 'danger', 'Gagal Dihapus Permanent !!');
 	}
 }

@@ -18,8 +18,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				@if($categories->getTotal())
-				@foreach($categories as $category)
+				@if($categories['total'])
+				@foreach($categories['items'] as $category)
 					<tr>
 						<td> {{$itemNumber++}} </td>
 						<td> {{$category['title']}} </td>
@@ -27,10 +27,13 @@
 							<a href="{{route('admin.category.edit', $category['slug'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit
 							</a>
-							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.category.destroy', $category['id']), array(
-								'icon'	=> 'fa fa-trash-o',
-								'class'	=> 'btn btn-danger btn-sm'
-							))}}
+							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.category.destroy', $category['id']),
+								array(
+									'icon'	=> 'fa fa-trash-o',
+									'class'	=> 'btn btn-danger btn-sm'
+								),
+								'Apakah anda yakin ?'
+							)}}
 						</td>
 					</tr>
 				@endforeach

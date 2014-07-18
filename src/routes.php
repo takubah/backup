@@ -111,14 +111,16 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 
 	Route::group(array('prefix' => $adminUrl, 'before' => 'AdminFilter'), function() use($adminUrl)
 	{
-		// dashboard
+		// Home
 		Route::get('dashboard', array(
 			'as'	=> 'admin.home.dashboard',
 			'uses'	=> 'Admin_HomeController@dashboard',
 		));
+		// End Home
 		
 		// User
 		Route::resource('user', 'Admin_UserController');
+		// End User
 
 		// Page
 		Route::get('page/edit-order', array(
@@ -134,23 +136,39 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'uses' 		=> 'Admin_PageController@forceDelete'
 		));
 		Route::resource('page', 'Admin_PageController');
+		// End Page
 
 		// Media
 		Route::get('media/ajaxIndex', array(
 			'as' 		=> 'admin.media.ajaxIndex',
 			'uses' 		=> 'Admin_MediaController@ajaxIndex'
 		));
-		Route::post('media/storeFroala', array('as' => 'admin.media.storeFroala', 'uses' => 'Admin_MediaController@storeFroala'));
+		Route::post('media/storeFroala', array(
+			'as' => 'admin.media.storeFroala',
+			'uses' => 'Admin_MediaController@storeFroala'
+		));
 		Route::resource('media', 'Admin_MediaController');
+		// End Media
 
 		// Category
+		Route::delete('category/forceDelete/{id}', array(
+			'as' 		=> 'admin.category.forceDelete',
+			'uses' 		=> 'Admin_CategoryController@forceDelete'
+		));
 		Route::resource('category', 'Admin_CategoryController');
+		// End Category
 
 		// Post
+		Route::delete('post/forceDelete/{id}', array(
+			'as' 		=> 'admin.post.forceDelete',
+			'uses' 		=> 'Admin_PostController@forceDelete'
+		));
 		Route::resource('post', 'Admin_PostController');
+		// End Post
 
 		// Widget
 		Route::resource('widget', 'Admin_WidgetController');
+		// End Widget
 
 		// Option
 		Route::get('option', array(
@@ -173,6 +191,7 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.option.mediaSave',
 			'uses' 		=> 'Admin_OptionController@mediaSave'
 		));
+		// End Option
 	});
 
 /**
@@ -193,6 +212,20 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		'as'	=> 'page.show',
 		'uses'	=> 'Public_PageController@show',
 	));
+	// End Page
+
+	
+	// Category
+	Route::get('/category', array(
+		'as'	=> 'category.index',
+		'uses'	=> 'Public_CategoryController@index',
+	));
+
+	Route::get('/category/{slug}', array(
+		'as'	=> 'category.show',
+		'uses'	=> 'Public_CategoryController@show',
+	));
+	// End Category
 
 	// Post
 	Route::resource('post', 'Public_PostController', array(

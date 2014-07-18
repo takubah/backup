@@ -5,7 +5,7 @@ use Antoniputra\Asmoyo\Cores\EloquentBase;
 class Category extends EloquentBase
 {
 	
-	protected $table = 'categories';
+	public $table = 'categories';
 
     /**
     * Morph relation name
@@ -44,7 +44,7 @@ class Category extends EloquentBase
     * @var array
     */
     public $statusList = array(
-        'publish', 'private',
+        'published', 'privated',
     );
 
     /**
@@ -53,8 +53,10 @@ class Category extends EloquentBase
     public function defaultRules()
     {
         return array(
-            'title'         => 'required',
-            'slug'          => 'required',
+            'title'         => 'required|unique:'.$this->table,
+            'slug'          => 'required|unique:'.$this->table,
+            'media_id'      => 'integer',
+            'parent_id'     => 'integer',
             'status'        => 'required|in:'.implode(',', $this->statusList),
         );
     }
