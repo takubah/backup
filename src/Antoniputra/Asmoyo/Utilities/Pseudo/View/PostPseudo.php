@@ -10,8 +10,8 @@ class PostPseudo extends Pseudo
 		$repo = App::make('Antoniputra\Asmoyo\Posts\PostInterface');
 
 		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
-		$attr['sortir']	= array_get($attr, 'sortir') ?: 'new';
-		$attr['limit']	= array_get($attr, 'limit') ?: 3;
+		$attr['limit']	= $repo->repoLimit( array_get($attr, 'limit') );
+		$attr['sortir']	= $repo->repoSortir( array_get($attr, 'sortir') );
 		$attr['id']		= array_get($attr, 'id') ?: null;
 
 		$data = array('attr' => $attr);

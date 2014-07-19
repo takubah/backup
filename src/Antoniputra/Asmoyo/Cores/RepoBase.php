@@ -167,7 +167,7 @@ abstract class RepoBase
 	* Set global page segment for all object
 	* @param $page integer|numeric
 	*/
-	protected function repoPage($page=null)
+	public function repoPage($page=null)
 	{
 		$web 	= app('asmoyo.web');
 		$page 	= $page ?: Input::get('page');
@@ -179,7 +179,7 @@ abstract class RepoBase
 	* Set global limit data for all object
 	* @param $limit integer|numeric
 	*/
-	protected function repoLimit($limit=null)
+	public function repoLimit($limit=null)
 	{
 		$web 	= app('asmoyo.web');
 		$limit 	= $limit ?: Input::get('limit');
@@ -191,7 +191,7 @@ abstract class RepoBase
 	* Set global sortir data for all object
 	* @param $sortir integer|numeric
 	*/
-	protected function repoSortir($sortir=null)
+	public function repoSortir($sortir=null)
 	{
 		if(is_array($sortir)) return $sortir;
 
@@ -205,7 +205,7 @@ abstract class RepoBase
 	* Set global status for all object
 	* @param $status integer|numeric
 	*/
-	protected function repoStatus($status=null)
+	public function repoStatus($status=null)
 	{
 		return $status ?: Input::get('status', 'all');
 	}

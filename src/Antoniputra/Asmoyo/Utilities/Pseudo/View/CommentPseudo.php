@@ -10,8 +10,8 @@ class CommentPseudo extends Pseudo
 		$repo = App::make('Antoniputra\Asmoyo\Comments\CommentInterface');
 
 		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
-		$attr['sortir']	= array_get($attr, 'sortir') ?: 'new';
-		$attr['limit']	= array_get($attr, 'limit') ?: 3;
+		$attr['limit']	= $repo->repoLimit( array_get($attr, 'limit') );
+		$attr['sortir']	= $repo->repoSortir( array_get($attr, 'sortir') );
 		$attr['id']		= array_get($attr, 'id') ?: null;
 		
 		$data = array('attr' => $attr);
@@ -19,7 +19,7 @@ class CommentPseudo extends Pseudo
 		switch ($attr['type'])
 		{
 			case 'list':
-				$data['repo'] = $repo->getAll($attr['sortir'], $attr['limit']);
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir']);
 				return View::make('asmoyo::pseudo.comment', $data);
 			break;
 
