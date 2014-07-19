@@ -51,6 +51,21 @@ class Admin_MediaController extends AsmoyoController
 		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
 	}
 
+	public function getForFroala()
+	{
+		$medias = $this->media->getAll();
+		if($medias['items']) {
+			foreach($medias['items'] as $med) {
+				$result[]	= getMedia($med['file'], 'small');
+				$result[]	= getMedia($med['file'], 'medium');
+				$result[]	= getMedia($med['file'], 'large');
+				$result[]	= getMedia($med['file'], 'original');
+			}
+			return $result;
+		}
+		return false;
+	}
+
 	public function show($slug)
 	{
 		$data = array(

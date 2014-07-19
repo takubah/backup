@@ -143,6 +143,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.media.ajaxIndex',
 			'uses' 		=> 'Admin_MediaController@ajaxIndex'
 		));
+		Route::get('media/getForFroala', array(
+			'as' => 'admin.media.getForFroala',
+			'uses' => 'Admin_MediaController@getForFroala'
+		));
 		Route::post('media/storeFroala', array(
 			'as' => 'admin.media.storeFroala',
 			'uses' => 'Admin_MediaController@storeFroala'

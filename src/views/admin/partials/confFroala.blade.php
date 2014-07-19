@@ -7,18 +7,17 @@
 	@parent
 	{{asmoyoAsset('plugin/froala_editor/js/froala_editor.min.js', 'admin')}}
 
-	<script>
-		var froala_options = {
+	<script>		
+		var froala_defaults = {
 			imageUploadURL: "{{route('admin.media.storeFroala')}}",
-			height: 300
+			imagesLoadURL: "{{route('admin.media.getForFroala')}}",
+			height: 400,
+			inlineMode: false
 		};
 
 	    $(function() {
-	        $('.froala_editor_inline').editable(froala_options);
-	    });
-
-	    $(function() {
-	        $('.froala_editor').editable( jQuery.extend({inlineMode: false}, froala_options) );
+	        $('.froala_editor').editable( jQuery.extend( froala_defaults, {} ) );
+	        $('.froala_editor_inline').editable( jQuery.extend(froala_defaults, {inlineMode:true}) );
 	    });
 	</script>
 @stop
