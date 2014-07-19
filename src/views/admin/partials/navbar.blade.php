@@ -95,7 +95,7 @@
 			</a>
 		</li>
 		<li @if($activePage == 'option') class="active" @endif>
-			<a href="{{route('admin.option.index')}}" class="show-tooltip" data-placement="right" title="Atur">
+			<a href="{{route('admin.option.web')}}" class="show-tooltip" data-placement="right" title="Atur">
 				<i class="fa fa-gears"></i> Atur
 			</a>
 		</li>
