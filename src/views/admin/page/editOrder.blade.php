@@ -21,9 +21,9 @@
 							<a style="cursor:move;">
 								{{$page['title']}}
 							</a>
-							@if( $page['dropdown'])
+							@if( $page['child'])
 								<ol>
-									@foreach($page['dropdown'] as $child)
+									@foreach($page['child'] as $child)
 										<li data-id="{{$child['id']}}" data-title="{{$child['title']}}" data-setparent="0">
 											<a style="cursor:move;">
 												{{$child['title']}}

@@ -130,7 +130,7 @@ class PageRepo extends RepoBase implements PageInterface
 			foreach ($pageParent as $p)
 			{
 				$p 				= $p;
-				$p['dropdown']	= $this->getChild($p['id']);
+				$p['child']		= $this->getChild($p['id']);
 				$result[] = $p;
 			}
 		}

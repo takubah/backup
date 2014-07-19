@@ -21,6 +21,7 @@
 			</h3>
 			<div class="box-content">
 				{{ '{<asmoyo:comment type=list sortir=title-descending>}' }}
+				{{ '{<asmoyo:category type=list sortir=title-descending>}' }}
 			</div>
 		</div>
 

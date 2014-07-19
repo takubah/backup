@@ -2,11 +2,22 @@
 
 	<ul class="nav">
 
-		@foreach($repo['items'] as $r)
+		@foreach($repo as $r)
 			<li>
-				<a href="{{route('post.show', $r['slug'])}}">
+				<a href="{{route('category.show', $r['slug'])}}">
 					{{$r['title']}}
 				</a>
+				@if( $r['child'] )
+					<ul>
+						@foreach($r['child'] as $child)
+							<li>
+								<a style="cursor:move;">
+									{{$child['title']}}
+								</a>
+							</li>
+						@endforeach
+					</ul>
+				@endif
 			</li>
 		@endforeach
 

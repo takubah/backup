@@ -200,9 +200,38 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 	{
 		$data = $this->model->get();
 		$result = array();
-		foreach ($data as $d)	{
+		foreach ($data as $d) {
 			$result[$d['id']] = $d['title'];
 		}
+		return $result;
+	}
+
+	public function getStructure($limit = null, $sortir = null, $status = null)
+	{
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result 	= array();
+		$catParent 	= $this->prepareData($limit, $sortir, $status)->where('parent_id', 0)->get()->toArray();
+
+		if ($catParent)
+		{
+			foreach ($catParent as $c)
+			{
+				$c 			= $c;
+				$c['child']	= $this->model->where('parent_id', $c['id'])->where('status', 'published')->get()->toArray();
+				$result[] 	= $c;
+			}
+		}
+
+		// save cache
+		if($result) $this->cacheTag($tag)->forever($key, $result);
 		return $result;
 	}
 
