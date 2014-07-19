@@ -117,7 +117,7 @@ class UserRepo extends RepoBase implements UserInterface
 	public function store($input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
-		if($this->repoValidation($input))
+		if($this->repoValidation($input, $rules))
 		{
 			return $this->model->create($input);
 		}
@@ -131,6 +131,7 @@ class UserRepo extends RepoBase implements UserInterface
 		$rules = array_merge($this->editRules, $rules);
 		if($this->repoValidation($input, $rules))
 		{
+			$input['password']	= \Hash::make($input['password']);
 			$prevData = $this->model->find($id);
 
 			$this->cacheTag( $this->getCacheTag('one') )->forget('getById|id:'.$prevData['id']);

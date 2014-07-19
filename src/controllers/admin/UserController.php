@@ -46,6 +46,27 @@ class Admin_UserController extends AsmoyoController
 		return Redirect::route('admin.login');
 	}
 
+	public function changePassword()
+	{
+		$data = array(
+			'user'	=> Auth::user(),
+		);
+		return $this->loadView('asmoyo::admin.user.changePassword', $data, true);
+	}
+
+	public function putChangePassword()
+	{
+		$input = array_merge(Auth::user()->toArray(), Input::all());
+		$rules = array('password' => 'required|confirmed|min:6');
+
+		if ( $this->user->update( $input['id'], $input, $rules ) )
+		{
+			return $this->redirectAlert('admin.user.index', 'success', 'Password Berhasil Diperbarui !!');
+		}
+
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->user->errors);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *

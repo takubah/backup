@@ -39,7 +39,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="#">
+							<a href="{{route('admin.user.changePassword')}}">
 								Edit Password
 							</a>
 						</li>

@@ -119,6 +119,14 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		// End Home
 		
 		// User
+		Route::get('user/change-password', array(
+			'as' 		=> 'admin.user.changePassword',
+			'uses' 		=> 'Admin_UserController@changePassword'
+		));
+		Route::put('user/change-password', array(
+			'as' 		=> 'admin.user.putChangePassword',
+			'uses' 		=> 'Admin_UserController@putChangePassword'
+		));
 		Route::resource('user', 'Admin_UserController');
 		// End User
 
