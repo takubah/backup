@@ -19,7 +19,7 @@ class PostPseudo extends Pseudo
 		switch ($attr['type'])
 		{
 			case 'list':
-				$data['repo'] = $repo->getAll($attr['sortir'], $attr['limit']);
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir']);
 				return View::make('asmoyo::pseudo.post', $data);
 			break;
 

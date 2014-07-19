@@ -2,7 +2,7 @@
 
 	<ul class="nav">
 
-		@foreach($repo as $r)
+		@foreach($repo['items'] as $r)
 			<li>
 				<a href="">
 					{{$r['title']}}
