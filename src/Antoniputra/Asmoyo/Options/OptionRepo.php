@@ -8,29 +8,41 @@ class OptionRepo extends RepoBase implements OptionInterface
 	
 	public function __construct(Option $model)
 	{
-		parent::__construct($model);
+		$this->model = $model;
+	}
+
+
+	protected function getCacheTag($key = 'one')
+	{
+		$one 	= $this->model->getTable() .'_oneData';
+		$many 	= $this->model->getTable();
+		$tags 	= array(
+			'one'	=> $one,
+			'many'	=> $many,
+			'both'	=> array($one, $many),
+		);
+
+		if( ! isset($tags[$key]) )
+			throw new \Exception($key ." Key not available", 1);
+
+		return $tags[$key];
 	}
 
 	public function get($name=null)
 	{
 		// check cache
 		$key = 'asmoyo.web';
-		if( $get = $this->cacheTag(__CLASS__)->get($key) ) return $get;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$result = array();
-		foreach( \Antoniputra\Asmoyo\Options\Option::all() as $opt )
+		foreach( $this->model->all() as $opt )
 		{
-			if($opt['type'] == 'json')
-			{
-				$result[$opt['name']]	= json_decode($opt['value'], true);
-			} else {
-				$result[$opt['name']]	= $opt['value'];
-			}
+			$result[$opt['name']]	= $opt['value'];
 		}
 
 		// save cache
-		$this->cacheTag(__CLASS__)->forever($key, $result);
-		
+		if($result) $this->cacheTag($tag)->forever($key, $result);
 		return ( !$name ) ? $result : $result[$name];
 	}
 
@@ -41,16 +53,15 @@ class OptionRepo extends RepoBase implements OptionInterface
 		{
 			foreach($attr as $key => $val)
 			{
-				if(is_array($val) AND !empty($val))
+				if(!empty($val))
 				{
-					$this->model->where('name', $key)->update(array('value' => json_encode($val)));
-				} else {
+					$val = is_array($val) ? json_encode($val) : $val;
 					$this->model->where('name', $key)->update(array('value' => $val));
 				}
 			}
 
 			// forget cache
-			$this->cacheFlush(__CLASS__);
+			$this->cacheTag( $this->getCacheTag('many') )->forget('asmoyo.web');
 			return true;
 		}
 

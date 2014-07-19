@@ -24,12 +24,11 @@ class Option extends EloquentBase {
      */
 	protected $fillable = array('name', 'value', 'description', 'type');
 
-	/**
-	* Default validation rules
-	*/
-	public $rules = array(
-		'name'			=> 'required',
-		'value'			=> 'required',
-		'description'	=> 'required',
-	);
+	public function getValueAttribute($value)
+    {
+    	if( $this->getAttributes()['type'] == 'json') {
+        	return json_decode($value, true);
+    	}
+    	return $value;
+    }
 }

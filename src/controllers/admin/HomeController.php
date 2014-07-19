@@ -4,7 +4,8 @@ class Admin_HomeController extends AsmoyoController
 {
 	public function dashboard()
 	{
-		return $this->loadView('asmoyo::admin.home.dashboard');
+		$data = array();
+		return $this->loadView('asmoyo::admin.home.dashboard', $data, false);
 	}
 
 }
