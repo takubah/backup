@@ -12,6 +12,7 @@ class MediaPseudo extends Pseudo
 		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
 		$attr['limit']	= $repo->repoLimit( array_get($attr, 'limit') );
 		$attr['sortir']	= $repo->repoSortir( array_get($attr, 'sortir') );
+		$attr['status']	= $repo->repoSortir( array_get($attr, 'status') );
 		$attr['id']		= array_get($attr, 'id') ?: null;
 
 		$data = array('attr' => $attr);
@@ -19,20 +20,20 @@ class MediaPseudo extends Pseudo
 		switch ($attr['type'])
 		{
 			case 'list':
-				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir']);
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
 				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
 			case 'grid':
-				$data['attr']['size'] = array_get($attr, 'size') ?: '100px' ;
-				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				$data['attr']['size'] 	= array_get($attr, 'size') ?: '100px' ;
+				$data['repo'] 			= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
 				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
 			case 'media-object':
 				$data['attr']['description'] = array_get($attr, 'description') ?: 1 ;
 				$data['attr']['size'] 		= array_get($attr, 'size') ?: '100px' ;
-				$data['repo'] 				= $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				$data['repo'] 				= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
 				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
