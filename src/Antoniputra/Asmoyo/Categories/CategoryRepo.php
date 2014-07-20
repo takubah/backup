@@ -143,28 +143,63 @@ class CategoryRepo extends RepoBase implements CategoryInterface
 
 	public function getById($id)
 	{
-		return $this->model->with('cover')
-			->find($id);
+		// check cache
+		$key = __FUNCTION__.'|id:'.$id;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
+
+		$result = $this->model->with('cover')->find($id);
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
 	}
 
 	public function getByIdWithPosts($id)
 	{
-		return $this->model->with('cover', 'posts')
+		// check cache
+		$key = __FUNCTION__.'|id:'.$id;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
+
+		$result = $this->model->with('cover', 'posts')
 			->find($id);
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
 	}
 
 	public function getBySlug($slug)
 	{
-		return $this->model->with('cover')
+		// check cache
+		$key = __FUNCTION__.'|slug:'.$slug;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = $this->model->with('cover')
 			->where('slug', $slug)
 			->first();
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
 	}
 
 	public function getBySlugWithPosts($slug)
 	{
-		return $this->model->with('cover', 'posts')
+		// check cache
+		$key = __FUNCTION__.'|slug:'.$slug;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = $this->model->with('cover', 'posts')
 			->where('slug', $slug)
 			->first();
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
 	}
 
 	public function store($input = array(), $rules = array())
