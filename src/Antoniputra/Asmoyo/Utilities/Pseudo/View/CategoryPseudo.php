@@ -20,13 +20,13 @@ class CategoryPseudo extends Pseudo
 		{
 			case 'list':
 				$data['repo'] = $repo->getStructure($attr['limit'], $attr['sortir']);
-				return View::make('asmoyo::pseudo.category', $data);
+				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'grid':
 				$data['attr']['imageSize'] = array_get($attr, 'imageSize') ?: '100px' ;
 				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
-				return View::make('asmoyo::pseudo.category', $data);
+				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'media-object':

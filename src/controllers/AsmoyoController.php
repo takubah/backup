@@ -24,8 +24,6 @@ class AsmoyoController extends Controller {
 
 	public function loadView($content, $data = array(), $disabledPseudo=false)
 	{
-		include __DIR__ . '/../composers.php';
-
 		$web = app('asmoyo.web');
 		
 		// set view structure if empty
@@ -46,8 +44,8 @@ class AsmoyoController extends Controller {
 			$content = 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $content;
 		}
 
-		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data);
-		return ($disabledPseudo) ? $view : Pseudo::render($view);
+		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data)->render();
+		return Pseudo::render($view);
 	}
 
 	protected function getAssets($theme, $file)

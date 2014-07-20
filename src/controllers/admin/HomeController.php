@@ -6,7 +6,7 @@ class Admin_HomeController extends AsmoyoController
 	{
 		// return app('Antoniputra\Asmoyo\Categories\CategoryInterface')->getAll()['items'];
 		$data = array();
-		return $this->loadView('asmoyo::admin.home.dashboard', $data, false);
+		return $this->loadView('asmoyo::admin.home.dashboard', $data);
 	}
 
 }

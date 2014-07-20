@@ -34,6 +34,7 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		include __DIR__ . '/../../filters.php';
 		include __DIR__ . '/../../routes.php';
 		include __DIR__ . '/../../events.php';
+		include __DIR__ . '/../../composers.php';
 	}
 
 	/**
