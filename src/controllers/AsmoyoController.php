@@ -22,7 +22,7 @@ class AsmoyoController extends Controller {
 		return $this;
 	}
 
-	public function loadView($content, $data = array(), $disabledPseudo=false)
+	public function loadView($content, $data = array())
 	{
 		$web = app('asmoyo.web');
 		

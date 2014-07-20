@@ -40,7 +40,7 @@ class PostPseudo extends Pseudo
 			break;
 			
 			default:
-				
+				return '';
 			break;
 		}
 	}

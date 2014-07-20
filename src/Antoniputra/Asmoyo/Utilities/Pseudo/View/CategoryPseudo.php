@@ -24,25 +24,37 @@ class CategoryPseudo extends Pseudo
 			break;
 
 			case 'grid':
-				$data['attr']['imageSize'] = array_get($attr, 'imageSize') ?: '100px' ;
+				$data['attr']['size'] = array_get($attr, 'size') ?: '100px' ;
 				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
 				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'media-object':
-				
+				$data['attr']['description'] = array_get($attr, 'description') ?: 1 ;
+				$data['attr']['size'] 		= array_get($attr, 'size') ?: '100px' ;
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'detail':
+				$data['attr']['id'] 	= array_get($attr, 'id');
+				$data['attr']['slug'] 	= array_get($attr, 'slug');
+				$data['attr']['size'] 	= array_get($attr, 'size') ?: '100px' ;
 				
-			break;
+				if($id = $data['attr']['id']) {
+					$repo = $repo->getById($id);
+				} elseif($slug = $data['attr']['slug']) {
+					$repo = $repo->getBySlug($slug);
+				} else {
+					return '';
+				}
 
-			case 'inline':
-				
+				$data['repo'] = $repo;
+				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 			
 			default:
-				
+				return '';
 			break;
 		}
 	}

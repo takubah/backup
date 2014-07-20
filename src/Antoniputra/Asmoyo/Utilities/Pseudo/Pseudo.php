@@ -42,6 +42,9 @@ abstract class Pseudo {
 				case 'widget':
 					$obj = new PseudoView\WidgetPseudo;
 				break;
+				default:
+					return $tpl;
+				break;
 			}
 
 			$tpl = str_replace( '{<'.$elem.'>}', call_user_func_array(
