@@ -56,10 +56,10 @@ class Admin_MediaController extends AsmoyoController
 		$medias = $this->media->getAll();
 		if($medias['items']) {
 			foreach($medias['items'] as $med) {
-				$result[]	= getMedia($med['file'], 'small');
+				// $result[]	= getMedia($med['file'], 'small');
 				$result[]	= getMedia($med['file'], 'medium');
-				$result[]	= getMedia($med['file'], 'large');
-				$result[]	= getMedia($med['file'], 'original');
+				// $result[]	= getMedia($med['file'], 'large');
+				// $result[]	= getMedia($med['file'], 'original');
 			}
 			return $result;
 		}

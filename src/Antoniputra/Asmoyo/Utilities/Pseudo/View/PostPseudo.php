@@ -20,23 +20,37 @@ class PostPseudo extends Pseudo
 		{
 			case 'list':
 				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir']);
-				return View::make('asmoyo::pseudo.post', $data);
+				return View::make('asmoyo::pseudo.post', $data)->render();
 			break;
 
 			case 'grid':
-				
+				$data['attr']['size'] = array_get($attr, 'size') ?: '100px' ;
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				return View::make('asmoyo::pseudo.post', $data)->render();
 			break;
 
 			case 'media-object':
-				
+				$data['attr']['description'] = array_get($attr, 'description') ?: 1 ;
+				$data['attr']['size'] 		= array_get($attr, 'size') ?: '100px' ;
+				$data['repo'] 				= $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				return View::make('asmoyo::pseudo.post', $data)->render();
 			break;
 
 			case 'detail':
+				$data['attr']['id'] 	= array_get($attr, 'id');
+				$data['attr']['slug'] 	= array_get($attr, 'slug');
+				$data['attr']['size'] 	= array_get($attr, 'size') ?: '100px' ;
 				
-			break;
+				if($id = $data['attr']['id']) {
+					$repo = $repo->getById($id);
+				} elseif($slug = $data['attr']['slug']) {
+					$repo = $repo->getBySlug($slug);
+				} else {
+					return '';
+				}
 
-			case 'inline':
-				
+				$data['repo'] = $repo;
+				return View::make('asmoyo::pseudo.post', $data)->render();
 			break;
 			
 			default:

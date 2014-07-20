@@ -76,10 +76,10 @@
 
 			<div id="typeStandard">
 				<div class="form-group">
-					<label for="content" class="col-sm-2 control-label">
+					<label for="content" class="col-sm-12 text-center">
 						Content
 					</label>
-					<div class="col-sm-10">
+					<div class="col-sm-12">
 						{{Form::textarea('content', null, array('class' => 'form-control froala_editor', 'id' => 'content', 'placeholder' => 'content', 'style' => 'height:500px;'))}}
 					</div>
 				</div>

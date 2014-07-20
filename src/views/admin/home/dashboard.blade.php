@@ -1,9 +1,19 @@
 <div class="row">
 	<div class="col-md-6">
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-tag"></i>
+				List Kategori
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:category type=list sortir=title-ascending>}' }}
+			</div>
+		</div>
 		
 		<div class="asmoyo-box">
 			<h3 class="box-header">
-				<i class="fa fa-comments"></i>
+				<i class="fa fa-tag"></i>
 				Grid Kategori
 			</h3>
 			<div class="box-content">
@@ -13,17 +23,7 @@
 
 		<div class="asmoyo-box">
 			<h3 class="box-header">
-				<i class="fa fa-file-text-o"></i>
-				List Kategori
-			</h3>
-			<div class="box-content">
-				{{ '{<asmoyo:category type=list sortir=title-ascending>}' }}
-			</div>
-		</div>
-
-		<div class="asmoyo-box">
-			<h3 class="box-header">
-				<i class="fa fa-comments"></i>
+				<i class="fa fa-tag"></i>
 				Media Object Kategori
 			</h3>
 			<div class="box-content">
@@ -33,7 +33,7 @@
 
 		<div class="asmoyo-box">
 			<h3 class="box-header">
-				<i class="fa fa-comments"></i>
+				<i class="fa fa-tag"></i>
 				Detail Kategori
 			</h3>
 			<div class="box-content">
@@ -47,10 +47,40 @@
 		<div class="asmoyo-box">
 			<h3 class="box-header">
 				<i class="fa fa-file-text-o"></i>
-				Postingan Terakhir
+				List Post
 			</h3>
 			<div class="box-content">
 				{{ '{<asmoyo:post type=list sortir=latest-updated>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-file-text-o"></i>
+				Grid Post
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:post type=grid sortir=title-ascending>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-file-text-o"></i>
+				Media Object Post
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:post type=media-object sortir=title-ascending>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-file-text-o"></i>
+				Detail Post
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:post type=detail id=1>}' }}
 			</div>
 		</div>
 

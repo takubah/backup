@@ -52,7 +52,7 @@
 		@foreach($repo['items'] as $r)
 			<li class="media">
 				<a href="{{route('category.show', $r['slug'])}}" class="pull-left thumbnail">
-					<img class="media-object" src="{{getMedia($r['cover']['file'])}}" alt="{{$r['alt']}}" style="width:{{$attr['size']}};">
+					<img class="media-object" src="{{getMedia($r['cover']['file'])}}" alt="{{$r['cover']['alt']}}" style="width:{{$attr['size']}};">
 				</a>
 				<div class="media-body">
 					<h4 class="media-heading"> <a href="{{route('category.show', $r['slug'])}}">{{$r['title']}}</a> </h4>
@@ -70,7 +70,7 @@
 	@if($repo)
 		<div class="media">
 			<a href="{{route('category.show', $repo['slug'])}}" class="pull-left thumbnail">
-				<img class="media-object" src="{{getMedia($repo['cover']['file'])}}" alt="{{$repo['alt']}}" style="width:{{$attr['size']}};">
+				<img class="media-object" src="{{getMedia($repo['cover']['file'])}}" alt="{{$repo['cover']['alt']}}" style="width:{{$attr['size']}};">
 			</a>
 			<div class="media-body">
 				<h4 class="media-heading"> <a href="{{route('category.show', $repo['slug'])}}">{{$repo['title']}}</a> </h4>
