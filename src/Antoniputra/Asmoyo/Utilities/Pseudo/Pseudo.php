@@ -33,11 +33,14 @@ abstract class Pseudo {
 				case 'post':
 					$obj = new PseudoView\PostPseudo;
 				break;
-				case 'comment':
-					$obj = new PseudoView\CommentPseudo;
+				case 'media':
+					$obj = new PseudoView\MediaPseudo;
 				break;
 				case 'category':
 					$obj = new PseudoView\CategoryPseudo;
+				break;
+				case 'comment':
+					$obj = new PseudoView\CommentPseudo;
 				break;
 				case 'widget':
 					$obj = new PseudoView\WidgetPseudo;

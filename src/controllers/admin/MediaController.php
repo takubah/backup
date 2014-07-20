@@ -20,7 +20,9 @@ class Admin_MediaController extends AsmoyoController
 
 	public function create()
 	{
-		$data = array();
+		$data = array(
+			'statusList'	=> $this->media->getStatusList(),
+		);
 		return $this->loadView('asmoyo::admin.media.create', $data);
 	}
 
@@ -34,36 +36,6 @@ class Admin_MediaController extends AsmoyoController
 		}
 
 		return Response::json(array('error' => $this->media->errors), 400);
-	}
-
-	public function storeFroala()
-	{
-		$input = Input::all();
-		$input['type'] = 'internal';
-		$input['title'] = str_random('40');
-		$input['slug'] = Str::slug($input['title']);
-
-		if( $process = $this->media->store($input) )
-		{
-			return Response::json( array('link' => getMedia($process['file'], 'original') ), 200);
-		}
-
-		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
-	}
-
-	public function getForFroala()
-	{
-		$medias = $this->media->getAll();
-		if($medias['items']) {
-			foreach($medias['items'] as $med) {
-				// $result[]	= getMedia($med['file'], 'small');
-				$result[]	= getMedia($med['file'], 'medium');
-				// $result[]	= getMedia($med['file'], 'large');
-				// $result[]	= getMedia($med['file'], 'original');
-			}
-			return $result;
-		}
-		return false;
 	}
 
 	public function show($slug)
@@ -80,7 +52,8 @@ class Admin_MediaController extends AsmoyoController
 	public function edit($id)
 	{
 		$data = array(
-			'media'		=> $this->media->getById($id),
+			'media'			=> $this->media->getById($id),
+			'statusList'	=> $this->media->getStatusList(),
 		);
 
 		if( ! $data['media'] ) return App::abort(404);
@@ -121,5 +94,35 @@ class Admin_MediaController extends AsmoyoController
 			'medias'	=> Paginator::make($medias, $medias['total'], $medias['limit']),
 		);
 		return View::make('asmoyo::admin.media.ajaxIndex', $data);
+	}
+
+	public function storeFroala()
+	{
+		$input = Input::all();
+		$input['type'] = 'internal';
+		$input['title'] = str_random('40');
+		$input['slug'] = Str::slug($input['title']);
+
+		if( $process = $this->media->store($input) )
+		{
+			return Response::json( array('link' => getMedia($process['file'], 'original') ), 200);
+		}
+
+		return Response::json(array('error' => 'error, pastikan file yg di upload ber-format : jpg, jpeg, gif, png'), 400);
+	}
+
+	public function getForFroala()
+	{
+		$medias = $this->media->getAll();
+		if($medias['items']) {
+			foreach($medias['items'] as $med) {
+				// $result[]	= getMedia($med['file'], 'small');
+				$result[]	= getMedia($med['file'], 'medium');
+				// $result[]	= getMedia($med['file'], 'large');
+				// $result[]	= getMedia($med['file'], 'original');
+			}
+			return $result;
+		}
+		return false;
 	}
 }

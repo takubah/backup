@@ -23,7 +23,7 @@ class Media extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('gallery_id', 'type', 'file', 'mime_type', 'size', 'title', 'slug', 'description');
+	protected $fillable = array('gallery_id', 'type', 'file', 'mime_type', 'size', 'status', 'title', 'slug', 'description');
 
 	/**
     * These are make collumn to Carbon instance
@@ -43,6 +43,14 @@ class Media extends EloquentBase
 	);
 
     /**
+    * list status support
+    * @var array
+    */
+    public $statusList = array(
+        'published', 'privated'
+    );
+
+    /**
     * Default validation rules
     */
     public function defaultRules()
@@ -52,6 +60,7 @@ class Media extends EloquentBase
             'slug'          => 'required|unique:'.$this->table,
             'type'          => 'required|in:'.implode(',', $this->typeList),
             'file'          => 'required|mimes:jpeg,jpg,gif,png',
+            'status'        => 'required|in:'.implode(',', $this->statusList),
         );
     }
 

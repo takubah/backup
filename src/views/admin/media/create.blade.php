@@ -50,6 +50,15 @@
 				</div>
 			</div>
 
+			<div class="form-group">
+				<label for="status" class="col-sm-3 control-label">
+					Status
+				</label>
+				<div class="col-sm-9">
+					{{Form::select('status', $statusList, null, array('class' => 'form-control', 'id' => 'status', 'placeholder' => 'status'))}}
+				</div>
+			</div>
+
         	<div class="form-group">
 				<label for="description" class="col-sm-3 control-label">
 					Description

@@ -152,6 +152,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 					'file'			=> $img['fileName'],
 					'mime_type'		=> $img['mimeType'],
 					'size'			=> $img['size'],
+					'status'		=> Input::get('status', 'published'),
 				));
 			}
 			$this->errors = $this->image->errors;
@@ -169,6 +170,7 @@ class MediaRepo extends RepoBase implements MediaInterface
 				'slug'	 		=> Str::slug( Input::get('title') ),
 				'description'	=> Input::get('description', ''),
 				'type'			=> $input['type'],
+				'status'		=> Input::get('status', 'published'),
 			);
 
 			if( Input::hasFile('file') )

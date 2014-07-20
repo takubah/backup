@@ -26,6 +26,7 @@
 				<tr>
 					<th style="width:40px;"> No. </th>
 					<th> Title </th>
+					<th> Status </th>
 					<th> Opsi </th>
 				</tr>
 			</thead>
@@ -35,6 +36,7 @@
 					<tr>
 						<td> {{$itemNumber++}} </td>
 						<td> {{$category['title']}} </td>
+						<td> {{$category['status']}} </td>
 						<td>
 							<a href="{{route('admin.category.edit', $category['slug'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit

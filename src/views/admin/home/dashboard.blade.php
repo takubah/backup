@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-4">
 
 		<div class="asmoyo-box">
 			<h3 class="box-header">
@@ -42,7 +42,7 @@
 		</div>
 
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-4">
 
 		<div class="asmoyo-box">
 			<h3 class="box-header">
@@ -60,7 +60,7 @@
 				Grid Post
 			</h3>
 			<div class="box-content">
-				{{ '{<asmoyo:post type=grid sortir=title-ascending>}' }}
+				{{ '{<asmoyo:post type=grid sortir=title-ascending size=80px>}' }}
 			</div>
 		</div>
 
@@ -81,6 +81,50 @@
 			</h3>
 			<div class="box-content">
 				{{ '{<asmoyo:post type=detail id=1>}' }}
+			</div>
+		</div>
+
+	</div>
+
+	<div class="col-md-4">
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-picture-o"></i>
+				List Media
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:media type=list sortir=latest-updated>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-picture-o"></i>
+				Grid Media
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:media type=grid sortir=title-ascending size=80px>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-picture-o"></i>
+				Media Object Media
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:media type=media-object sortir=title-ascending>}' }}
+			</div>
+		</div>
+
+		<div class="asmoyo-box">
+			<h3 class="box-header">
+				<i class="fa fa-picture-o"></i>
+				Detail Media
+			</h3>
+			<div class="box-content">
+				{{ '{<asmoyo:media type=detail id=1>}' }}
 			</div>
 		</div>
 
