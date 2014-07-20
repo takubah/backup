@@ -24,7 +24,9 @@ class CategoryPseudo extends Pseudo
 			break;
 
 			case 'grid':
-				
+				$data['attr']['imageSize'] = array_get($attr, 'imageSize') ?: '100px' ;
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], 'published');
+				return View::make('asmoyo::pseudo.category', $data);
 			break;
 
 			case 'media-object':

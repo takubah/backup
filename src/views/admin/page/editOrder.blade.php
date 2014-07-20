@@ -14,7 +14,7 @@
 	
 		{{Form::open(array('method' => 'PUT', 'route' => 'admin.page.editOrderSave'))}}
 			
-			<ol class="serialization vertical">
+			<ol class="serialization asmoyo-list">
 				@if($pages)
 					@foreach($pages as $page)
 						<li data-id="{{$page['id']}}" data-title="{{$page['title']}}">

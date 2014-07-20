@@ -80,7 +80,7 @@ class AsmoyoController extends Controller {
 		}
 	}
 
-	protected function getMedia($size, $file)
+	protected function getMedia($size, $file='default')
 	{
 		$path 	= public_path('uploads/images/'. $size .'/' );
 		$requestedFile = $path . $file;

@@ -74,7 +74,7 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		'uses'	=> 'AsmoyoController@getAssets',
 	))->where('theme', '[A-Za-z0-9-_]+')->where('file', '(.*)');
 
-	Route::get('uploads/{size}/{file}', array(
+	Route::get('uploads/{size}/{file?}', array(
 		'as'	=> 'getMedia',
 		'uses'	=> 'AsmoyoController@getMedia',
 	))->where('file', '(.*)');

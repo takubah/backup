@@ -29,8 +29,8 @@
 		@if($medias['total'])
 		@foreach($medias['items'] as $media)
 			<div class="col-sm-6 col-md-3">
-                <div class="thumbnail asmoyoMedia">
-                    <div class="image" style="background:url( {{getMedia($media['file'])}} ) center center; background-size: cover;"> &nbsp; </div>
+                <div class="thumbnail asmoyo-media">
+                    <div class="image" style="background-image:url('{{getMedia($media['file'])}}');"> &nbsp; </div>
                     <div class="caption hoverable">
                         {{$media['title']}}
                     </div>
