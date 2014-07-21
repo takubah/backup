@@ -39,17 +39,17 @@ class WidgetTableSeeder extends Seeder {
 			    'content'	 	=> '',
 			    'attribute'		=> json_encode(array(
 			    	'field' => array(
-			    		'title' 	=> 'required',
-			    		'link'		=> 'required|url',
-			    		'icon'		=> '',
-			    		'description' => '',
-		    		),
-		    		'field_type' => array(
 		    			'title'		=> 'text',
 		    			'link'		=> 'text',
 		    			'icon'		=> 'text',
 		    			'description' => 'textarea',
 	    			),
+			    	'validation' => array(
+			    		'title' 	=> 'required',
+			    		'link'		=> 'required|url',
+			    		'icon'		=> '',
+			    		'description' => '',
+		    		),
 		    	)),
 			    'status'	  	=> 'enabled',
 			),
