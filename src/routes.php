@@ -209,11 +209,11 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.widget.group.store',
 			'uses' 		=> 'Admin_WidgetController@groupStore'
 		));
-		Route::get('widget/{slug}/show/{id}', array(
+		Route::get('widget/{slug}/show/{any}', array(
 			'as' 		=> 'admin.widget.group.show',
 			'uses' 		=> 'Admin_WidgetController@groupShow'
 		));
-		Route::get('widget/{slug}/edit/{id}', array(
+		Route::get('widget/{slug}/edit/{any}', array(
 			'as' 		=> 'admin.widget.group.edit',
 			'uses' 		=> 'Admin_WidgetController@groupEdit'
 		));
@@ -221,9 +221,9 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.widget.group.update',
 			'uses' 		=> 'Admin_WidgetController@groupUpdate'
 		));
-		Route::delete('widget/{slug}/delete/{id}', array(
-			'as' 		=> 'admin.widget.group.delete',
-			'uses' 		=> 'Admin_WidgetController@groupDelete'
+		Route::delete('widget/{slug}/destroy/{id}', array(
+			'as' 		=> 'admin.widget.group.destroy',
+			'uses' 		=> 'Admin_WidgetController@groupDestroy'
 		));
 		// End Widget
 
