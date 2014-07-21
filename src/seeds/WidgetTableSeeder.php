@@ -16,6 +16,12 @@ class WidgetTableSeeder extends Seeder {
 			    'content'	 	=> '',
 			    'attribute'		=> json_encode(array(
 			    	'field' => array(
+		    			'title'		=> 'text',
+		    			'link'		=> 'text',
+		    			'description' => 'textarea',
+		    			'file'		=> 'media',
+	    			),
+			    	'validation' => array(
 			    		'title'			=> 'required',
 			    		'link'			=> 'url',
 			    		'description' 	=> '',
@@ -38,6 +44,12 @@ class WidgetTableSeeder extends Seeder {
 			    		'icon'		=> '',
 			    		'description' => '',
 		    		),
+		    		'field_type' => array(
+		    			'title'		=> 'text',
+		    			'link'		=> 'text',
+		    			'icon'		=> 'text',
+		    			'description' => 'textarea',
+	    			),
 		    	)),
 			    'status'	  	=> 'enabled',
 			),
