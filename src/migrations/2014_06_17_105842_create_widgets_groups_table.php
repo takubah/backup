@@ -20,6 +20,7 @@ class CreateWidgetsGroupsTable extends Migration {
 			$table->string('title');
 			$table->string('slug');
 			$table->string('description');
+			$table->text('content')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

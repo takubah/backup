@@ -19,8 +19,8 @@ class CreateWidgetsTable extends Migration {
 			$table->string('slug');
 		    $table->text('description');
 		    $table->text('content')->nullable();
-		    $table->boolean('is_hasMany');
-		    $table->string('view_path');
+		    $table->boolean('has_group');
+		    $table->text('attribute');
 		    $table->string('status');
 			$table->timestamps();
 		});

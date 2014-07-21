@@ -9,23 +9,37 @@ class WidgetTableSeeder extends Seeder {
 
 		$widgets 	= array(
 			array(
-			    'title' 			=> 'Asmoyo Bootstrap Banner',
-			    'slug'	 			=> 'asmoyo-bootstrap-banner',
-			    'description' 		=> 'bootstrap banner for banner',
-			    'is_hasMany'  		=> 1,
-			    'content'	 		=> '',
-			    'view_path'			=> 'asmoyo-bootstrap-banner',
-			    'status'	  		=> 'enabled',
+			    'title' 		=> 'Asmoyo Bootstrap Banner',
+			    'slug'	 		=> 'asmoyo-bootstrap-banner',
+			    'description' 	=> 'bootstrap banner for banner',
+			    'has_group'  	=> 1,
+			    'content'	 	=> '',
+			    'attribute'		=> json_encode(array(
+			    	'field' => array(
+			    		'title'			=> 'required',
+			    		'link'			=> 'url',
+			    		'description' 	=> '',
+			    		'file'			=> 'required|url'
+		    		),
+		    	)),
+			    'status'	  	=> 'enabled',
 			),
 
 			array(
-			    'title' 			=> 'Asmoyo Daftars',
-			    'slug'	 			=> 'asmoyo-daftars',
-			    'description' 		=> 'make list for your web info',
-			    'is_hasMany'  		=> 1,
-			    'content'	 		=> '',
-			    'view_path'			=> 'asmoyo-daftars',
-			    'status'	  		=> 'enabled',
+			    'title' 		=> 'Asmoyo Daftars',
+			    'slug'	 		=> 'asmoyo-daftars',
+			    'description' 	=> 'make list for your web info',
+			    'has_group'  	=> 1,
+			    'content'	 	=> '',
+			    'attribute'		=> json_encode(array(
+			    	'field' => array(
+			    		'title' 	=> 'required',
+			    		'link'		=> 'required|url',
+			    		'icon'		=> '',
+			    		'description' => '',
+		    		),
+		    	)),
+			    'status'	  	=> 'enabled',
 			),
 		);
 
@@ -43,6 +57,20 @@ class WidgetTableSeeder extends Seeder {
 				'title' 			=> 'Banner Utama',
 				'slug'	 			=> 'banner-utama',
 				'description' 		=> 'Banner utama pada homepage',
+				'content'			=> json_encode(array(
+					array(
+			    		'title'			=> 'Banner ke 1',
+			    		'link'			=> 'http://google.co.id',
+			    		'description' 	=> 'ini adalah banner ke 1',
+			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+		    		),
+		    		array(
+		    			'title'			=> 'Banner ke 2',
+			    		'link'			=> 'http://facebook.com',
+			    		'description' 	=> 'ini adalah banner ke 2',
+			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+	    			),
+		    	)),
 			),
 
 			// daftars widget vertical
@@ -52,22 +80,62 @@ class WidgetTableSeeder extends Seeder {
 				'title' 			=> 'Layanan Kami',
 				'slug'	 			=> 'layanan-kami',
 				'description' 		=> 'Daftar Layanan Kami',
+				'content'			=> json_encode(array(
+					array(
+			    		'title'			=> 'Dekorasi Balon',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> '',
+		    		),
+		    		array(
+		    			'title'			=> 'MC Badut (Ulang Tahun)',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> '',
+	    			),
+	    			array(
+						'title'			=> 'Puppet Show',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> '',
+					),
+					array(
+						'title'			=> 'Electone',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> '',
+					),
+		    	)),
 			),
 
 			// daftars widget horizontal
 			array(
-				'widget_id' 		=> 2,
-				'type'		 		=> 'horizontal',
-				'title' 			=> 'Keunggulan',
-				'slug'	 			=> 'Keunggulan',
-				'description' 		=> 'Daftar Keunggulan Kami',
+				'widget_id' 	=> 2,
+				'type'		 	=> 'horizontal',
+				'title' 		=> 'Keunggulan',
+				'slug'	 		=> 'Keunggulan',
+				'description' 	=> 'Daftar Keunggulan Kami',
+				'content'		=> json_encode(array(
+					array(
+						'title'			=> 'Proses Kami',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,'
+					),
+					array(
+						'title'			=> 'Kualitas Acara',
+						'link'			=> '',
+						'icon'			=> '',
+						'description'	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,'
+					),
+				)),
 			),
 		);
 
 		DB::table('widgets_groups')->insert($widgets_groups);
 		/* End Widgets_Groups */
 
-		/* Widgets_Groups_Items */
+		/* Widgets_Groups_Items *
 		DB::table('widgets_items')->truncate();
 
 		$widgets_items 	= array(
@@ -78,12 +146,12 @@ class WidgetTableSeeder extends Seeder {
 				'parent_id'			=> null,
 				'order'				=> 0,
 				'title'				=> 'banner ke 1',
-				'content'			=> json_encode(
-					array(
-						'file'			=> 'bootstrap-banner1.jpg',
-						'description'	=> 'ini adalah banner yang ke 1'
-					)
-				),
+				'content'			=> json_encode(array(
+		    		'title'			=> 'Banner ke 1',
+		    		'link'			=> 'http://google.co.id',
+		    		'description' 	=> 'ini adalah banner ke 1',
+		    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+		    	)),
 			),
 			array(
 				'widget_id' 		=> null,
@@ -91,12 +159,12 @@ class WidgetTableSeeder extends Seeder {
 				'parent_id'			=> null,
 				'order'				=> 1,
 				'title'				=> 'banner ke 2',
-				'content'			=> json_encode(
-					array(
-						'file'			=> 'bootstrap-banner2.jpg',
-						'description'	=> 'ini adalah banner yang ke 2'
-					)
-				),
+				'content'			=> json_encode(array(
+					'title'			=> 'Banner ke 2',
+		    		'link'			=> 'http://facebook.com',
+		    		'description' 	=> 'ini adalah banner ke 2',
+		    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+				)),
 			),
 			// end banner widget
 
