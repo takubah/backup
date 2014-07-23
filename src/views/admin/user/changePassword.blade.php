@@ -1,9 +1,9 @@
-@section('title') Edit User {{$user['username']}} @stop
+@section('title') Ubah Password Admin @stop
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-users"></i>
-		Edit User : {{$user['username']}}
+		Ubah Password Admin
 	</h3>
 	<div class="box-content">
 
