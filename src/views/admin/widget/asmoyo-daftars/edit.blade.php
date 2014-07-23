@@ -61,10 +61,13 @@
 			</div>
 
 			<hr>
-			<a class="btn btn-default" onclick="addRow()">
-				<i class="fa fa-plus"></i>
-				Tambahkan Baris
-			</a>
+			<p class="lead">
+				<a href="#bottom" class="btn btn-default" onclick="addRow()">
+					<i class="fa fa-plus"></i>
+					Tambahkan Baris
+				</a>
+			</p>
+
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
 			@if($group['content'])
 			<?php $i = 1; ?>
@@ -106,7 +109,7 @@
 			@endif
 			</ol>
 
-			<div class="form-group">
+			<div class="form-group" id="bottom">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary">
 						<i class="fa fa-check"></i>
@@ -156,6 +159,7 @@
 		<hr style="border-color:#999;">
 	</li>
 </div>
+<!-- End Clone Data -->
 
 
 @section('javascripts')
@@ -184,7 +188,6 @@
 		}
 
 		function removeRow(num) {
-			alert('total item : '+ itemTotal);
 			if(confirm('anda yakin ?'))
 			{
 				if( itemTotal > 1 ) {

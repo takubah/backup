@@ -1,4 +1,5 @@
 @section('javascripts')
+
 	<!-- Modal -->
 	<div class="modal fade" id="modalAjax" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -19,4 +20,5 @@
 	</div>
 
 	@parent
+	
 @stop
