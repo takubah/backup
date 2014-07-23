@@ -14,7 +14,7 @@
 	
 		{{Form::open(array('method' => 'PUT', 'route' => 'admin.page.editOrderSave'))}}
 			
-			<ol class="serialization asmoyo-list">
+			<ol id="page-sortir" class="sortable asmoyo-list">
 				@if($pages)
 					@foreach($pages as $page)
 						<li data-id="{{$page['id']}}" data-title="{{$page['title']}}">
@@ -56,7 +56,7 @@
 	@parent
 	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.js', 'admin')}}
 	<script type="text/javascript">
-		var group = $("ol.serialization").sortable({
+		var group = $("#page-sortir").sortable({
 			group: 'serialization',
 			onDrop: function (item, container, _super) {
 				var data = group.sortable("serialize").get();

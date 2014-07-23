@@ -7,7 +7,7 @@
 	@parent
 	{{asmoyoAsset('plugin/froala_editor/js/froala_editor.min.js', 'admin')}}
 
-	<script>		
+	<script>
 		var froala_defaults = {
 			imageUploadURL: "{{route('admin.media.storeFroala')}}",
 			imagesLoadURL: "{{route('admin.media.getForFroala')}}",
