@@ -35,7 +35,10 @@
 				@foreach($widgets['items'] as $widget)
 					<tr>
 						<td> {{$itemNumber++}} </td>
-						<td> {{$widget['title']}} </td>
+						<td>
+							<h4>{{$widget['title']}}</h4>
+							<p>{{$widget['description']}}</p>
+						</td>
 						<td> {{$widget['status']}} </td>
 						<td>
 							<a href="{{route('admin.widget.group', $widget['slug'])}}" class="btn btn-default btn-sm">

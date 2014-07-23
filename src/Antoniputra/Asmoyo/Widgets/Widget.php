@@ -22,7 +22,7 @@ class Widget extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('title', 'slug', 'description', 'content', 'view_path', 'is_hasMany', 'status');
+	protected $fillable = array('title', 'slug', 'description', 'content', 'view_path', 'has_group', 'status');
 
 	/**
     * These are make collumn to Carbon instance
@@ -31,6 +31,16 @@ class Widget extends EloquentBase {
 	public function getDates()
     {
         return array('created_at', 'updated_at', 'deleted_at');
+    }
+
+    public function getAttributeAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setAttributeAttribute($value)
+    {
+        $this->attributes['attribute'] = json_encode($value);
     }
 
     /**

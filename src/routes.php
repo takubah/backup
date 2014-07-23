@@ -217,7 +217,7 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.widget.group.edit',
 			'uses' 		=> 'Admin_WidgetController@groupEdit'
 		));
-		Route::put('widget/{slug}/edit/{id}', array(
+		Route::put('widget/{slug}/edit/{any}', array(
 			'as' 		=> 'admin.widget.group.update',
 			'uses' 		=> 'Admin_WidgetController@groupUpdate'
 		));

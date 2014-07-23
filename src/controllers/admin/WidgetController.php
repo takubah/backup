@@ -48,16 +48,22 @@ class Admin_WidgetController extends AsmoyoController
 	}
 
 	
-	// group
+	/**
+	* Widget Group
+	*/
 
 	public function group($widgetSlug)
 	{
-		$widgets = $this->widget->getAllPaginated();
+		// get widget first
+		$widget = $this->widget->getBySlug($widgetSlug);
+		if( ! $widget ) return App::abort(404);
+
+		$groups = $this->widget->getGroupAllPaginated($widget['id']);
 		$data 	= array(
-			'widgets'	=> Paginator::make($widgets, $widgets['total'], $widgets['limit']),
+			'widget' => $widget,
+			'groups' => Paginator::make($groups, $groups['total'], $groups['limit']),
 		);
-		// return $data['widgets'];
-		return $this->loadView('asmoyo::admin.widget.index', $data);
+		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.index', $data);
 	}
 
 	public function groupShow($widgetSlug, $groupSlug)
@@ -73,21 +79,43 @@ class Admin_WidgetController extends AsmoyoController
 	public function groupStore($widgetSlug)
 	{
 		return 'ini adalah group Show '. $widgetSlug;
-	}	
+	}
 
 	public function groupEdit($widgetSlug, $groupSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug .' dan groupnya : '. $groupSlug;
+		// get widget first
+		$widget = $this->widget->getBySlug($widgetSlug);
+		if( ! $widget ) return App::abort(404);
+
+		$data = array(
+			'widget' 	=> $widget,
+			'group' 	=> $this->widget->getGroupBySlug($groupSlug),
+			'typeList'	=> $this->widget->getTypeList(),
+		);
+		
+		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.edit', $data);
 	}
 	
 	public function groupUpdate($widgetSlug, $groupSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug .' dan groupnya : '. $groupSlug;
+		$widget 	= $this->widget->getBySlug($widgetSlug);
+		$input 		= Input::all();
+		
+		if( $this->widget->groupUpdate($input['widget_id'], $input['id'], $input) )
+		{
+			return $this->redirectAlert( route('admin.widget.group', $widget['slug']), 'success', 'Berhasil Diperbarui !');
+		}
+
+		return Redirect::back()->with('alert', array(
+			'type'		=> 'danger',
+			'title'		=> 'Gagal',
+			'text'		=> $this->widget->errors
+		));
 	}
 
-	public function groupDelete($widgetSlug, $groupSlug)
+	public function groupDestroy($widgetSlug, $groupSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug .' dan groupnya : '. $groupSlug;
+		return 'ini adalah group Show '. $widgetSlug .' dan itemnya : '. $groupSlug;
 	}
 
 }

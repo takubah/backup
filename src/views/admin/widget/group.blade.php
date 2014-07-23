@@ -1,9 +1,9 @@
-@section('title') Daftar Widget @stop
+@section('title') Grup Widget : {{$widget['title']}} @stop
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-file-text-o"></i>
-		Daftar Widget
+		Grup Widget : {{$widget['title']}}
 	</h3>
 	<div class="box-content">
 
@@ -11,13 +11,13 @@
 
 		<ul class="nav nav-pills">
 			<li class="disabled">
-				<a>Total Data : <b>{{$widgets->getTotal()}}</b></a>
+				<a>Total Data : <b>{{$groups->getTotal()}}</b></a>
 			</li>
 			<li class="disabled">
-				<a>Sortir by : <b>{{$widgets['sortir']}}</b></a>
+				<a>Sortir by : <b>{{$groups['sortir']}}</b></a>
 			</li>
 			<li class="disabled">
-				<a>Status by : <b>{{$widgets['status']}}</b></a>
+				<a>Status by : <b>{{$groups['status']}}</b></a>
 			</li>
 		</ul>
 
@@ -26,39 +26,28 @@
 				<tr>
 					<th style="width:40px;"> No. </th>
 					<th> Title </th>
-					<th> Status </th>
+					<th> Description </th>
 					<th> Opsi </th>
 				</tr>
 			</thead>
 			<tbody>
-				@if($widgets['items'])
-				@foreach($widgets['items'] as $widget)
+				@if($groups['items'])
+				@foreach($groups['items'] as $group)
 					<tr>
 						<td> {{$itemNumber++}} </td>
-						<td> {{$widget['title']}} </td>
-						<td> {{$widget['status']}} </td>
+						<td> {{$group['title']}} </td>
+						<td> {{$group['description']}} </td>
 						<td>
-							<a href="{{route('admin.widget.group', $widget['slug'])}}" class="btn btn-default btn-sm">
-								<i class="fa fa-gear"></i>
-								Kelola
+							<a href="{{route('admin.widget.group.edit', array($widget['slug'], $group['slug']) )}}" class="btn btn-default btn-sm">
+								<i class="fa fa-pencil"></i> Edit
 							</a>
-							@if($widget['status'] == 'enabled')
-								{{Form::asmoyoLink('Disable', 'PUT', route('admin.widget.disable', $widget['id']),
-									array(
-										'icon'	=> 'fa fa-power-off',
-										'class'	=> 'btn btn-danger btn-sm'
-									),
-									'Apakah anda yakin ?'
-								)}}
-							@elseif($widget['status'] == 'disabled')
-								{{Form::asmoyoLink('Enable', 'PUT', route('admin.widget.enable', $widget['id']),
-									array(
-										'icon'	=> 'fa fa-check',
-										'class'	=> 'btn btn-success btn-sm'
-									),
-									'Apakah anda yakin ?'
-								)}}
-							@endif
+							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.widget.group.destroy', array($widget['slug'], $group['id']) ),
+								array(
+									'icon'	=> 'fa fa-trash-o',
+									'class'	=> 'btn btn-danger btn-sm'
+								),
+								'Apakah anda yakin ?'
+							)}}
 						</td>
 					</tr>
 				@endforeach
@@ -72,7 +61,7 @@
 			</tbody>
 		</table>
 
-		{{$widgets->appends(array('sortir' => $widgets['sortir'], 'status' => $widgets['status']))->links()}}
+		{{$groups->appends(array('sortir' => $groups['sortir'], 'status' => $groups['status']))->links()}}
 
 	</div>
 </div>

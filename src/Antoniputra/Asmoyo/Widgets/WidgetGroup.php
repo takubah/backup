@@ -27,7 +27,7 @@ class WidgetGroup extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('widget_id', 'type', 'title', 'slug', 'description');
+	protected $fillable = array('widget_id', 'type', 'title', 'slug', 'description', 'content');
 
 	/**
     * These are make collumn to Carbon instance
@@ -38,16 +38,36 @@ class WidgetGroup extends EloquentBase {
         return array('created_at', 'updated_at', 'deleted_at');
     }
 
+    public function getContentAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = json_encode($value);
+    }
+
+    /**
+    * list type support
+    * @var array
+    */
+    public $typeList = array(
+        'vertical', 'horizontal'
+    );
+
     /**
     * Default validation rules
     */
     public function defaultRules()
     {
         return array(
-            'widget_id'         => 'required',
-            'title'             => 'required',
-            'slug'              => 'required',
-            'description'       => 'required',
+            'widget_id'     => 'required',
+            'title'         => 'required|unique:'.$this->table,
+            'slug'          => 'required|unique:'.$this->table,
+            'description'   => 'required',
+            'content'       => 'required',
+            'type'          => 'required|in:'.implode(',', $this->typeList),
         );
     }
 

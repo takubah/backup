@@ -1,9 +1,15 @@
 <?php namespace Antoniputra\Asmoyo\Widgets;
 
+use Input;
 use Antoniputra\Asmoyo\Cores\RepoBase;
 
 class WidgetRepo extends RepoBase implements WidgetInterface
 {
+	protected $groupEditRules = array(
+		'widget_id'	=> '',
+		'title'		=> 'required|unique:widgets_groups,title,<id>',
+        'slug'		=> 'required|unique:widgets_groups,slug,<id>',
+	);
 	
 	public function __construct(Widget $model, WidgetGroup $widgetGroup, WidgetItem $widgetItem)
 	{
@@ -35,14 +41,21 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		$status = $this->repoStatus($status);
 
 		// check cache
-		// $key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
-		// $tag = $this->getCacheTag('many');
-		// if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+		$key = __FUNCTION__.'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
-		$result = $this->prepareData($limit, $sortir, $status)->with('groups.items')->get();
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status)
+				->with('groups')
+				->get(),
+		);
 
 		// save cache
-        // if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
         return $result;
 	}
 	
@@ -54,9 +67,9 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		$status = $this->repoStatus($status);
 
 		// check cache
-		// $key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
-		// $tag = $this->getCacheTag('many');
-		// if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+		$key = __FUNCTION__.'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
 
 		$data = $this->prepareData($limit, $sortir, $status)->with('groups');
 		$result = array(
@@ -69,16 +82,21 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		);
 
 		// save cache
-        // if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
         return $result;
 	}
 
 	public function getById($id)
 	{
-		return $this->model->with('groups.items')->find($id);
+		return $this->model->find($id);
 	}
 
 	public function getBySlug($slug)
+	{
+		return $this->model->where('slug', $slug)->first();
+	}
+
+	public function getBySlugWithGroups($slug)
 	{
 		return $this->model->with('groups.items')
 			->where('slug', $slug)->first();
@@ -95,21 +113,128 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	}
 
 
-	// Group
+	/**
+	* Widget Group
+	*/
 
-	public function getGroupAll()
+	public function getGroupAll($widgetId, $limit = null, $sortir = null, $status = null)
 	{
-		return $this->widgetGroup->with('widget', 'items')->get();
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+
+		// check cache
+		$key = __FUNCTION__.'|widgetId:'.$widgetId .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$result = array(
+			'limit' => $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $this->prepareData($limit, $sortir, $status, $this->widgetGroup)
+				->where('widget_id', $widgetId)
+				->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
 	}
 
-	public function getGroupAllPaginated()
+	public function getGroupAllPaginated($widgetId, $page = null, $limit = null, $sortir = null, $status = null)
 	{
-		return $this->widgetGroup->with('widget', 'items')->get();
+		$page 	= $this->repoPage($page);
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+		$status = $this->repoStatus($status);
+		
+		// check cache
+		$key = __FUNCTION__ .'|widgetId:'.$widgetId .'|page:'.$page .'|limit:'.$limit .'|sortir:'.$sortir .'|status:'.$status;
+		$tag = $this->getCacheTag('many');
+		if( $get = $this->cacheTag($tag)->get($key) ) return $get;
+
+		$data = $this->prepareData($limit, $sortir, $status, $this->widgetGroup)
+			->where('widget_id', $widgetId);
+
+		$result = array(
+			'total'	=> $data->count(),
+			'page'	=> $page,
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'status' => $status,
+			'items' => $data->get(),
+		);
+
+		// save cache
+        if($result['items']) $this->cacheTag($tag)->forever($key, $result);
+        return $result;
 	}
 
-	public function getGroupBySlug($group_slug)
+	public function getGroupBySlug($groupSlug)
 	{
-		return $this->widgetGroup->with('widget', 'items')->where('slug', $group_slug)->first();
+		return $this->widgetGroup->with('items')->where('slug', $groupSlug)->first();
+	}
+
+	public function groupUpdate($widgetId, $groupId, $input = array(), $rules=array())
+	{
+		// get widget
+		$widget 	= $this->getById($widgetId);
+		$fields  	= array_keys($widget['attribute']['field']);
+		$custom_rules = $widget['attribute']['validation'];
+
+		$input 		= $input ?: Input::all();
+		$new_rules 	= array_merge($this->groupEditRules, $rules);
+
+		// foreach widget field / item
+		foreach ($input['content'][$fields[0]] as $key => $value)
+		{
+			$result[$key] = array();
+			foreach ($fields as $field)
+			{
+				$data[$field] = $input['content'][$field][$key];
+			}
+			// validation per field / item
+			if( ! $this->repoValidation($data, array(), $custom_rules) )
+			{
+				return false;
+			}
+			// save to $result
+			$result[$key] = $data;
+		}
+
+		$attr = array(
+			'id'		=> $input['id'],
+			'title' 	=> $input['title'],
+			'slug'		=> \Str::slug($input['title']),
+			'type'	 	=> $input['type'],
+			'description' => $input['description'],
+			'content' 	=> $result,
+		);
+
+		if( $this->repoValidation($attr, $new_rules, $this->widgetGroup->defaultRules()) )
+		{
+			// get widgetGroup
+			$prevData = $this->widgetGroup->find($groupId);
+
+			// clear cache
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|slug:'.$prevData['slug']);
+
+			$prevData->update($attr);
+			return true;
+		}
+		return false;
+	}
+
+
+	public function getTypeList()
+	{
+		foreach( $this->widgetGroup->typeList as $t )
+		{
+			$key = strtolower(str_replace(' ', '', $t));
+			$result[$key] = ucfirst($t);
+		}
+		return $result;
 	}
 
 }

@@ -47,11 +47,13 @@ abstract class RepoBase
 		return Cache::tags($tag)->flush();
 	}
 
-	protected function repoValidation($input, $custom_rules=array())
+	public function repoValidation($input, $custom_rules=array(), $base_rules=array())
 	{
-		$rules = $this->prepareValidation( $input, array_merge($this->model->defaultRules(), $custom_rules) );
+		$base_rules = $base_rules ?: $this->model->defaultRules();
+		$rules 		= $this->prepareValidation( $input, array_merge($base_rules, $custom_rules) );
 
 		$messages   = Lang::get('validation.custom');
+		// dd($rules);
 		$v          = Validator::make($input, $rules, $messages);
 		
 		 // check for failure
@@ -87,9 +89,9 @@ abstract class RepoBase
 	}
 
 
-	protected function prepareData($limit = null, $sortir = null, $status = null)
+	protected function prepareData($limit = null, $sortir = null, $status = null, $model=null)
 	{
-		$data = $this->model;
+		$data 	= ($model instanceof \Eloquent) ? $model : $this->model;
 		$sortir = $sortir ?: $this->repoSortir($sortir);
 		$limit  = $limit ?: $this->repoLimit($limit);
 		$status = $status ?: $this->repoStatus($status);
