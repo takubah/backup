@@ -1,5 +1,3 @@
-<div id="jancok"></div>
-
 <div class="modal-header">
     <a class="close" data-dismiss="modal">
     	<span aria-hidden="true">&times;</span>

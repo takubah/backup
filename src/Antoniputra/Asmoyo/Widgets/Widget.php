@@ -4,7 +4,7 @@ use Antoniputra\Asmoyo\Cores\EloquentBase;
 
 class Widget extends EloquentBase {
 	
-	protected $table = 'widgets';
+	public $table = 'widgets';
 
 	/**
     * Morph relation name

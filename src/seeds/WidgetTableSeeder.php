@@ -46,7 +46,7 @@ class WidgetTableSeeder extends Seeder {
 	    			),
 			    	'validation' => array(
 			    		'title' 	=> 'required',
-			    		'link'		=> '',
+			    		'link'		=> 'url',
 			    		'icon'		=> '',
 			    		'description' => '',
 		    		),

@@ -7,3 +7,4 @@ Antoniputra\Asmoyo\Users\User::observe($eventBase);
 Antoniputra\Asmoyo\Categories\Category::observe($eventBase);
 Antoniputra\Asmoyo\Medias\Media::observe($eventBase);
 Antoniputra\Asmoyo\Posts\Post::observe($eventBase);
+Antoniputra\Asmoyo\Widgets\Widget::observe($eventBase);

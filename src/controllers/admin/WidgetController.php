@@ -66,9 +66,21 @@ class Admin_WidgetController extends AsmoyoController
 		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.index', $data);
 	}
 
-	public function groupShow($widgetSlug, $groupSlug)
+	public function groupShowAjax($widgetSlug, $groupSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug .' dan groupnya : '. $groupSlug;
+		if( ! Request::ajax()) { return App::abort(404); }
+		
+		// get widget and widgetGroup first
+		$widget 	= $this->widget->getBySlug($widgetSlug);
+		$group 		= $this->widget->getGroupBySlug($groupSlug);
+		if( ! $widget OR ! $group ) return App::abort(404);
+
+		$data = array(
+			'widget' 	=> $widget,
+			'group' 	=> $group,
+		);
+		
+		return View::make('asmoyo::admin.widget.'.$widget['slug'].'.show', $data);
 	}
 	
 	public function groupCreate($widgetSlug)
@@ -99,13 +111,14 @@ class Admin_WidgetController extends AsmoyoController
 
 	public function groupEdit($widgetSlug, $groupSlug)
 	{
-		// get widget first
-		$widget = $this->widget->getBySlug($widgetSlug);
-		if( ! $widget ) return App::abort(404);
+		// get widget and widgetGroup first
+		$widget 	= $this->widget->getBySlug($widgetSlug);
+		$group 		= $this->widget->getGroupBySlug($groupSlug);
+		if( ! $widget OR ! $group ) return App::abort(404);
 
 		$data = array(
 			'widget' 	=> $widget,
-			'group' 	=> $this->widget->getGroupBySlug($groupSlug),
+			'group' 	=> $group,
 			'typeList'	=> $this->widget->getTypeList(),
 		);
 		
@@ -129,9 +142,13 @@ class Admin_WidgetController extends AsmoyoController
 		));
 	}
 
-	public function groupDestroy($widgetSlug, $groupSlug)
+	public function groupDestroy($widgetSlug, $groupId)
 	{
-		return 'ini adalah group Show '. $widgetSlug .' dan itemnya : '. $groupSlug;
+		if( $this->widget->groupDelete($groupId) )
+		{
+			return $this->redirectAlert(null, 'success', 'Berhasil Dihapus !!');
+		}
+		return $this->redirectAlert(null, 'danger', 'Gagal Dihapus !!');
 	}
 
 }

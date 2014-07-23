@@ -13,7 +13,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	
 	public function __construct(Widget $model, WidgetGroup $widgetGroup, WidgetItem $widgetItem)
 	{
-		$this->model = $model;
+		$this->model 		= $model;
 		$this->widgetGroup 	= $widgetGroup;
 		$this->widgetItem 	= $widgetItem;
 	}
@@ -171,9 +171,50 @@ class WidgetRepo extends RepoBase implements WidgetInterface
         return $result;
 	}
 
+	public function getGroupById($groupId)
+	{
+		// check cache
+		$key = __FUNCTION__.'|groupId:'.$groupId;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
+
+		$result = $this->widgetGroup->with('items')->find($groupId);
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
+	}
+
 	public function getGroupBySlug($groupSlug)
 	{
-		return $this->widgetGroup->with('items')->where('slug', $groupSlug)->first();
+		// check cache
+		$key = __FUNCTION__.'|groupSlug:'.$groupSlug;
+		$tag = $this->getCacheTag('one');
+		if( $get = $this->cacheTag( $tag )->get($key) ) return $get;
+
+		$result = $this->widgetGroup->with('items')->where('slug', $groupSlug)->first();
+
+		// save cache
+		if($result) $this->cacheTag( $tag )->forever($key, $result);
+		return $result;
+	}
+
+	public function groupStore($widgetId, $input = array(), $rules = array())
+	{
+		// get widget
+		$widget 	= $this->getById($widgetId);
+		$base_rules = $this->widgetGroup->defaultRules();
+		$content[] 	= self::getFields($widget['attribute']['field']);
+		$input['slug']		= \Str::slug($input['title']);
+		$input['content'] 	= $content;
+
+		if( $this->repoValidation($input, array(), $base_rules) )
+		{
+			$this->widgetGroup->create($input);
+			$this->cacheFlush( $this->getCacheTag('many') );
+			return true;
+		}
+		return false;
 	}
 
 	public function groupUpdate($widgetId, $groupId, $input = array(), $rules = array())
@@ -215,7 +256,9 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 			$prevData = $this->widgetGroup->find($groupId);
 
 			// clear cache
-			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|slug:'.$prevData['slug']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupById|groupId:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|groupSlug:'.$prevData['slug']);
+			$this->cacheFlush( $this->getCacheTag('many') );
 
 			$prevData->update($attr);
 			return true;
@@ -223,20 +266,19 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		return false;
 	}
 
-	public function groupStore($widgetId, $input = array(), $rules = array())
+	public function groupDelete($groupId, $is_permanent=false)
 	{
-		// get widget
-		$widget 	= $this->getById($widgetId);
-		$base_rules = $this->widgetGroup->defaultRules();
-		$content[] 	= array_keys($widget['attribute']['field']);
-		$input['slug']		= \Str::slug($input['title']);
-		$input['content'] 	= $content;
-
-		if( $this->repoValidation($input, array(), $base_rules) )
+		if( $prevData = $this->widgetGroup->find($groupId) )
 		{
-			$this->widgetGroup->create($input);
-			// clear cache
-			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|slug:'.$prevData['slug']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupById|groupId:'.$prevData['id']);
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|groupSlug:'.$prevData['slug']);
+			$this->cacheFlush( $this->getCacheTag('many') );
+
+			if($is_permanent)
+				$prevData->forceDelete();
+			else
+				$prevData->delete();
+
 			return true;
 		}
 		return false;
@@ -249,6 +291,18 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		{
 			$key = strtolower(str_replace(' ', '', $t));
 			$result[$key] = ucfirst($t);
+		}
+		return $result;
+	}
+
+	public function getFields($fields)
+	{
+		if(!is_array($fields)) throw new \Exception("fields should be an array", 1);
+
+		$result = array();
+		foreach (array_keys($fields) as $key)
+		{
+			$result[$key]	= '';
 		}
 		return $result;
 	}

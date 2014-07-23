@@ -210,8 +210,8 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'uses' 		=> 'Admin_WidgetController@groupStore'
 		));
 		Route::get('widget/{slug}/show/{any}', array(
-			'as' 		=> 'admin.widget.group.show',
-			'uses' 		=> 'Admin_WidgetController@groupShow'
+			'as' 		=> 'admin.widget.group.showAjax',
+			'uses' 		=> 'Admin_WidgetController@groupShowAjax'
 		));
 		Route::get('widget/{slug}/edit/{any}', array(
 			'as' 		=> 'admin.widget.group.edit',
