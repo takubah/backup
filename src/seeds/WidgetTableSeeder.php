@@ -22,10 +22,10 @@ class WidgetTableSeeder extends Seeder {
 		    			'file'		=> 'media',
 	    			),
 			    	'validation' => array(
-			    		'title'			=> 'required',
-			    		'link'			=> 'url',
-			    		'description' 	=> '',
-			    		'file'			=> 'required|url'
+			    		'title' 	=> 'required',
+			    		'link'		=> 'url',
+			    		'description' => '',
+			    		'file'		=> 'required|url'
 		    		),
 		    	)),
 			    'status'	  	=> 'enabled',
@@ -46,7 +46,7 @@ class WidgetTableSeeder extends Seeder {
 	    			),
 			    	'validation' => array(
 			    		'title' 	=> 'required',
-			    		'link'		=> 'required|url',
+			    		'link'		=> '',
 			    		'icon'		=> '',
 			    		'description' => '',
 		    		),
