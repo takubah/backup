@@ -2,7 +2,7 @@
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
-		<i class="fa fa-file-text-o"></i>
+		<i class="fa fa-th-large"></i>
 		Daftar Widget
 	</h3>
 	<div class="box-content">

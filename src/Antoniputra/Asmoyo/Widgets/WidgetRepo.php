@@ -176,7 +176,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		return $this->widgetGroup->with('items')->where('slug', $groupSlug)->first();
 	}
 
-	public function groupUpdate($widgetId, $groupId, $input = array(), $rules=array())
+	public function groupUpdate($widgetId, $groupId, $input = array(), $rules = array())
 	{
 		// get widget
 		$widget 	= $this->getById($widgetId);
@@ -187,16 +187,13 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		$new_rules 	= array_merge($this->groupEditRules, $rules);
 
 		// foreach widget field / item
-		foreach ($input['content'][$fields[0]] as $key => $value)
-		{
+		foreach ($input['content'][$fields[0]] as $key => $value) {
 			$result[$key] = array();
-			foreach ($fields as $field)
-			{
+			foreach ($fields as $field) {
 				$data[$field] = $input['content'][$field][$key];
 			}
 			// validation per field / item
-			if( ! $this->repoValidation($data, array(), $custom_rules) )
-			{
+			if( ! $this->repoValidation($data, array(), $custom_rules) ) {
 				return false;
 			}
 			// save to $result
@@ -221,6 +218,25 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|slug:'.$prevData['slug']);
 
 			$prevData->update($attr);
+			return true;
+		}
+		return false;
+	}
+
+	public function groupStore($widgetId, $input = array(), $rules = array())
+	{
+		// get widget
+		$widget 	= $this->getById($widgetId);
+		$base_rules = $this->widgetGroup->defaultRules();
+		$content[] 	= array_keys($widget['attribute']['field']);
+		$input['slug']		= \Str::slug($input['title']);
+		$input['content'] 	= $content;
+
+		if( $this->repoValidation($input, array(), $base_rules) )
+		{
+			$this->widgetGroup->create($input);
+			// clear cache
+			$this->cacheTag( $this->getCacheTag('one') )->forget('getGroupBySlug|slug:'.$prevData['slug']);
 			return true;
 		}
 		return false;

@@ -6,6 +6,20 @@
 				Daftar Widget
 			</a>
 		</li>
+		@if(Request::segment(3))
+			<li>
+				<a href="{{route( 'admin.widget.group', Request::segment(3) )}}" style="text-transform:capitalize;">
+					<i class="fa fa-bars"></i>
+					{{Request::segment(3)}}
+				</a>
+			</li>
+			<li>
+				<a href="{{route( 'admin.widget.group.create', Request::segment(3) )}}" style="text-transform:capitalize;">
+					<i class="fa fa-plus"></i>
+					Tambah Grup Baru
+				</a>
+			</li>
+		@endif
 	</ul>
 </div>
 <hr>

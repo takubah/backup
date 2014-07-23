@@ -73,12 +73,28 @@ class Admin_WidgetController extends AsmoyoController
 	
 	public function groupCreate($widgetSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug;
+		// get widget first
+		$widget = $this->widget->getBySlug($widgetSlug);
+		if( ! $widget ) return App::abort(404);
+
+		$data = array(
+			'widget' 	=> $widget,
+			'typeList'	=> $this->widget->getTypeList(),
+		);
+		
+		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.create', $data);
 	}
 	
 	public function groupStore($widgetSlug)
 	{
-		return 'ini adalah group Show '. $widgetSlug;
+		$widget 	= $this->widget->getBySlug($widgetSlug);
+		$input 		= Input::all();
+		
+		if( $result = $this->widget->groupStore($input['widget_id'], $input) )
+		{
+			return $this->redirectAlert( route('admin.widget.group', $widget['slug']), 'success', 'Berhasil Ditambahkan !');
+		}
+		return $this->redirectAlert( null, 'danger', 'Gagal !', $this->widget->errors );
 	}
 
 	public function groupEdit($widgetSlug, $groupSlug)

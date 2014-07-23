@@ -5,31 +5,6 @@
 	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.css', 'admin')}}
 @stop
 
-@section('javascripts')
-	@parent
-	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.js', 'admin')}}
-	<script type="text/javascript">
-		// sortable
-		var group = $("#widgetSortir").sortable({
-			group: 'serialization',
-			handle: '#btn-move',
-			onDrop: function (item, container, _super)
-			{
-				_super(item, container);
-			}
-		});
-
-		// remove element
-		$(".removeItem").click(function() {
-			if(confirm('anda yakin ?'))
-			{
-				var item = $(this).attr('data-remove');
-				$( item ).remove();
-			}
-		});
-	</script>
-@stop
-
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-th-large"></i>
@@ -50,7 +25,7 @@
 						<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 							<h4 class="panel-title">
 								<i class="fa fa-pencil"></i>
-								Edit Identitas Grup
+								Edit Identitas Widget Grup
 							</h4>
 						</a>
 					</div>
@@ -86,19 +61,20 @@
 			</div>
 
 			<hr>
-
+			<a class="btn btn-default" onclick="addRow()">
+				<i class="fa fa-plus"></i>
+				Tambahkan Baris
+			</a>
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
 			@if($group['content'])
 			<?php $i = 1; ?>
 			@foreach($group['content'] as $w)
 				{{Form::hidden('content[icon][]', $w['icon'], array('class' => 'form-control'))}}
-				<li id="item_{{$i}}" style="position:relative;">
-					<i id="btn-move" class="fa fa-arrows" style="cursor:move;"></i>
-
-					<a data-remove="#item_{{$i}}" class="btn btn-default removeItem" style="position:absolute; right:0px; top:0px; z-index:9;">
+				<li id="item_{{$i}}">
+					<i id="btn-move" class="fa fa-arrows moveable"></i>
+					<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
 						Remove
 					</a>
-
 					<div class="form-group">
 						<label class="col-md-2 control-label">
 							Title
@@ -143,3 +119,82 @@
 
 	</div>
 </div>
+
+<!-- Clone Data -->
+<div id="item_clone" style="display:none;">
+	<li id="">
+		<i id="btn-move" class="fa fa-arrows moveable"></i>
+		<a class="btn btn-default btnRemove" onclick="">
+			Remove
+		</a>
+
+		{{Form::hidden('content[icon][]', null, array('class' => 'form-control'))}}
+		<div class="form-group">
+			<label class="col-md-2 control-label">
+				Title
+			</label>
+			<div class="col-md-9">
+				{{Form::text('content[title][]', null, array('class' => 'form-control'))}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-2 control-label">
+				Link
+			</label>
+			<div class="col-md-9">
+				{{Form::text('content[link][]', null, array('class' => 'form-control'))}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-2 control-label">
+				Description
+			</label>
+			<div class="col-md-9">
+				{{Form::textarea('content[description][]', null, array('class' => 'form-control', 'rows' => '3'))}}
+			</div>
+		</div>
+		<hr style="border-color:#999;">
+	</li>
+</div>
+
+
+@section('javascripts')
+	@parent
+	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.js', 'admin')}}
+	<script type="text/javascript">
+		// sortable
+		var group = $("#widgetSortir").sortable({
+			group: 'serialization',
+			handle: '#btn-move',
+			onDrop: function (item, container, _super)
+			{
+				_super(item, container);
+			}
+		});
+
+		var itemTotal = $('#widgetSortir li').length;
+
+		// add field
+		function addRow() {
+			itemTotal++;
+			$('#item_clone li').attr("id", "item_"+itemTotal);
+			var newLine  = $('#item_clone li').clone();
+			newLine.find('.btnRemove').attr('onclick', 'removeRow('+itemTotal+')');
+			$('#widgetSortir').append(newLine);
+		}
+
+		function removeRow(num) {
+			alert('total item : '+ itemTotal);
+			if(confirm('anda yakin ?'))
+			{
+				if( itemTotal > 1 ) {
+					$( '#item_'+num ).remove();
+					itemTotal--;
+				} else {
+					alert('anda tidak bisa menghilangkan semua item'); 
+					return false;
+				}
+			}
+		}
+	</script>
+@stop
