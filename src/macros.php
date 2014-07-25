@@ -103,3 +103,46 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $co
     
     return $output;
 });
+
+Form::macro('asmoyoWidget', function($name, $type, $value=null, $i=null, $attr=array())
+{
+    $output = '';
+    $id     = $name.'_'.$i;
+    $name   = 'content['.$name.'][]';
+    switch ($type) {
+        case 'text':
+            $prop   = array('id' => $id, 'class' => 'form-control');
+            $attr   = array_merge($prop, $attr);
+            $output .= Form::text($name, $value, $attr);
+        break;
+
+        case 'textarea':
+            $prop   = array('id' => $id, 'class' => 'form-control', 'rows' => '3');
+            $attr   = array_merge($prop, $attr);
+            $output .= Form::textarea($name, $value, $attr);
+        break;
+
+        case 'media':
+            $prop   = array('id' => $id, 'class' => 'form-control');
+            $attr   = array_merge($prop, $attr);
+            $output .= Form::text($name, $value, $attr);
+
+            $id_preview = 'media_preview_'.$i;
+            $output .= '<a id="'.$id_preview.'" class="thumbnail" style="margin:0px; height:300px; background:url(\''.$value.'\') center no-repeat; "> </a>';
+
+            $id_caller  = 'media_caller_'.$i;
+            $output .= '
+                <a href="'.route('admin.media.ajaxIndex').'" id="'.$id_caller.'" class="btn btn-default medias" data-toggle="modal" data-target="#modalAjax" >
+                    <i class="fa fa-picture-o"></i>
+                    Select Media
+                </a>
+            ';
+        break;
+    
+        default:
+            return 'field type not found';
+        break;
+    }
+
+    return $output;
+});

@@ -191,8 +191,7 @@
 
 @section('javascripts')
 	@parent
-
-	{{asmoyoAsset( 'js/asmoyo.js', 'admin')}}
+	
 	<script type="text/javascript">	
 
 		$( "#forImageDefault" ).asmoyoMediaModal({

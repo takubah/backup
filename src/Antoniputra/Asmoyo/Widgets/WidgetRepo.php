@@ -204,7 +204,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		// get widget
 		$widget 	= $this->getById($widgetId);
 		$base_rules = $this->widgetGroup->defaultRules();
-		$content[] 	= self::getFields($widget['attribute']['field']);
+		$content[] 	= self::generateFields($widget['attribute']['field']);
 		$input['slug']		= \Str::slug($input['title']);
 		$input['content'] 	= $content;
 
@@ -295,7 +295,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		return $result;
 	}
 
-	public function getFields($fields)
+	public function generateFields($fields)
 	{
 		if(!is_array($fields)) throw new \Exception("fields should be an array", 1);
 
