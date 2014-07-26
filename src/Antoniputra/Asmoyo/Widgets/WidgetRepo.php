@@ -203,14 +203,37 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	{
 		// get widget
 		$widget 	= $this->getById($widgetId);
+		$fields  	= array_keys($widget['attribute']['field']);
+		$custom_rules = array_merge($widget['attribute']['validation'], $rules);
 		$base_rules = $this->widgetGroup->defaultRules();
-		$content[] 	= self::generateFields($widget['attribute']['field']);
-		$input['slug']		= \Str::slug($input['title']);
-		$input['content'] 	= $content;
+		$input 		= $input ?: Input::all();
 
-		if( $this->repoValidation($input, array(), $base_rules) )
+		// foreach widget field / item
+		foreach ($input['content'][$fields[0]] as $key => $value) {
+			$result[$key] = array();
+			foreach ($fields as $field) {
+				$data[$field] = $input['content'][$field][$key];
+			}
+			// validation per field / item
+			if( ! $this->repoValidation($data, array(), $custom_rules) ) {
+				return false;
+			}
+			// save to $result
+			$result[$key] = $data;
+		}
+
+		$attr = array(
+			'widget_id'	=> $input['widget_id'],
+			'title' 	=> $input['title'],
+			'slug'		=> \Str::slug($input['title']),
+			'type'	 	=> Input::get('type') ?: '',
+			'description' => $input['description'],
+			'content' 	=> $result,
+		);
+
+		if( $this->repoValidation($attr, array(), $base_rules) )
 		{
-			$this->widgetGroup->create($input);
+			$this->widgetGroup->create($attr);
 			$this->cacheFlush( $this->getCacheTag('many') );
 			return true;
 		}
@@ -245,7 +268,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 			'id'		=> $input['id'],
 			'title' 	=> $input['title'],
 			'slug'		=> \Str::slug($input['title']),
-			'type'	 	=> $input['type'],
+			'type'	 	=> Input::get('type') ?: '',
 			'description' => $input['description'],
 			'content' 	=> $result,
 		);

@@ -106,7 +106,11 @@ class Admin_WidgetController extends AsmoyoController
 		{
 			return $this->redirectAlert( route('admin.widget.group', $widget['slug']), 'success', 'Berhasil Ditambahkan !');
 		}
-		return $this->redirectAlert( null, 'danger', 'Gagal !', $this->widget->errors );
+		return Redirect::back()->with('alert', array(
+			'type'		=> 'danger',
+			'title'		=> 'Gagal',
+			'text'		=> $this->widget->errors
+		));
 	}
 
 	public function groupEdit($widgetSlug, $groupSlug)

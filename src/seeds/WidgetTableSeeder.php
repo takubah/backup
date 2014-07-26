@@ -25,7 +25,7 @@ class WidgetTableSeeder extends Seeder {
 			    		'title' 	=> 'required',
 			    		'link'		=> 'url',
 			    		'description' => '',
-			    		'file'		=> 'required|url'
+			    		'file'		=> 'required'
 		    		),
 		    	)),
 			    'status'	  	=> 'enabled',
@@ -41,13 +41,11 @@ class WidgetTableSeeder extends Seeder {
 			    	'field' => array(
 		    			'title'		=> 'text',
 		    			'link'		=> 'text',
-		    			'icon'		=> 'text',
 		    			'description' => 'textarea',
 	    			),
 			    	'validation' => array(
 			    		'title' 	=> 'required',
 			    		'link'		=> 'url',
-			    		'icon'		=> '',
 			    		'description' => '',
 		    		),
 		    	)),
@@ -80,6 +78,24 @@ class WidgetTableSeeder extends Seeder {
 		    			'title'			=> 'Banner ke 2',
 			    		'link'			=> 'http://facebook.com',
 			    		'description' 	=> 'ini adalah banner ke 2',
+			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+	    			),
+		    		array(
+		    			'title'			=> 'Banner ke 3',
+			    		'link'			=> 'http://facebook.com',
+			    		'description' 	=> 'ini adalah banner ke 3',
+			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+	    			),
+		    		array(
+		    			'title'			=> 'Banner ke 4',
+			    		'link'			=> 'http://facebook.com',
+			    		'description' 	=> 'ini adalah banner ke 4',
+			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
+	    			),
+		    		array(
+		    			'title'			=> 'Banner ke 5',
+			    		'link'			=> 'http://facebook.com',
+			    		'description' 	=> 'ini adalah banner ke 5',
 			    		'file'			=> 'http://asmoyo.dev/uploads/medium/example.jpg'
 	    			),
 		    	)),

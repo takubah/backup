@@ -1,5 +1,10 @@
 @section('title') Edit Widget Grup {{$group['title']}} - Widget {{$widget['title']}} @stop
 
+@section('stylesheets')
+	@parent
+	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.css', 'admin')}}
+@stop
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-th-large"></i>
@@ -66,36 +71,36 @@
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
 			@if($group['content'])
 			<?php $i = 1; ?>
-			@foreach($group['content'] as $w)
+			@foreach($group['content'] as $g)
+				
 				<li id="item_{{$i}}">
 					<i id="btn-move" class="fa fa-arrows moveable"></i>
 					<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
 						Remove
 					</a>
-					<div class="form-group">
-						<label class="col-md-2 control-label">
-							Title
-						</label>
-						<div class="col-md-9">
-							{{Form::text('content[title][]', $w['title'], array('class' => 'form-control'))}}
+					
+					@foreach($widget['attribute']['field'] as $field_name => $field_type)
+						<div class="form-group">
+							<label class="col-md-2 control-label">
+								{{$field_name}}
+							</label>
+							<div class="col-md-9">
+								{{Form::asmoyoWidget( $field_name, $field_type, $g[$field_name], $i, array() )}}
+								@if($field_type == 'media')
+									@section('javascripts')
+					                    @parent
+					                    <script type="text/javascript">
+					                        $( '#media_caller_{{$i}}' ).asmoyoMediaModal({
+					                            field_file: '#{{$field_name}}_{{$i}}',
+					                            preview: '#media_preview_{{$i}}'
+					                        }, true);
+					                    </script>
+					                @stop
+				                @endif
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label">
-							Link
-						</label>
-						<div class="col-md-9">
-							{{Form::text('content[link][]', $w['link'], array('class' => 'form-control'))}}
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-2 control-label">
-							Description
-						</label>
-						<div class="col-md-9">
-							{{Form::textarea('content[description][]', $w['description'], array('class' => 'form-control', 'rows' => '3'))}}
-						</div>
-					</div>
+					@endforeach
+
 					<hr style="border-color:#999;">
 				</li>
 				<?php $i++; ?>
@@ -124,43 +129,37 @@
 		<a class="btn btn-default btnRemove" onclick="">
 			Remove
 		</a>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Title
-			</label>
-			<div class="col-md-9">
-				{{Form::text('content[title][]', null, array('class' => 'form-control'))}}
+
+		@foreach($widget['attribute']['field'] as $field_name => $field_type)
+			<div class="form-group">
+				<label class="col-md-2 control-label">
+					{{$field_name}}
+				</label>
+				<div class="col-md-9">
+					{{Form::asmoyoWidget( $field_name, $field_type, $g[$field_name], $i, array() )}}
+					{{--@if($field_type == 'media')
+						@section('javascripts')
+		                    @parent
+		                    <script type="text/javascript">
+		                        $( '#media_caller_{{$i}}' ).asmoyoMediaModal({
+		                            field_file: ,
+		                            preview: 
+		                        }, true);
+		                    </script>
+		                @stop
+					@endif--}}
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Link
-			</label>
-			<div class="col-md-9">
-				{{Form::text('content[link][]', null, array('class' => 'form-control'))}}
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Description
-			</label>
-			<div class="col-md-9">
-				{{Form::textarea('content[description][]', null, array('class' => 'form-control', 'rows' => '3'))}}
-			</div>
-		</div>
+		@endforeach
 		<hr style="border-color:#999;">
 	</li>
 </div>
 <!-- End Clone Data -->
 
-
-@section('stylesheets')
-	@parent
-	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.css', 'admin')}}
-@stop
-
+@include('asmoyo::admin.partials.modalAjax')
 @section('javascripts')
 	@parent
+
 	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.js', 'admin')}}
 	<script type="text/javascript">
 		// sortable

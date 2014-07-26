@@ -67,7 +67,7 @@ class WidgetGroup extends EloquentBase {
             'slug'          => 'required|unique:'.$this->table,
             'description'   => 'required',
             'content'       => 'required',
-            'type'          => 'required|in:'.implode(',', $this->typeList),
+            // 'type'          => 'required|in:'.implode(',', $this->typeList),
         );
     }
 

@@ -1,5 +1,10 @@
 @section('title') Edit Widget Grup {{$group['title']}} - Widget {{$widget['title']}} @stop
 
+@section('stylesheets')
+	@parent
+	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.css', 'admin')}}
+@stop
+
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-th-large"></i>
@@ -36,14 +41,6 @@
 							</div>
 							<div class="form-group">
 								<label class="col-md-2 control-label">
-									Type
-								</label>
-								<div class="col-md-9">
-									{{Form::select('type', $typeList, $group['type'], array('class' => 'form-control'))}}
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-md-2 control-label">
 									Description
 								</label>
 								<div class="col-md-9">
@@ -56,22 +53,30 @@
 			</div>
 
 			<hr>
-			<p class="lead">
-				<a href="#bottom" class="btn btn-default" onclick="addRow()">
-					<i class="fa fa-plus"></i>
-					Tambahkan Baris
-				</a>
-			</p>
-
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
 			@if($group['content'])
 			<?php $i = 1; ?>
 			@foreach($group['content'] as $w)
 				<li id="item_{{$i}}">
 					<i id="btn-move" class="fa fa-arrows moveable"></i>
-					<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
+					<!-- <a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
 						Remove
-					</a>
+					</a> -->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">
+							Gambar
+						</label>
+						<div class="col-sm-10">
+							{{Form::hidden( 'content[file][]', $w['file'], array('id' => 'file_'.$i) )}}
+							
+							<a id="preview_{{$i}}" class="thumbnail" style="margin:0px; height:300px; background:url('{{$w['file']}}') center no-repeat; "> </a>
+
+							<a href="{{route('admin.media.ajaxIndex')}}" id="caller_{{$i}}" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
+								<i class="fa fa-picture-o"></i>
+								Select Media
+							</a>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-md-2 control-label">
 							Title
@@ -117,47 +122,7 @@
 	</div>
 </div>
 
-<!-- Clone Data -->
-<div id="item_clone" style="display:none;">
-	<li id="">
-		<i id="btn-move" class="fa fa-arrows moveable"></i>
-		<a class="btn btn-default btnRemove" onclick="">
-			Remove
-		</a>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Title
-			</label>
-			<div class="col-md-9">
-				{{Form::text('content[title][]', null, array('class' => 'form-control'))}}
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Link
-			</label>
-			<div class="col-md-9">
-				{{Form::text('content[link][]', null, array('class' => 'form-control'))}}
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="col-md-2 control-label">
-				Description
-			</label>
-			<div class="col-md-9">
-				{{Form::textarea('content[description][]', null, array('class' => 'form-control', 'rows' => '3'))}}
-			</div>
-		</div>
-		<hr style="border-color:#999;">
-	</li>
-</div>
-<!-- End Clone Data -->
-
-
-@section('stylesheets')
-	@parent
-	{{asmoyoAsset( 'plugin/sortable/jquery-sortable.css', 'admin')}}
-@stop
+@include('asmoyo::admin.partials.modalAjax')
 
 @section('javascripts')
 	@parent
@@ -173,17 +138,7 @@
 			}
 		});
 
-		var itemTotal = $('#widgetSortir li').length;
-
-		// add field
-		function addRow() {
-			itemTotal++;
-			$('#item_clone li').attr("id", "item_"+itemTotal);
-			var newLine  = $('#item_clone li').clone();
-			newLine.find('.btnRemove').attr('onclick', 'removeRow('+itemTotal+')');
-			$('#widgetSortir').append(newLine);
-		}
-
+		// remove row
 		function removeRow(num) {
 			if(confirm('anda yakin ?'))
 			{
@@ -196,5 +151,19 @@
 				}
 			}
 		}
+
+		@if($group['content'])
+			<?php $i = 1; ?>
+			@foreach($group['content'] as $w)
+
+				// media modal
+				$( "#caller_{{$i}}" ).asmoyoMediaModal({
+					field_file_url: '#file_{{$i}}',
+					preview: '#preview_{{$i}}'
+				}, true);
+
+			<?php $i++; ?>
+			@endforeach
+		@endif
 	</script>
 @stop

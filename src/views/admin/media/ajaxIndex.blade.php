@@ -12,7 +12,7 @@
 	@foreach($medias['items'] as $media)
 		<div class="col-sm-6 col-md-3">
 	        <div class="thumbnail">
-	            <a href="#" class="thumbnail media_item" data-id="{{$media['id']}}" data-image="{{$media['file']}}" data-image-url="{{getMedia($media['file'])}}" style="background:url( {{getMedia($media['file'])}} ) center; background-size: cover; height:170px; margin:0px;" data-dismiss="modal" ></a>
+	            <a href="#" class="thumbnail media_item" data-id="{{$media['id']}}" data-image="{{$media['file']}}" data-image-url="{{getMedia($media['file'])}}" data-image-url-ori="{{getMedia($media['file'], 'original')}}" style="background:url( {{getMedia($media['file'])}} ) center; background-size: cover; height:170px; margin:0px;" data-dismiss="modal" ></a>
 	        </div>
 	    </div>
 	@endforeach
