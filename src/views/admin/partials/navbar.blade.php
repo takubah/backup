@@ -94,6 +94,11 @@
 				<i class="fa fa-th-large"></i> Widget
 			</a>
 		</li>
+		<li @if($activePage == 'display') class="active" @endif>
+			<a href="{{route('admin.display.index')}}" class="show-tooltip" data-placement="right" title="Tampilan">
+				<i class="fa fa-laptop"></i> Tampilan
+			</a>
+		</li>
 		<li @if($activePage == 'option') class="active" @endif>
 			<a href="{{route('admin.option.web')}}" class="show-tooltip" data-placement="right" title="Atur">
 				<i class="fa fa-gears"></i> Atur

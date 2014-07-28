@@ -249,6 +249,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'uses' 		=> 'Admin_OptionController@mediaSave'
 		));
 		// End Option
+
+		// Display
+		Route::resource('display', 'Admin_DisplayController');
+		// End Display
 	});
 
 /**
