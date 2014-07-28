@@ -35,6 +35,7 @@
                 var settings = $.extend({
                     field_id: false, // "#media_id"
                     field_file: false, // "#media_file",
+                    field_file_url: false, // "#media_file_url",
                     preview: false, // "#media_preview",
                 }, options );
 
@@ -47,6 +48,7 @@
 
             var mediaSelectedId     = $(this).attr('data-id'),
                 mediaSelectedFile   = $(this).attr('data-image'),
+                mediaSelectedUrlOri = $(this).attr('data-image-url-ori'),
                 mediaSelectedUrl    = $(this).attr('data-image-url');
 
             if (asmoyoMediaModalParam.field_id) {
@@ -55,6 +57,10 @@
 
             if (asmoyoMediaModalParam.field_file) {
                 $( asmoyoMediaModalParam.field_file ).val(mediaSelectedFile);
+            };
+
+            if (asmoyoMediaModalParam.field_file_url) {
+                $( asmoyoMediaModalParam.field_file_url ).val(mediaSelectedUrlOri);
             };
 
             if (asmoyoMediaModalParam.preview) {
