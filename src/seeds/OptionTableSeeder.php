@@ -114,6 +114,29 @@ class OptionTableSeeder extends Seeder {
 				'type'			=> 'json',
 			),
 
+			array(
+				'name'			=> 'web_sideLeft',
+				'value'			=> json_encode(array(
+					array(
+						'title'	 	=> 'Web Sidebar Default',
+						'content'	=> 'ini adalah default content',
+					),
+				)),
+				'description'	=> 'item sidebar left',
+				'type'			=> 'json',
+			),
+			array(
+				'name'			=> 'web_sideRight',
+				'value'			=> json_encode(array(
+					array(
+						'title'	 	=> 'Web Kategori',
+						'content'	=> '{<asmoyo:category type=grid sortir=title-descending size=80px>}',
+					),
+				)),
+				'description'	=> 'item sidebar right',
+				'type'			=> 'json',
+			),
+
 
 			// Media
 			array(
