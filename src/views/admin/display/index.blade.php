@@ -2,71 +2,41 @@
 
 <div class="row">
 	<div class="col-md-8">
-		<div class="asmoyo-box">
+		<div class="asmoyo-box" style="background:none;">
 			<h3 class="box-header">
-				<i class="fa fa-th-large"></i>
-				Daftar Widget
+				<i class="fa fa-laptop"></i>
+				Atur Tampilan
 			</h3>
 			<div class="box-content">
-
+				<h4>Daftar Widget &raquo;</h4>
 				<div class="row">
-					<div class="col-md-6">
-						<ul class="list-group">
-							@foreach($widgets as $w)
-								<h4>{{$w['title']}}</h4>
-
-								@if($w['groups'])
-								@foreach($w['groups'] as $g)
-								<li class="list-group-item">
-									<div class="dropdown" style="background:none; cursor:pointer; float:right;">
-										<a data-toggle="dropdown" class="btn btn-xs btn-primary">
-											<i class="fa fa-plus"></i> add
+					<div class="col-md-12">
+						@foreach($widgets as $w)
+							<div class="asmoyo-widget-list panel panel-default pull-left">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										{{$w['title'] ?: $w['widgetName']}}
+									</h4>
+								</div>
+								<div class="panel-body">
+									{{$w['description']}}
+								</div>
+								<div class="panel-footer">
+									<div class="dropdown pull-right">
+										<a data-toggle="dropdown" class="btn btn-sm btn-primary">
+											<i class="fa fa-plus"></i> Add
 										</a>
 										{{HTML::select(
-											'<asmoyo:category type=grid sortir=title-descending size=80px>',
+											'<asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].'>',
 											$widgetContainer,
-											array('class' => 'dropdown-menu widget-chooser', 'style' => 'text-align:left;'),
-											array('data-title' => $g['title'])
+											array('class' => 'dropdown-menu widget-chooser'),
+											array('data-title' => $w['title'])
 										)}}
 									</div>
-
-									<h4 class="list-group-item-heading">
-										{{$g['title']}}
-									</h4>
-									<p class="list-group-item-text">
-										{{$g['description']}}
-									</p>
-								</li>
-								@endforeach
-								@endif
-
-							@endforeach
-						</ul>
-					</div>
-					<div class="col-md-6">
-						<ul class="list-group">
-							@foreach($pseudoObjectList as $val)
-								<li class="list-group-item">
-									<div class="dropdown" style="background:none; cursor:pointer; float:right;">
-										<a data-toggle="dropdown" class="btn btn-xs btn-primary">
-											<i class="fa fa-plus"></i> add
-										</a>
-										{{HTML::select(
-											'<asmoyo:'.$val.' type=list sortir=title-descending size=80px>',
-											$widgetContainer,
-											array('class' => 'dropdown-menu widget-chooser', 'style' => 'text-align:left;'),
-											array('data-title' => $g['title'])
-										)}}
-									</div>
-									<h4 class="list-group-item-heading">
-										Kategori
-									</h4>
-									<p class="list-group-item-text">
-										ini adalah kategori widget
-									</p>
-								</li>
-							@endforeach
-						</ul>
+									<div style="clear:both;"></div>
+								</div>
+							</div>
+						@endforeach
 					</div>
 				</div> <!-- End Row -->
 
@@ -76,9 +46,8 @@
 	
 
 	<div class="col-md-4">
-		<div class="asmoyo-box toggle">
+		<div class="asmoyo-box">
 			<h3 class="box-header">
-				<i class="fa fa-laptop"></i>
 				Sidebar Kiri
 			</h3>
 			<div class="box-content" id="sideLeft">
@@ -88,7 +57,6 @@
 
 		<div class="asmoyo-box">
 			<h3 class="box-header">
-				<i class="fa fa-laptop"></i>
 				Sidebar Kanan
 			</h3>
 			<div class="box-content" id="sideRight">

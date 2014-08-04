@@ -118,8 +118,8 @@ class OptionTableSeeder extends Seeder {
 				'name'			=> 'web_sideLeft',
 				'value'			=> json_encode(array(
 					array(
-						'title'	 	=> 'Web Sidebar Default',
-						'content'	=> '{<asmoyo:post type=grid sortir=title-descending size=80px>}',
+						'title'	 	=> 'Daftar Posting Baru',
+						'content'	=> '{<asmoyo:post type=list sortir=new size=80px>}',
 					),
 				)),
 				'description'	=> 'item sidebar left',
@@ -129,7 +129,7 @@ class OptionTableSeeder extends Seeder {
 				'name'			=> 'web_sideRight',
 				'value'			=> json_encode(array(
 					array(
-						'title'	 	=> 'Web Kategori',
+						'title'	 	=> 'Kategori',
 						'content'	=> '{<asmoyo:category type=grid sortir=title-descending size=80px>}',
 					),
 				)),

@@ -8,14 +8,19 @@
 		<li>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">
-						{{ucfirst($read['object'])}}
-						<span class="pull-right btn btn-default btn-xs handle">
-							<i class="fa fa-arrows"></i>
-						</span>
-						<span class="pull-right btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href=".panel_{{$position}}_{{$i}}">
-							<i class="fa fa-arrow-down"></i>
-						</span>
+					<h3 class="panel-title" style="position:relative;">
+						{{ucfirst($read['object'])}} <br>
+						<small style="font-size:12px;">
+							{{$side['title']}} - {{$read['type']}} - {{$read['sortir']}}
+						</small>
+						<div style="position:absolute; top:3px; right:0px;">
+							<span class="btn btn-default btn-sm handle">
+								<i class="fa fa-arrows"></i>
+							</span>
+							<span class="btn btn-default btn-sm" data-toggle="collapse" data-parent="#accordion" href=".panel_{{$position}}_{{$i}}">
+								<i class="fa fa-arrow-down"></i>
+							</span>
+						</div>
 					</h3>
 				</div>
 				<div class="panel_{{$position}}_{{$i}} panel-collapse collapse">
@@ -42,7 +47,7 @@
 </ul>
 <div class="form-group">
 	<div class="col-sm-12 text-center">
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="btn btn-primary btn-sm">
 			<i class="fa fa-check"></i>
 			Simpan
 		</button>

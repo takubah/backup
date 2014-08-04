@@ -79,14 +79,85 @@ abstract class Pseudo {
 		return $original;
 	}
 
+	public static function getList()
+	{
+		$lists 	= array();
+		$widgets = app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll('all');
+		foreach ($widgets['items'] as $w)
+		{
+			if($w['groups']) {
+				foreach ($w['groups'] as $g)
+				{
+					$lists[] = array(
+						'widgetName'	=> $w['title'],
+						'title' 		=> $g['title'],
+						'description' 	=> $g['description'],
+						'pseudo'	=> array(
+							'object'		=> 'widget-group',
+							'type'			=> 'list',
+							'sortir'		=> 'new',
+						),
+					);
+				}
+			}
+		}
+
+		return array_merge($lists, self::objectList());
+	}
+
 	public static function objectList()
 	{
 		return array(
-			'post'		=> 'post',
-			'media'		=> 'media',
-			'category'	=> 'category',
-			'comment'	=> 'comment',
-			'widget'	=> 'widget',
+			array(
+				'widgetName'	=> 'Post',
+				'title' 		=> '',
+				'description' 	=> 'ini adalah description',
+				'pseudo'	=> array(
+					'object'		=> 'post',
+					'type'			=> 'list',
+					'sortir'		=> 'new',
+				),
+			),
+			array(
+				'widgetName'	=> 'Media',
+				'title' 		=> '',
+				'description' 	=> 'ini adalah description',
+				'pseudo'	=> array(
+					'object'		=> 'media',
+					'type'			=> 'list',
+					'sortir'		=> 'new',
+				),
+			),
+			array(
+				'widgetName'	=> 'Category',
+				'title' 		=> '',
+				'description' 	=> 'ini adalah description',
+				'pseudo'	=> array(
+					'object'		=> 'category',
+					'type'			=> 'list',
+					'sortir'		=> 'new',
+				),
+			),
+			array(
+				'widgetName'	=> 'Comment',
+				'title' 		=> '',
+				'description' 	=> 'ini adalah description',
+				'pseudo'	=> array(
+					'object'		=> 'comment',
+					'type'			=> 'list',
+					'sortir'		=> 'new',
+				),
+			),
+			/*array(
+				'widgetName'	=> 'Widget',
+				'title' 		=> '',
+				'description' 	=> 'ini adalah description',
+				'pseudo'	=> array(
+					'object'		=> 'widget',
+					'type'			=> 'list',
+					'sortir'		=> 'new',
+				),
+			),*/
 		);
 	}
 
