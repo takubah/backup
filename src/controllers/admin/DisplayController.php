@@ -25,9 +25,27 @@ class Admin_DisplayController extends AsmoyoController
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 
-	public function update($position)
+	public function ajaxUpdate($position)
 	{
-		return Input::all();
+		$web 	= app('asmoyo.web');
+		$input 	= Input::all();
+		foreach ($input['title'] as $key => $title) {
+			$new[] 	= array(
+				'title'		=> $title,
+				'content'	=> '{<asmoyo:'.$input["object"][$key].' type='.$input["type"][$key].' sortir='.$input["sortir"][$key].'>}',
+			);
+		}
+
+		if ($position == 'left')
+			$data['web_sideLeft'] 	= $new;
+		else
+			$data['web_sideRight'] 	= $new;
+
+		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
+		{
+			return Response::json('Berhasil di perbarui !!', 200);
+		}
+		return Response::json(array('error' => 'something error'), 500);
 	}
 
 	public function ajaxSidebar($position)
@@ -63,7 +81,6 @@ class Admin_DisplayController extends AsmoyoController
 		{
 			return Response::json('Berhasil di buat !!', 200);
 		}
-
 		return Response::json(array('error' => 'something error'), 500);
 	}
 }

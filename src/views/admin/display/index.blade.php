@@ -84,6 +84,7 @@
 			});
 
 			$('.widget-chooser > li > a').click(function(){
+				// initialize variable
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
 					title 	= el.attr('data-title'),
@@ -95,8 +96,8 @@
 						? "{{route('admin.display.ajaxSidebar', 'right')}}"
 						: "{{route('admin.display.ajaxSidebar', 'left')}}";
 
+				// add proses
 				$( target ).html('loading...');
-
 				$.ajax({
 					type: "POST",
 					url: urlPost,

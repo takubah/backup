@@ -264,8 +264,8 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'uses'	=> 'Admin_DisplayController@index'
 		));
 		Route::post('display/update/{slug}', array(
-			'as'	=> 'admin.display.update',
-			'uses'	=> 'Admin_DisplayController@update'
+			'as'	=> 'admin.display.ajaxUpdate',
+			'uses'	=> 'Admin_DisplayController@ajaxUpdate'
 		));
 		// End Display
 	});

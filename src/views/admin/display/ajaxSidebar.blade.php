@@ -1,4 +1,4 @@
-{{Form::open(array('method' => 'POST', 'route' => array('admin.display.update', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)'))}}
+{{Form::open(array('method' => 'POST', 'route' => array('admin.display.ajaxUpdate', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)'))}}
 	{{Form::hidden('position', $position)}}
 <ul class="widget-sortable nav">
 	@if($sidebar)
@@ -25,6 +25,7 @@
 				</div>
 				<div class="panel_{{$position}}_{{$i}} panel-collapse collapse">
 					<div class="panel-body">
+						{{Form::hidden('object[]', $read['object'])}}
 						<p>
 							<label style="font-size:12px;">Title</label>
 							{{Form::text('title[]', $side['title'], array('class' => 'form-control input-sm'))}}
@@ -69,14 +70,31 @@
 	// handle form submit
 	function widgetSubmit(position, that)
 	{
+		if(position == 'right') {
+			var url 	= "{{route('admin.display.ajaxSidebar', 'right')}}",
+				target 	= "#sideRight"
+		} else {
+			var url 	= "{{route('admin.display.ajaxSidebar', 'left')}}",
+				target 	= "#sideLeft"
+		}
+
+		// update process
+		$( target ).html('loading...');
 		$.ajax({
 			type: "POST",
 			url: $(that).attr('action'),
 			data: $(that).serialize()
 		})
 		.success(function( msg )
-		{					
-			return msg;
+		{
+			if (msg) {
+				$.get(url, function(data,status)
+				{
+					$( target ).html(data);
+				});
+			} else {
+				alert('error');
+			}
 		});
 		event.preventDefault();
 	}
