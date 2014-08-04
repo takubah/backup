@@ -12,15 +12,17 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function index()
 	{
-		$widgets = App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll();
+		$widgets = App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll('all');
 
 		$data = array(
-			'widgets'	=> $widgets['items'],
+			'widgets'			=> $widgets['items'],
 			'widgetContainer'	=> array(
 				'sideLeft' => 'Sidebar Kiri',
 				'sideRight' => 'Sidebar Kanan'
 			),
+			'pseudoObjectList'	=> Pseudo::objectList()
 		);
+		return $data;
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 

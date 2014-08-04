@@ -160,7 +160,9 @@ abstract class RepoBase
 			}
 		}
 
-		$data = $data->limit($limit);
+		if( $limit != 'all' ) {
+			$data = $data->limit($limit);
+		}
 
 		return $data;
 	}
@@ -184,6 +186,9 @@ abstract class RepoBase
 	public function repoLimit($limit=null)
 	{
 		$web 	= app('asmoyo.web');
+
+		if($limit == 'all') return $limit;
+
 		$limit 	= $limit ?: Input::get('limit');
 		$result = is_numeric($limit) ? $limit : $web['web_itemPerPage'];
 		return (integer) $result;

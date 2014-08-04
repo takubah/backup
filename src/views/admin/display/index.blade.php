@@ -45,25 +45,27 @@
 					</div>
 					<div class="col-md-6">
 						<ul class="list-group">
-							<li class="list-group-item">
-								<div class="dropdown" style="background:none; cursor:pointer; float:right;">
-									<a data-toggle="dropdown" class="btn btn-xs btn-primary">
-										<i class="fa fa-plus"></i> add
-									</a>
-									{{HTML::select(
-										'<asmoyo:category type=grid sortir=title-descending size=80px>',
-										$widgetContainer,
-										array('class' => 'dropdown-menu widget-chooser', 'style' => 'text-align:left;'),
-										array('data-title' => $g['title'])
-									)}}
-								</div>
-								<h4 class="list-group-item-heading">
-									Kategori
-								</h4>
-								<p class="list-group-item-text">
-									ini adalah kategori widget
-								</p>
-							</li>
+							@foreach($pseudoObjectList as $val)
+								<li class="list-group-item">
+									<div class="dropdown" style="background:none; cursor:pointer; float:right;">
+										<a data-toggle="dropdown" class="btn btn-xs btn-primary">
+											<i class="fa fa-plus"></i> add
+										</a>
+										{{HTML::select(
+											'<asmoyo:'.$val.' type=list sortir=title-descending size=80px>',
+											$widgetContainer,
+											array('class' => 'dropdown-menu widget-chooser', 'style' => 'text-align:left;'),
+											array('data-title' => $g['title'])
+										)}}
+									</div>
+									<h4 class="list-group-item-heading">
+										Kategori
+									</h4>
+									<p class="list-group-item-text">
+										ini adalah kategori widget
+									</p>
+								</li>
+							@endforeach
 						</ul>
 					</div>
 				</div> <!-- End Row -->

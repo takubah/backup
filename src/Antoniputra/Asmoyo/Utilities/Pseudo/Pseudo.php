@@ -79,6 +79,17 @@ abstract class Pseudo {
 		return $original;
 	}
 
+	public static function objectList()
+	{
+		return array(
+			'post'		=> 'post',
+			'media'		=> 'media',
+			'category'	=> 'category',
+			'comment'	=> 'comment',
+			'widget'	=> 'widget',
+		);
+	}
+
 	public static function typeList()
 	{
 		return array(
