@@ -251,6 +251,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		// End Option
 
 		// Display
+		Route::get('display/ajaxSidebar/{slug}', array(
+			'as'	=> 'admin.display.ajaxSidebar',
+			'uses'	=> 'Admin_DisplayController@ajaxSidebar'
+		));
 		Route::resource('display', 'Admin_DisplayController');
 		// End Display
 	});

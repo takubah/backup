@@ -1,4 +1,6 @@
 <?php
+use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
+
 
 function getMime($ext, $default='text/html')
 {
@@ -32,6 +34,11 @@ function getAssetUrl($file, $theme='admin')
         $theme = $web['web_publicTemplate']['name'];
     }
     return route('getAssets', $theme.'/'.$file);
+}
+
+function pseudoRead($str)
+{
+    return Pseudo::read($str);
 }
 
 function asmoyoAsset($file, $theme='admin')
@@ -101,6 +108,33 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $co
 
     $output .= Form::close();
     
+    return $output;
+});
+
+HTML::macro('select', function($value, $list=array(), $attr=array(), $attrChild=array()){
+    
+    $output = '<ul';
+    if (is_array($attr)) {
+        foreach ($attr as $key => $v) {
+            $output .= ' '. $key .'="'.$v.'" ';
+        }
+    }
+    $output .= '>';
+
+    foreach ($list as $target => $text) {
+        $output .= '<li>';
+        $output .= '<a data-target="'.$target.'" data-value="'.$value.'" ';
+
+        if ($attrChild) {
+            foreach ($attrChild as $key => $v) {
+                $output .= $key .'="'.$v.'" ';
+            }
+        }
+
+        $output .= '>'. $text .'</a>';
+        $output .= '</li>';
+    }
+    $output .= '</ul>';
     return $output;
 });
 

@@ -61,4 +61,21 @@ abstract class Pseudo {
 		else
 			return $original;
 	}
+
+	public static function read($str)
+	{
+		$original = $str;
+
+		preg_match_all('/\{<(asmoyo:[^}]+)\>}/', $str, $matches);
+		if( isset($matches[1][0]) )
+		{
+			$prop = explode('&', preg_replace('/\s+/', '&', $matches[1][0]));
+			$object = substr(array_shift($prop), strlen('asmoyo:'));
+			parse_str(implode('&', $prop), $prop);
+
+			// add object key to prop and return
+			return array_merge( array('object' => $object), $prop );
+		}
+		return $original;
+	}
 }
