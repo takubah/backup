@@ -78,4 +78,25 @@ abstract class Pseudo {
 		}
 		return $original;
 	}
+
+	public static function typeList()
+	{
+		return array(
+			'list'			=> 'list',
+			'grid'			=> 'grid',
+			'media-object'	=> 'media-object',
+			'detail'		=> 'detail',
+		);
+	}
+
+	public static function sortirList()
+	{
+		return array(
+			'new'				=> 'new',
+			'latest-updated'	=> 'latest-updated',
+			'title-ascending'	=> 'title-ascending',
+			'title-descending'	=> 'title-descending',
+			'popular'			=> 'popular',
+		);
+	}
 }

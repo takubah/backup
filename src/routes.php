@@ -255,7 +255,18 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as'	=> 'admin.display.ajaxSidebar',
 			'uses'	=> 'Admin_DisplayController@ajaxSidebar'
 		));
-		Route::resource('display', 'Admin_DisplayController');
+		Route::post('display/ajaxSidebarAdd/{slug}', array(
+			'as'	=> 'admin.display.ajaxSidebarAdd',
+			'uses'	=> 'Admin_DisplayController@ajaxSidebarAdd'
+		));
+		Route::get('display', array(
+			'as'	=> 'admin.display.index',
+			'uses'	=> 'Admin_DisplayController@index'
+		));
+		Route::post('display/update/{slug}', array(
+			'as'	=> 'admin.display.update',
+			'uses'	=> 'Admin_DisplayController@update'
+		));
 		// End Display
 	});
 

@@ -66,7 +66,8 @@
 							</li>
 						</ul>
 					</div>
-				</div>
+				</div> <!-- End Row -->
+
 			</div>
 		</div>
 	</div>
@@ -81,14 +82,6 @@
 			<div class="box-content" id="sideLeft">
 				<!-- ajax content -->
 			</div>
-			<!-- <div class="box-footer">
-				<div class="text-center">
-					<button type="submit" class="btn btn-primary btn-sm">
-						<i class="fa fa-check"></i>
-						Simpan
-					</button>
-				</div>
-			</div> -->
 		</div>
 
 		<div class="asmoyo-box">
@@ -99,14 +92,6 @@
 			<div class="box-content" id="sideRight">
 				<!-- ajax content -->
 			</div>
-			<!-- <div class="box-footer">
-				<div class="text-center">
-					<button type="submit" class="btn btn-primary btn-sm">
-						<i class="fa fa-check"></i>
-						Simpan
-					</button>
-				</div>
-			</div> -->
 		</div>
 	</div>
 </div>
@@ -131,18 +116,38 @@
 			$('.widget-chooser > li > a').click(function(){
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
-					value 	= '{'+ el.attr('data-value') +'}',
+					title 	= el.attr('data-title'),
+					content	= '{'+ el.attr('data-value') +'}',
+					urlPost = (target == '#sideRight')
+						? "{{route('admin.display.ajaxSidebarAdd', 'right')}}"
+						: "{{route('admin.display.ajaxSidebarAdd', 'left')}}",
 					url 	= (target == '#sideRight')
 						? "{{route('admin.display.ajaxSidebar', 'right')}}"
 						: "{{route('admin.display.ajaxSidebar', 'left')}}";
 
-				console.log(url, target, value, el.attr('data-title') );
-
 				$( target ).html('loading...');
-				$.get(url, function(data,status)
+
+				$.ajax({
+					type: "POST",
+					url: urlPost,
+					data: { title: title, content: content }
+				})
+				.success(function( msg )
+				{					
+					if (msg) {
+						$.get(url, function(data,status)
+						{
+							$( target ).html(data);
+						});
+					} else {
+						alert('error');
+					}
+				});
+
+				/*$.get(url, function(data,status)
 				{
 					$( target ).html(data);
-				});
+				});*/
 			});
 
 			/*$( ".widget-draggable li" ).draggable({

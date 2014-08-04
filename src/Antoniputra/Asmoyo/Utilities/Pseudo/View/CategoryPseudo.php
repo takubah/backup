@@ -21,20 +21,17 @@ class CategoryPseudo extends Pseudo
 		{
 			case 'list':
 				$data['repo'] = $repo->getStructure($attr['limit'], $attr['sortir']);
-				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'grid':
 				$data['attr']['size'] 	= array_get($attr, 'size') ?: '100px' ;
 				$data['repo'] 			= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
-				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'media-object':
 				$data['attr']['description'] = array_get($attr, 'description') ?: 1 ;
 				$data['attr']['size'] 		= array_get($attr, 'size') ?: '100px' ;
 				$data['repo'] 				= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
-				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 
 			case 'detail':
@@ -51,13 +48,13 @@ class CategoryPseudo extends Pseudo
 				}
 
 				$data['repo'] = $repo;
-				return View::make('asmoyo::pseudo.category', $data)->render();
 			break;
 			
 			default:
 				return '';
 			break;
 		}
+		return View::make('asmoyo::pseudo.category', $data)->render();
 	}
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 // use Antoniputra\Asmoyo\Widgets\WidgetInterface;
+use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
 class Admin_DisplayController extends AsmoyoController
 {
@@ -23,14 +24,9 @@ class Admin_DisplayController extends AsmoyoController
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 
-	public function store()
+	public function update($position)
 	{
 		return Input::all();
-	}
-
-	public function update($id)
-	{
-
 	}
 
 	public function ajaxSidebar($position)
@@ -44,9 +40,29 @@ class Admin_DisplayController extends AsmoyoController
 			: $web['web_sideRight'];
 
 		$data = array(
-			'sidebar'	=> $sidebar
+			'position'	=> $position,
+			'sidebar'	=> $sidebar,
+			'pseudoTypeList' => Pseudo::typeList(),
+			'pseudoSortirList' => Pseudo::sortirList(),
 		);
 		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
 	}
 
+	public function ajaxSidebarAdd($position)
+	{
+		$web 	= app('asmoyo.web');
+		$input = Input::all();
+
+		if ($position == 'left')
+			$data['web_sideLeft'] 	= array_merge($web['web_sideLeft'], array($input));
+		else
+			$data['web_sideRight'] 	= array_merge($web['web_sideRight'], array($input));
+
+		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
+		{
+			return Response::json('Berhasil di buat !!', 200);
+		}
+
+		return Response::json(array('error' => 'something error'), 500);
+	}
 }

@@ -119,7 +119,7 @@ class OptionTableSeeder extends Seeder {
 				'value'			=> json_encode(array(
 					array(
 						'title'	 	=> 'Web Sidebar Default',
-						'content'	=> 'ini adalah default content',
+						'content'	=> '{<asmoyo:post type=grid sortir=title-descending size=80px>}',
 					),
 				)),
 				'description'	=> 'item sidebar left',
