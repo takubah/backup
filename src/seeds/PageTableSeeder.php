@@ -15,9 +15,8 @@ class PageTableSeeder extends Seeder {
 				'order'				=> 0,
 				'title' 			=> 'Home',
 				'slug' 				=> 'home',
-				'content'			=> json_encode(array(
-					'{<asmoyo:post slug:>}'
-				)),
+				'content'			=> '',
+				'content_structure'	=> json_encode(array()),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -33,9 +32,8 @@ class PageTableSeeder extends Seeder {
 				'order'				=> 2,
 				'title' 			=> 'About',
 				'slug' 				=> 'about',
-				'content'			=> json_encode(array(
-					'ini adalah halaman about'
-				)),
+				'content'			=> '',
+				'content_structure'	=> json_encode(array()),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -52,6 +50,7 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'Kategori',
 				'slug' 				=> 'kategori',
 				'content'			=> '',
+				'content_structure'	=> json_encode(array()),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -68,6 +67,7 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'Posting',
 				'slug' 				=> 'posting',
 				'content'			=> '',
+				'content_structure'	=> json_encode(array()),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),

@@ -23,6 +23,7 @@ class CreatePagesTable extends Migration {
 			$table->string('title');
 			$table->string('slug');
 			$table->text('content');
+			$table->text('content_structure');
 			$table->text('side_left');
 			$table->text('side_right');
 			$table->text('footer');
