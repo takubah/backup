@@ -27,7 +27,7 @@ class Post extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('groupable_id', 'groupable_type', 'media_id', 'user_id', 'type', 'title', 'slug', 'description', 'body', 'status', 'meta_title', 'meta_keyword', 'meta_description');
+    protected $fillable = array();
 
 	/**
     * These are make collumn to Carbon instance

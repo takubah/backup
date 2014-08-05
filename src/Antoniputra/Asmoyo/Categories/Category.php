@@ -28,7 +28,7 @@ class Category extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('media_id', 'parent_id', 'title', 'slug', 'description', 'status');
+    protected $fillable = array();
 
     /**
     * These are make collumn to Carbon instance

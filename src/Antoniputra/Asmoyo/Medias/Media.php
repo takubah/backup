@@ -23,7 +23,7 @@ class Media extends EloquentBase
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('gallery_id', 'type', 'file', 'mime_type', 'size', 'status', 'title', 'slug', 'description');
+    protected $fillable = array();
 
 	/**
     * These are make collumn to Carbon instance

@@ -27,7 +27,37 @@ class Page extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('parent_id', 'status', 'type', 'structure', 'title', 'slug', 'content', 'side_left', 'side_right', 'footer', 'order','meta_title', 'meta_keyword', 'meta_description');
+	protected $fillable = array();
+
+    public function getContentStructureAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setContentStructureAttribute($value)
+    {
+        $this->attributes['content_structure'] = json_encode($value);
+    }
+
+    public function getSideLeftAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setSideLeftAttribute($value)
+    {
+        $this->attributes['side_left'] = json_encode($value);
+    }
+
+    public function getSideRightAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setSideRightAttribute($value)
+    {
+        $this->attributes['side_right'] = json_encode($value);
+    }
 
 	/**
     * These are make collumn to Carbon instance

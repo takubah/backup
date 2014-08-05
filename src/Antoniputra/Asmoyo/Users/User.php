@@ -29,7 +29,7 @@ class User extends EloquentBase implements LaravelUserInterface, RemindableInter
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('email', 'username', 'password', 'permissions', 'last_login', 'remember_token', 'persist_code', 'reset_password_code', 'media_id', 'fullname', 'birthday', 'gender', 'city', 'address');
+	protected $fillable = array();
 
     /**
      * The attributes excluded from the model's JSON form.
