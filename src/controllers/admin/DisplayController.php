@@ -19,7 +19,6 @@ class Admin_DisplayController extends AsmoyoController
 				'sideRight' => 'Sidebar Kanan'
 			),
 		);
-		// return $data;
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 
@@ -30,7 +29,7 @@ class Admin_DisplayController extends AsmoyoController
 		foreach ($input['title'] as $key => $title) {
 			$new[] 	= array(
 				'title'		=> $title,
-				'content'	=> '{<asmoyo:'.$input["object"][$key].' type='.$input["type"][$key].' sortir='.$input["sortir"][$key].'>}',
+				'content'	=> '{<asmoyo:'.$input["object"][$key].' type='.$input["type"][$key].' sortir='.$input["sortir"][$key].' widget-name='.$input["widget_name"][$key] .'>}',
 			);
 		}
 
@@ -68,7 +67,8 @@ class Admin_DisplayController extends AsmoyoController
 	public function ajaxSidebarAdd($position)
 	{
 		$web 	= app('asmoyo.web');
-		$input = Input::all();
+		$input 	= Input::all();
+		$data 	= array();
 
 		if ($position == 'left')
 			$data['web_sideLeft'] 	= array_merge($web['web_sideLeft'], array($input));
@@ -78,6 +78,30 @@ class Admin_DisplayController extends AsmoyoController
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
 		{
 			return Response::json('Berhasil di buat !!', 200);
+		}
+		return Response::json(array('error' => 'something error'), 500);
+	}
+
+	public function ajaxSidebarRemove($position)
+	{
+		$web 	= app('asmoyo.web');
+		$keyToRemove = (integer) Input::get('key');
+		$data 	= array();
+
+		if ($position == 'left')
+		{
+			unset($web['web_sideLeft'][$keyToRemove]);
+			$data['web_sideLeft'] 	= array_values($web['web_sideLeft']);
+		}
+		else
+		{
+			unset($web['web_sideRight'][$keyToRemove]);
+			$data['web_sideRight'] 	= array_values($web['web_sideRight']);
+		}
+
+		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
+		{
+			return Response::json('Berhasil di hapus !!', 200);
 		}
 		return Response::json(array('error' => 'something error'), 500);
 	}

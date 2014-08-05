@@ -53,7 +53,8 @@ class OptionRepo extends RepoBase implements OptionInterface
 		{
 			foreach($attr as $key => $val)
 			{
-				if(!empty($val))
+				// all element cannot be null except web_side Left and Right
+				if( !empty($val) OR $key == 'web_sideLeft' OR $key == 'web_sideRight' )
 				{
 					$val = is_array($val) ? json_encode($val) : $val;
 					$this->model->where('name', $key)->update(array('value' => $val));
