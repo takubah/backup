@@ -71,13 +71,11 @@ class Admin_WidgetController extends AsmoyoController
 		if( ! Request::ajax()) { return App::abort(404); }
 		
 		// get widget and widgetGroup first
-		$widget 	= $this->widget->getBySlug($widgetSlug);
-		$group 		= $this->widget->getGroupBySlug($groupSlug);
-		if( ! $widget OR ! $group ) return App::abort(404);
+		$widget = $this->widget->getBySlugWithGroup($widgetSlug, $groupSlug);
+		if( ! $widget['group'] ) return App::abort(404);
 
 		$data = array(
 			'widget' 	=> $widget,
-			'group' 	=> $group,
 		);
 		
 		return View::make('asmoyo::admin.widget.'.$widget['slug'].'.show', $data);
@@ -115,14 +113,11 @@ class Admin_WidgetController extends AsmoyoController
 
 	public function groupEdit($widgetSlug, $groupSlug)
 	{
-		// get widget and widgetGroup first
-		$widget 	= $this->widget->getBySlug($widgetSlug);
-		$group 		= $this->widget->getGroupBySlug($groupSlug);
-		if( ! $widget OR ! $group ) return App::abort(404);
+		$widget = $this->widget->getBySlugWithGroup($widgetSlug, $groupSlug);
+		if( ! $widget['group'] ) return App::abort(404);
 
 		$data = array(
 			'widget' 	=> $widget,
-			'group' 	=> $group,
 			'typeList'	=> $this->widget->getTypeList(),
 		);
 		

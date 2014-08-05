@@ -7,6 +7,7 @@
 				List Kategori
 			</h3>
 			<div class="box-content">
+				{{-- '{<asmoyo:widget widget-name=asmoyo-daftars group-name=layanan-kami type=list sortir=title-ascending>}' --}}
 				{{ '{<asmoyo:category type=list sortir=title-ascending>}' }}
 			</div>
 		</div>

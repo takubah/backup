@@ -1,18 +1,18 @@
-@section('title') Edit Widget Grup {{$group['title']}} - Widget {{$widget['title']}} @stop
+@section('title') Edit Widget Grup {{$widget['group']['title']}} - Widget {{$widget['title']}} @stop
 
 <div class="asmoyo-box">
 	<h3 class="box-header">
 		<i class="fa fa-th-large"></i>
-		Edit Widget Grup {{$group['title']}} - Widget {{$widget['title']}}
+		Edit Widget Grup {{$widget['group']['title']}} - Widget {{$widget['title']}}
 	</h3>
 	<div class="box-content">
 
 		@include('asmoyo::admin.widget._menu')
 
-		{{Form::open(array('url' => route('admin.widget.group.update', array($widget['slug'], $group['slug'])), 'method' => 'PUT', 'class' => 'form-horizontal'))}}
+		{{Form::open(array('url' => route('admin.widget.group.update', array($widget['slug'], $widget['group']['slug'])), 'method' => 'PUT', 'class' => 'form-horizontal'))}}
 
-			{{Form::hidden('id', $group['id'])}}
-			{{Form::hidden('widget_id', $group['widget_id'])}}
+			{{Form::hidden('id', $widget['group']['id'])}}
+			{{Form::hidden('widget_id', $widget['group']['widget_id'])}}
 
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
@@ -31,7 +31,7 @@
 									Title
 								</label>
 								<div class="col-md-9">
-									{{Form::text('title', $group['title'], array('class' => 'form-control'))}}
+									{{Form::text('title', $widget['group']['title'], array('class' => 'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -39,7 +39,7 @@
 									Type
 								</label>
 								<div class="col-md-9">
-									{{Form::select('type', $typeList, $group['type'], array('class' => 'form-control'))}}
+									{{Form::select('type', $typeList, $widget['group']['type'], array('class' => 'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -47,7 +47,7 @@
 									Description
 								</label>
 								<div class="col-md-9">
-									{{Form::textarea('description', $group['description'], array('class' => 'form-control', 'rows' => 4))}}
+									{{Form::textarea('description', $widget['group']['description'], array('class' => 'form-control', 'rows' => 4))}}
 								</div>
 							</div>
 						</div>
@@ -64,9 +64,9 @@
 			</p>
 
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
-			@if($group['content'])
+			@if($widget['group']['content'])
 			<?php $i = 1; ?>
-			@foreach($group['content'] as $w)
+			@foreach($widget['group']['content'] as $w)
 				<li id="item_{{$i}}">
 					<i id="btn-move" class="fa fa-arrows moveable"></i>
 					<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">

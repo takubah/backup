@@ -71,4 +71,9 @@ class Widget extends EloquentBase {
         return $this->hasMany('Antoniputra\Asmoyo\Widgets\WidgetGroup');
     }
 
+    public function group()
+    {
+        return $this->hasOne('Antoniputra\Asmoyo\Widgets\WidgetGroup');
+    }
+
 }

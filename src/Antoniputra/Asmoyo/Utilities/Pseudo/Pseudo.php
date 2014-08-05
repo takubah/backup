@@ -46,14 +46,22 @@ abstract class Pseudo {
 					$obj = new PseudoView\WidgetPseudo;
 				break;
 				default:
-					return $tpl;
+					$obj = false;
 				break;
 			}
 
-			$tpl = str_replace( '{<'.$elem.'>}', call_user_func_array(
-				array($obj, 'translate'), 
-				array($prop)
-			), $tpl);
+			if ($obj instanceof Self)
+			{
+				$tpl = str_replace( '{<'.$elem.'>}', call_user_func_array(
+					array($obj, 'translate'), 
+					array($prop)
+				), $tpl);
+			}
+			else
+			{
+				// here is handle missing pseudo
+				$tpl = str_replace('{<'.$elem.'>}', '', $tpl);
+			}
 		}
 
 		if ($tpl != FALSE)
@@ -89,11 +97,14 @@ abstract class Pseudo {
 				foreach ($w['groups'] as $g)
 				{
 					$lists[] = array(
-						'widgetName'	=> $w['title'],
+						'name'			=> $w['title'],
+						'widget_name'	=> $w['slug'],
+						'group_name'	=> $g['slug'],
 						'title' 		=> $g['title'],
 						'description' 	=> $g['description'],
 						'pseudo'	=> array(
-							'object'		=> 'widget-group',
+							'id'			=> $g['id'],
+							'object'		=> 'widget',
 							'type'			=> 'list',
 							'sortir'		=> 'new',
 						),
@@ -109,55 +120,57 @@ abstract class Pseudo {
 	{
 		return array(
 			array(
-				'widgetName'	=> 'Post',
+				'name'			=> 'Post',
 				'title' 		=> '',
+				'widget_name'	=> '',
+				'group_name'	=> '',
 				'description' 	=> 'ini adalah description',
 				'pseudo'	=> array(
+					'id'			=> null,
 					'object'		=> 'post',
 					'type'			=> 'list',
 					'sortir'		=> 'new',
 				),
 			),
 			array(
-				'widgetName'	=> 'Media',
+				'name'			=> 'Media',
 				'title' 		=> '',
+				'widget_name'	=> '',
+				'group_name'	=> '',
 				'description' 	=> 'ini adalah description',
 				'pseudo'	=> array(
+					'id'			=> null,
 					'object'		=> 'media',
 					'type'			=> 'list',
 					'sortir'		=> 'new',
 				),
 			),
 			array(
-				'widgetName'	=> 'Category',
+				'name'			=> 'Category',
 				'title' 		=> '',
+				'widget_name'	=> '',
+				'group_name'	=> '',
 				'description' 	=> 'ini adalah description',
 				'pseudo'	=> array(
+					'id'			=> null,
 					'object'		=> 'category',
 					'type'			=> 'list',
 					'sortir'		=> 'new',
 				),
 			),
 			array(
-				'widgetName'	=> 'Comment',
+				'name'			=> 'Comment',
 				'title' 		=> '',
+				'widget_name'	=> '',
+				'group_name'	=> '',
 				'description' 	=> 'ini adalah description',
 				'pseudo'	=> array(
+					'id'			=> null,
 					'object'		=> 'comment',
 					'type'			=> 'list',
 					'sortir'		=> 'new',
 				),
 			),
-			/*array(
-				'widgetName'	=> 'Widget',
-				'title' 		=> '',
-				'description' 	=> 'ini adalah description',
-				'pseudo'	=> array(
-					'object'		=> 'widget',
-					'type'			=> 'list',
-					'sortir'		=> 'new',
-				),
-			),*/
 		);
 	}
 

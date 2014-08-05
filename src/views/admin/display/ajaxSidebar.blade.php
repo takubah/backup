@@ -9,9 +9,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title" style="position:relative;">
-						{{ucfirst($read['object'])}} <br>
+						{{ (isset($read['widget-name']) AND $read['widget-name']) ?$read['widget-name'] : ucfirst($read['object']) }} <br>
 						<small style="font-size:12px;">
-							{{$side['title']}} - {{$read['type']}} - {{$read['sortir']}}
+							<b>{{$side['title']}}</b> - {{$read['type']}} - {{$read['sortir']}}
 						</small>
 						<div style="position:absolute; top:3px; right:0px;">
 							<span class="btn btn-default btn-sm handle">
@@ -26,18 +26,29 @@
 				<div class="panel_{{$position}}_{{$i}} panel-collapse collapse">
 					<div class="panel-body">
 						{{Form::hidden('object[]', $read['object'])}}
-						<p>
-							<label style="font-size:12px;">Title</label>
-							{{Form::text('title[]', $side['title'], array('class' => 'form-control input-sm'))}}
-						</p>
-						<p>
-							<label style="font-size:12px;">Type</label>
-							{{Form::select('type[]', $pseudoTypeList, $read['type'], array('class' => 'form-control input-sm'))}}
-						</p>
-						<p>
-							<label style="font-size:12px;">Sortir</label>
-							{{Form::select('sortir[]', $pseudoSortirList, $read['sortir'], array('class' => 'form-control input-sm'))}}
-						</p>
+						
+						@if( isset($side['title']) )
+							<p>
+								<label style="font-size:12px;">Title</label>
+								{{Form::text('title[]', $side['title'], array('class' => 'form-control input-sm'))}}
+							</p>
+						@endif
+
+						@if( isset($read['type']) )
+							<p>
+								<label style="font-size:12px;">Type</label>
+								{{Form::select('type[]', $pseudoTypeList, $read['type'], array('class' => 'form-control input-sm'))}}
+							</p>
+						@endif
+
+						@if( isset($read['sortir']) )
+							<p>
+								<label style="font-size:12px;">Sortir</label>
+								{{Form::select('sortir[]', $pseudoSortirList, $read['sortir'], array('class' => 'form-control input-sm'))}}
+							</p>
+						@endif
+
+						<!-- <a class=""></a> -->
 					</div>
 				</div>
 			</div>

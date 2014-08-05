@@ -15,7 +15,7 @@
 							<div class="asmoyo-widget-list panel panel-default pull-left">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										{{$w['title'] ?: $w['widgetName']}}
+										{{$w['title'] ?: $w['name']}}
 									</h4>
 								</div>
 								<div class="panel-body">
@@ -27,7 +27,7 @@
 											<i class="fa fa-plus"></i> Add
 										</a>
 										{{HTML::select(
-											'<asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].'>',
+											'asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].' id='.$w["pseudo"]["id"].' widget-name='.$w['widget_name'].' group-name='.$w['group_name'],
 											$widgetContainer,
 											array('class' => 'dropdown-menu widget-chooser'),
 											array('data-title' => $w['title'])
@@ -88,7 +88,7 @@
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
 					title 	= el.attr('data-title'),
-					content	= '{'+ el.attr('data-value') +'}',
+					content	= '{<'+ el.attr('data-value') +'>}',
 					urlPost = (target == '#sideRight')
 						? "{{route('admin.display.ajaxSidebarAdd', 'right')}}"
 						: "{{route('admin.display.ajaxSidebarAdd', 'left')}}",

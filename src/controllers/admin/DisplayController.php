@@ -12,8 +12,6 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function index()
 	{
-		// $widgets = App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll('all');
-
 		$data = array(
 			'widgets'			=> Pseudo::getList(),
 			'widgetContainer'	=> array(
@@ -21,7 +19,7 @@ class Admin_DisplayController extends AsmoyoController
 				'sideRight' => 'Sidebar Kanan'
 			),
 		);
-		// return $data['widgets'];
+		// return $data;
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 

@@ -91,14 +91,37 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		return $this->model->find($id);
 	}
 
+	public function getByIdWithGroup($widgetId, $groupId)
+	{
+		$result = $this->model->with(array('group' => function($query) use($groupId) {
+			return $query->find($groupId);
+		}))->find($widgetId);
+
+		return $result;
+	}
+
+	public function getByIdWithGroups($id)
+	{
+		return $this->model->with('groups')->find($id);
+	}
+
 	public function getBySlug($slug)
 	{
 		return $this->model->where('slug', $slug)->first();
 	}
 
+	public function getBySlugWithGroup($widgetSlug, $groupSlug)
+	{
+		$result = $this->model->with(array('group' => function($query) use($groupSlug) {
+			return $query->where('slug', $groupSlug);
+		}))->where('slug', $widgetSlug)->first();
+
+		return $result;
+	}
+
 	public function getBySlugWithGroups($slug)
 	{
-		return $this->model->with('groups.items')
+		return $this->model->with('groups')
 			->where('slug', $slug)->first();
 	}
 

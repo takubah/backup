@@ -4,14 +4,14 @@
     	<span class="sr-only">Close</span>
 	</a>
     <h4 class="modal-title" id="mediaModalLabel">
-    	Widget <b> {{$widget['title']}} </b> : {{$group['title']}}
+    	Widget <b> {{$widget['title']}} </b> : {{$widget['group']['title']}}
     </h4>
 </div>
 
 <div class="modal-body" id="modal_body">
     <div class="list-group">
-    	@if($group['content'])
-    	@foreach($group['content'] as $content)
+    	@if($widget['group']['content'])
+    	@foreach($widget['group']['content'] as $content)
     		<a @if($content['link']) href="{{$content['link']}}" @endif class="list-group-item">
 				<h4 class="list-group-item-heading">
 					{{$content['title']}}
@@ -32,7 +32,7 @@
 </div>
 
 <div class="modal-footer">
-	<a href="{{route('admin.widget.group.edit', array($widget['slug'], $group['slug']) )}}" class="btn btn-primary">
+	<a href="{{route('admin.widget.group.edit', array($widget['slug'], $widget['group']['slug']) )}}" class="btn btn-primary">
 		Edit
 	</a>
     <a class="btn btn-default" data-dismiss="modal">Close</a>
