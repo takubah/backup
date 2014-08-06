@@ -1,4 +1,4 @@
-@section('title') Edit Widget Grup {{$widget['group']['title']}} - Widget {{$widget['title']}} @stop
+@section('title') Tambah Grup Widget {{$widget['title']}} @stop
 
 @section('stylesheets')
 	@parent
@@ -14,10 +14,9 @@
 
 		@include('asmoyo::admin.widget._menu')
 
-		{{Form::open(array('url' => route('admin.widget.group.update', array($widget['slug'], $widget['group']['slug'])), 'method' => 'PUT', 'class' => 'form-horizontal'))}}
+		{{Form::open(array('url' => route('admin.widget.group.store', array($widget['slug'])), 'method' => 'POST', 'class' => 'form-horizontal'))}}
 
-			{{Form::hidden('id', $widget['group']['id'])}}
-			{{Form::hidden('widget_id', $widget['group']['widget_id'])}}
+			{{Form::hidden('widget_id', $widget['id'])}}
 
 			<div class="panel-group" id="accordion">
 				<div class="panel panel-default">
@@ -29,14 +28,14 @@
 							</h4>
 						</a>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse">
+					<div id="collapseOne" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<div class="form-group">
 								<label class="col-md-2 control-label">
 									Title
 								</label>
 								<div class="col-md-9">
-									{{Form::text('title', $widget['group']['title'], array('class' => 'form-control'))}}
+									{{Form::text('title', null, array('class' => 'form-control'))}}
 								</div>
 							</div>
 							<div class="form-group">
@@ -44,7 +43,7 @@
 									Description
 								</label>
 								<div class="col-md-9">
-									{{Form::textarea('description', $widget['group']['description'], array('class' => 'form-control', 'rows' => 4))}}
+									{{Form::textarea('description', null, array('class' => 'form-control', 'rows' => 4))}}
 								</div>
 							</div>
 						</div>
@@ -54,9 +53,7 @@
 
 			<hr>
 			<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
-			@if($widget['group']['content'])
-			<?php $i = 1; ?>
-			@foreach($widget['group']['content'] as $w)
+			@for($i=1; $i<=5; $i++)
 				<li id="item_{{$i}}">
 					<i id="btn-move" class="fa fa-arrows moveable"></i>
 					<!-- <a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
@@ -67,9 +64,9 @@
 							Gambar
 						</label>
 						<div class="col-sm-10">
-							{{Form::hidden( 'content[file][]', $w['file'], array('id' => 'file_'.$i) )}}
+							{{Form::hidden( 'content[file][]', null, array('id' => 'file_'.$i) )}}
 							
-							<a id="preview_{{$i}}" class="thumbnail" style="margin:0px; height:300px; background:url('{{$w['file']}}') center no-repeat; "> </a>
+							<a id="preview_{{$i}}" class="thumbnail" style="margin:0px; height:300px; background:url('{{null}}') center no-repeat; "> </a>
 
 							<a href="{{route('admin.media.ajaxIndex')}}" id="caller_{{$i}}" class="btn btn-default" data-toggle="modal" data-target="#modalAjax">
 								<i class="fa fa-picture-o"></i>
@@ -82,7 +79,7 @@
 							Title
 						</label>
 						<div class="col-md-9">
-							{{Form::text('content[title][]', $w['title'], array('class' => 'form-control'))}}
+							{{Form::text('content[title][]', null, array('class' => 'form-control'))}}
 						</div>
 					</div>
 					<div class="form-group">
@@ -90,7 +87,7 @@
 							Link
 						</label>
 						<div class="col-md-9">
-							{{Form::text('content[link][]', $w['link'], array('class' => 'form-control'))}}
+							{{Form::text('content[link][]', null, array('class' => 'form-control'))}}
 						</div>
 					</div>
 					<div class="form-group">
@@ -98,14 +95,12 @@
 							Description
 						</label>
 						<div class="col-md-9">
-							{{Form::textarea('content[description][]', $w['description'], array('class' => 'form-control', 'rows' => '3'))}}
+							{{Form::textarea('content[description][]', null, array('class' => 'form-control', 'rows' => '3'))}}
 						</div>
 					</div>
 					<hr style="border-color:#999;">
 				</li>
-				<?php $i++; ?>
-			@endforeach
-			@endif
+			@endfor
 			</ol>
 
 			<div class="form-group" id="bottom">
@@ -152,18 +147,13 @@
 			}
 		}
 
-		@if($widget['group']['content'])
-			<?php $i = 1; ?>
-			@foreach($widget['group']['content'] as $w)
+		@for($i=1; $i<=5; $i++)
 
-				// media modal
-				$( "#caller_{{$i}}" ).asmoyoMediaModal({
-					field_file_url: '#file_{{$i}}',
-					preview: '#preview_{{$i}}'
-				}, true);
-
-			<?php $i++; ?>
-			@endforeach
-		@endif
+			// media modal
+			$( "#caller_{{$i}}" ).asmoyoMediaModal({
+				field_file_url: '#file_{{$i}}',
+				preview: '#preview_{{$i}}'
+			}, true);
+		@endfor
 	</script>
 @stop
