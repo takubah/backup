@@ -63,6 +63,19 @@
 				<!-- ajax content -->
 			</div>
 		</div>
+
+		{{--@if($pages['items'])
+		@foreach($pages['items'] as $page)
+			<div class="asmoyo-box">
+				<h3 class="box-header">
+					{{$page['title']}}
+				</h3>
+				<div class="box-content" id="page_{{$page['id']}}">
+					<!-- ajax content -->
+				</div>
+			</div>
+		@endforeach
+		@endif--}}
 	</div>
 </div>
 
@@ -71,16 +84,18 @@
 	{{HTML::script('//code.jquery.com/ui/1.11.0/jquery-ui.js')}}
 	<script type="text/javascript">
 		$(function() {
-			$( '#sideRight' ).html('loading...');
-			$.get("{{route('admin.display.ajaxSidebar', 'right')}}", function(data,status)
-			{
-				$( '#sideRight' ).html(data);
-			});
-
+			// load side left
 			$( '#sideLeft' ).html('loading...');
 			$.get("{{route('admin.display.ajaxSidebar', 'left')}}", function(data,status)
 			{
 				$( '#sideLeft' ).html(data);
+			});
+
+			// load side right
+			$( '#sideRight' ).html('loading...');
+			$.get("{{route('admin.display.ajaxSidebar', 'right')}}", function(data,status)
+			{
+				$( '#sideRight' ).html(data);
 			});
 
 			$('.widget-chooser > li > a').click(function(){
@@ -88,13 +103,19 @@
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
 					title 	= el.attr('data-title'),
-					content	= '{<'+ el.attr('data-value') +'>}',
-					urlPost = (target == '#sideRight')
-						? "{{route('admin.display.ajaxSidebarAdd', 'right')}}"
-						: "{{route('admin.display.ajaxSidebarAdd', 'left')}}",
-					url 	= (target == '#sideRight')
-						? "{{route('admin.display.ajaxSidebar', 'right')}}"
-						: "{{route('admin.display.ajaxSidebar', 'left')}}";
+					content	= '{<'+ el.attr('data-value') +'>}';
+
+				if(target == '#sideRight')
+				{
+					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'right')}}",
+						url 	= "{{route('admin.display.ajaxSidebar', 'right')}}";
+				} else if(target == '#sideLeft') {
+					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'left')}}",
+						url 	= "{{route('admin.display.ajaxSidebar', 'left')}}";
+				} else {
+					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'page')}}",
+						url 	= "{{route('admin.display.ajaxSidebar', 'page')}}";
+				}
 
 				// add proses
 				$( target ).html('loading...');

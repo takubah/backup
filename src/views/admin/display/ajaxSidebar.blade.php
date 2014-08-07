@@ -1,5 +1,5 @@
 @if($sidebar)
-	{{Form::open(array('method' => 'POST', 'route' => array('admin.display.ajaxUpdate', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)', 'id' => 'form_'.$position))}}
+	{{Form::open(array('method' => 'POST', 'route' => array('admin.display.ajaxSidebarUpdate', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)', 'id' => 'form_'.$position))}}
 		{{Form::hidden('position', $position)}}
 	<ul class="widget-sortable nav">
 		<?php $i = 1; ?>

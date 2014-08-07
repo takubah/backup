@@ -12,17 +12,31 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function index()
 	{
+		$pages 				= app('Antoniputra\Asmoyo\Pages\PageInterface')->getAll();
+		$widgetContainer 	= array(
+			'sideLeft' 	=> 'Sidebar Kiri',
+			'sideRight' => 'Sidebar Kanan',
+		);
+
+		// merge widgetContainer with PageContainer
+		/*if($pages['items'])
+		{
+			foreach($pages['items'] as $page)
+			{
+				$pageContainer['page_'.$page['id']] = $page['title'];
+			}
+		}
+		$widgetContainer = array_merge($widgetContainer, $pageContainer);*/
+
 		$data = array(
 			'widgets'			=> Pseudo::getList(),
-			'widgetContainer'	=> array(
-				'sideLeft' => 'Sidebar Kiri',
-				'sideRight' => 'Sidebar Kanan'
-			),
+			'pages'				=> $pages,
+			'widgetContainer'	=> $widgetContainer
 		);
 		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
 	}
 
-	public function ajaxUpdate($position)
+	public function ajaxSidebarUpdate($position)
 	{
 		$web 	= app('asmoyo.web');
 		$input 	= Input::all();
@@ -51,9 +65,24 @@ class Admin_DisplayController extends AsmoyoController
 		if ( ! Request::ajax() ) { return App::abort(404); }
 
 		$web 	= app('asmoyo.web');
-		$sidebar = ($position == 'left')
-			? $web['web_sideLeft']
-			: $web['web_sideRight'];
+		switch ($position) {
+			case 'left':
+				$sidebar = $web['web_sideLeft'];
+			break;
+
+			case 'right':
+				$sidebar = $web['web_sideRight'];
+			break;
+
+			case 'page':
+				$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById(Input::get('page_id', 0));
+				$sidebar = $page['content_structure'];
+			break;
+		
+			default:
+				return App::abort(404);
+			break;
+		}
 
 		$data = array(
 			'position'	=> $position,
@@ -61,6 +90,8 @@ class Admin_DisplayController extends AsmoyoController
 			'pseudoTypeList' => Pseudo::typeList(),
 			'pseudoSortirList' => Pseudo::sortirList(),
 		);
+		if($position == 'page') $data = array_merge($data, array('page_id' => $page['id']));
+
 		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
 	}
 
@@ -71,9 +102,19 @@ class Admin_DisplayController extends AsmoyoController
 		$data 	= array();
 
 		if ($position == 'left')
+		{
 			$data['web_sideLeft'] 	= array_merge($web['web_sideLeft'], array($input));
-		else
+		}
+		elseif($position == 'right')
+		{
 			$data['web_sideRight'] 	= array_merge($web['web_sideRight'], array($input));
+		}
+		else
+		{
+			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById($input['page_id'])->toArray();
+			// $page['content_structure'];
+			return 'berhasil masuk page';
+		}
 
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
 		{

@@ -264,8 +264,8 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'uses'	=> 'Admin_DisplayController@ajaxSidebarAdd'
 		));
 		Route::post('display/update/{slug}', array(
-			'as'	=> 'admin.display.ajaxUpdate',
-			'uses'	=> 'Admin_DisplayController@ajaxUpdate'
+			'as'	=> 'admin.display.ajaxSidebarUpdate',
+			'uses'	=> 'Admin_DisplayController@ajaxSidebarUpdate'
 		));
 		Route::post('display/remove/{slug}', array(
 			'as'	=> 'admin.display.ajaxSidebarRemove',

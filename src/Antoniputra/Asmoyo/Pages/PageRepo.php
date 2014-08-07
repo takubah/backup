@@ -85,6 +85,13 @@ class PageRepo extends RepoBase implements PageInterface
 		return $result;
 	}
 
+	/*public function getByType($type)
+	{
+		if ( ! in_array($type, $this->model->getTypeList) ) return false;
+
+		$data 	= $this->model->where('type', $type)->get();
+	}*/
+
 	public function getById($id)
 	{
 		// check cache

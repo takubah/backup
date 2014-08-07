@@ -81,7 +81,7 @@ class Page extends EloquentBase {
     * @var array
     */
     public $typeList = array(
-        'standard', 'category', 'post'
+        'default', 'standard', 'category', 'post'
     );
 
     /**

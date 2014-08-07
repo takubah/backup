@@ -16,7 +16,11 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'Home',
 				'slug' 				=> 'home',
 				'content'			=> '',
-				'content_structure'	=> json_encode(array()),
+				'content_structure'	=> json_encode(array(
+					array(
+						'page_content'	=> '$page_content_output',
+					),
+				)),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -33,7 +37,11 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'About',
 				'slug' 				=> 'about',
 				'content'			=> '',
-				'content_structure'	=> json_encode(array()),
+				'content_structure'	=> json_encode(array(
+					array(
+						'page_content'	=> '$page_content_output',
+					),
+				)),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -50,7 +58,11 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'Kategori',
 				'slug' 				=> 'kategori',
 				'content'			=> '',
-				'content_structure'	=> json_encode(array()),
+				'content_structure'	=> json_encode(array(
+					array(
+						'page_content'	=> '$page_content_output',
+					),
+				)),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
@@ -67,7 +79,11 @@ class PageTableSeeder extends Seeder {
 				'title' 			=> 'Posting',
 				'slug' 				=> 'posting',
 				'content'			=> '',
-				'content_structure'	=> json_encode(array()),
+				'content_structure'	=> json_encode(array(
+					array(
+						'page_content'	=> '$page_content_output',
+					),
+				)),
 				'side_left'			=> json_encode(array()),
 				'side_right'		=> json_encode(array()),
 				'footer'			=> json_encode(array()),
