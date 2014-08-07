@@ -2,9 +2,9 @@
 
 interface GalleryInterface
 {
-	public function getAll($limit=null);
+	/*public function getAll($limit=null);
 
 	public function getById($id);
 
-	public function getBySlug($slug);
+	public function getBySlug($slug);*/
 }
