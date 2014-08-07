@@ -162,6 +162,10 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		Route::resource('media', 'Admin_MediaController');
 		// End Media
 
+		// Gallery
+		Route::resource('gallery', 'Admin_GalleryController');
+		// End Gallery
+
 		// Category
 		Route::delete('category/forceDelete/{id}', array(
 			'as' 		=> 'admin.category.forceDelete',
