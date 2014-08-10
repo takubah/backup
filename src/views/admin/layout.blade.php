@@ -17,9 +17,7 @@
             {{asmoyoAsset( 'css/bootstrap.min.css', 'admin')}}
             {{asmoyoAsset( 'css/bootstrap-theme.min.css', 'admin')}}
             {{asmoyoAsset( 'css/font-awesome.min.css', 'admin')}}
-            
-            {{--asmoyoAsset( 'css/style.css', 'css', true )--}}
-            {{HTML::style('admin-style.css')}}
+            {{asmoyoAsset( 'css/admin-style.css', 'admin')}}
         @show
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
