@@ -129,7 +129,13 @@ class Image {
 
     public function path($path)
     {
-    	// return public_path('uploads/images/'.$path);
-    	return \Config::get('asmoyo::config.uploads.path') .'images/'. $path;
+    	$imagePath = \Config::get('asmoyo::config.uploads.path') .'images/';
+    	
+    	if (!file_exists($imagePath))
+    	{
+    		die('folder is not exist');
+    	}
+
+		return $imagePath . $path;
     }
 }
