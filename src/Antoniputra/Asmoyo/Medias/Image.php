@@ -129,6 +129,7 @@ class Image {
 
     public function path($path)
     {
-    	return public_path('uploads/images/'.$path);
+    	// return public_path('uploads/images/'.$path);
+    	return \Config::get('asmoyo::config.uploads.path') .'images/'. $path;
     }
 }
