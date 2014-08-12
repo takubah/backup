@@ -18,7 +18,7 @@ body { background:#F0F0F0; }
 .asmoyo-navbar .nav > li > a:hover { background:#3276b1; color: white; }
 
 /*sidebar*/
-.asmoyo-side-menu { position:fixed; top:51px; left:0px; width:105px; background-color:#3d566d; z-index:9999; height:100%; }
+.asmoyo-side-menu { position:fixed; top:51px; left:0px; width:105px; background-color:#3d566d; z-index:99; height:100%; }
 .asmoyo-side-menu ul { margin:0px; }
 .asmoyo-side-menu ul > li.active > a { background-color:#2cc36b; }
 .asmoyo-side-menu ul > li > a { padding:12px 7px; color:white; vertical-align:middle; }
