@@ -25,3 +25,15 @@ View::composer(array('*'), function($view)
 			: 'asmoyo-theme.'. $web['web_publicTemplate']['name'] .'.';
 	$view->with('theme',  $theme);
 });
+
+// set variable for header 
+View::composer(array('asmoyoTheme.*.partials.header'), function($view)
+{
+	$navbar = app('Antoniputra\Asmoyo\Pages\PageInterface')->getAsMenu();
+	$view->with('navbar', $navbar);
+});
+
+/*View::composers(array(
+    'Antoniputra\Asmoyo\Utilities\Composer\PublicComposer' => array('asmoyoTheme.baretshow.content.home'),
+    // 'AdminComposer' 	=> array('asmoyo::admin.page.index', 'asmoyo::admin.page.edit'),
+));*/

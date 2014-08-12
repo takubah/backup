@@ -127,9 +127,9 @@ class Image {
         return preg_replace("/\\.[^.\\s]{3,4}$/", "", $filename);
     }
 
-    public function path($path)
+    public function path($path=null)
     {
-    	$imagePath = \Config::get('asmoyo::config.uploads.path') .'images/';
+    	$imagePath = \Config::get('asmoyo::config.uploads.path_image');
     	
     	if (!file_exists($imagePath))
     	{

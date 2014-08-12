@@ -67,8 +67,14 @@ return array(
 	'uploads'		=> array(
 
 		/**
-		* where should file be stored
+		* where base upload path should be stored
 		*/
-		'path'		=> public_path('packages/antoniputra/asmoyo/uploads/'),
+		'path'			=> public_path('packages/antoniputra/asmoyo/uploads/'),
+
+		/**
+		* where image upload path should be stored
+		*/
+		'path_image'	=> public_path('packages/antoniputra/asmoyo/uploads/images/')
+
 	),
 );
