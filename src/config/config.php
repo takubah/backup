@@ -62,13 +62,13 @@ return array(
 	),
 
 	/**
-	* Assets Settings
+	* Uploads Settings
 	*/
-	'assets'			=> array(
+	'uploads'		=> array(
 
 		/**
-		* Using Cdn ?
+		* where should file be stored
 		*/
-		'cdn'		=> '',
+		'path'		=> public_path('packages/antoniputra/asmoyo/uploads/'),
 	),
 );
