@@ -19,26 +19,39 @@ class EtagFilter {
 
 	public function set(Route $route, Request $request, Response $response)
 	{
-		$entity = $this->entity( $request->path() );
- 
-	 	$response->setEtag( md5($entity) );
-	 	$response->setCache( array('max_age' => 600) );
+		if( $entity = $this->entity( $request->path() ) )
+		{
+	 		$response->setEtag( md5($entity) );
+		}
 	}
 
+	/**
+	* get path to file, for get time modified file
+	*/
 	protected function entity($url)
 	{
 		$web = app('asmoyo.web');
-		if( false !== strpos($url, 'admin') )
+		if( false !== strpos($url, 'assets') )
 		{
-			$path = public_path( str_replace('assets/admin', 'packages/antoniputra/asmoyo/admin', $url) );
-		} else {
-			$path = public_path( str_replace('assets/', 'themes/', $url) );
+			
+			if( false !== strpos($url, 'themes') )
+				$path = public_path( str_replace('assets', 'themes', $url) );			
+			else
+				$path = public_path( str_replace('assets/admin', 'packages/antoniputra/asmoyo/admin', $url) );
+
+		}
+		elseif( false !== strpos($url, 'uploads') )
+		{
+			$path_image = Config::get('asmoyo::config.uploads.path_image');
+			$path 	= str_replace('uploads', $path_image, $url);
 		}
 
 		if( file_exists($path) )
 		{
 			return filemtime($path);
 		}
+
+		return false;
 	}
 
 	/**
