@@ -84,12 +84,12 @@ class AsmoyoController extends Controller {
 		$requestedFile = $path . $file;
 		if( is_file($requestedFile) )
 		{
-			return Response::make( File::get($requestedFile) )
-				->header('Content-Type', getMime(File::extension($requestedFile)));
+			// return Response::make( File::get($requestedFile) )->header('Content-Type', getMime(File::extension($requestedFile)));
+			return Response::make(File::get($requestedFile), 200, array('Content-Type' => getMime(File::extension($requestedFile))));
 		} else {
 			$default = $path . app('asmoyo.web')['media_imageDefault'];
-			return Response::make( File::get($default) )
-				->header('Content-Type', getMime(File::extension($default)) );
+			// return Response::make( File::get($default) )->header('Content-Type', getMime(File::extension($default)) );
+			return Response::make(File::get($default), 200, array('Content-Type' => getMime(File::extension($default))) );
 		}
 	}
 
