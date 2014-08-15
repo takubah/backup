@@ -22,7 +22,7 @@
 		@foreach($repo['items'] as $r)
 			<div class="item col-md-3">
 				<a href="{{route('post.show', $r['slug'])}}" class="thumbnail">
-					<div class="image" style="background-image:url('{{getMedia($r['cover']['file'])}}'); height:{{$attr['size']}};"> </div>
+					<img src="{{getMedia($r['cover']['file'])}}" style="width:{{$attr['size']}};">
 				</a>
 				<p class="caption">
 					{{$r['title']}}

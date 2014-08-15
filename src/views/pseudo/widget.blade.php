@@ -21,7 +21,7 @@
 		@foreach($widget['group']['items'] as $r)
 			<div class="item col-md-3">
 				<a href="{{route('category.show', $r['slug'])}}" class="thumbnail">
-					<div class="image" style="background-image:url('{{getMedia($r['cover']['file'])}}'); height:{{$attr['size']}};"> </div>
+					<div class="image" style="background-image:url('{{getMedia($r['cover']['file'])}}'); width:{{$attr['size']}}; height:{{$attr['size']}};"> </div>
 				</a>
 				<p class="caption">
 					{{$r['title']}}
