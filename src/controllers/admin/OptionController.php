@@ -21,7 +21,7 @@ class Admin_OptionController extends AsmoyoController
 			'dateFormatList' => $this->option->dateFormatList(),
 			'sortirList' 	=> $this->option->getSortirList(),
 		);
-		return $this->adminView('option.web', $data);
+		return $this->setStructure('twoCollumn', 'admin')->adminView('option.web', $data);
 	}
 
 	public function webSave()
@@ -39,7 +39,7 @@ class Admin_OptionController extends AsmoyoController
 			'option'	=> $this->option->get(),
 			'watermarkPositionList' => $this->option->watermarkPositionList(),
 		);
-		return $this->adminView('option.media', $data);
+		return $this->setStructure('twoCollumn', 'admin')->adminView('option.media', $data);
 	}
 
 	public function mediaSave()
