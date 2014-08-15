@@ -16,7 +16,7 @@ class Admin_CategoryController extends AsmoyoController
 			'categories'	=> Paginator::make($cats, $cats['total'], $cats['limit']),
 		);
 		
-		return $this->loadView('asmoyo::admin.category.index', $data, true);
+		return $this->adminView('category.index', $data, true);
 	}
 
 	public function create()
@@ -25,7 +25,7 @@ class Admin_CategoryController extends AsmoyoController
 			'parentList'	=> $this->category->getParent(true),
 			'statusList'	=> $this->category->getStatusList(),
 		);
-		return $this->loadView('asmoyo::admin.category.create', $data);
+		return $this->adminView('category.create', $data);
 	}
 
 	public function store()
@@ -62,7 +62,7 @@ class Admin_CategoryController extends AsmoyoController
 
 		if( ! $data['category'] ) return App::abort(404);
 
-		return $this->loadView('asmoyo::admin.category.edit', $data);
+		return $this->adminView('category.edit', $data);
 	}
 
 	public function update($slug)

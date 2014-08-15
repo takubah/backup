@@ -33,7 +33,7 @@ class Admin_DisplayController extends AsmoyoController
 			'pages'				=> $pages,
 			'widgetContainer'	=> $widgetContainer
 		);
-		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.display.index', $data, true);
+		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, true);
 	}
 
 	public function ajaxSidebarUpdate($position)

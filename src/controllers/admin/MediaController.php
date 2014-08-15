@@ -15,7 +15,7 @@ class Admin_MediaController extends AsmoyoController
 		$data 	= array(
 			'medias'	=> Paginator::make($medias, $medias['total'], $medias['limit']),
 		);
-		return $this->setStructure('oneCollumn', 'admin')->loadView('media.index', $data, true);
+		return $this->setStructure('twoCollumn', 'admin')->adminView('media.index', $data);
 	}
 
 	public function create()
@@ -23,7 +23,7 @@ class Admin_MediaController extends AsmoyoController
 		$data = array(
 			'statusList'	=> $this->media->getStatusList(),
 		);
-		return $this->loadView('asmoyo::admin.media.create', $data);
+		return $this->adminView('media.create', $data);
 	}
 
 	public function store()
@@ -58,7 +58,7 @@ class Admin_MediaController extends AsmoyoController
 
 		if( ! $data['media'] ) return App::abort(404);
 
-		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.media.edit', $data);
+		return $this->setStructure('oneCollumn', 'admin')->adminView('media.edit', $data);
 	}
 
 	public function update($id)

@@ -16,7 +16,7 @@ class Admin_UserController extends AsmoyoController
 	public function adminLogin()
 	{
 		$data = array();
-		return $this->loadView('asmoyo::admin.user.login', $data, true);
+		return $this->adminView('user.login', $data, true);
 	}
 
 
@@ -51,7 +51,7 @@ class Admin_UserController extends AsmoyoController
 		$data = array(
 			'user'	=> Auth::user(),
 		);
-		return $this->loadView('asmoyo::admin.user.changePassword', $data, true);
+		return $this->adminView('user.changePassword', $data, true);
 	}
 
 	public function putChangePassword()
@@ -78,7 +78,7 @@ class Admin_UserController extends AsmoyoController
 		$data = array(
 			'users'		=> Paginator::make($users, $users['total'], $users['limit']),
 		);
-		return $this->loadView('asmoyo::admin.user.index', $data);
+		return $this->adminView('user.index', $data);
 	}
 
 
@@ -90,7 +90,7 @@ class Admin_UserController extends AsmoyoController
 	public function create()
 	{
 		$data = array();
-		return $this->loadView('asmoyo::admin.user.create', $data);
+		return $this->adminView('user.create', $data);
 	}
 
 
@@ -137,7 +137,7 @@ class Admin_UserController extends AsmoyoController
 
 		if( ! $data['user'] ) return App::abort(404);
 
-		return $this->loadView('asmoyo::admin.user.edit', $data);
+		return $this->adminView('user.edit', $data);
 	}
 
 

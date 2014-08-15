@@ -15,7 +15,7 @@ class Admin_PageController extends AsmoyoController
 		$data 	= array(
 			'pages'		=> Paginator::make($pages, $pages['total'], $pages['limit']),
 		);
-		return $this->loadView('asmoyo::admin.page.index', $data, true);
+		return $this->adminView('page.index', $data, true);
 	}
 
 	public function create()
@@ -26,7 +26,7 @@ class Admin_PageController extends AsmoyoController
 			'statusList'	=> $this->page->getStatusList(),
 			'typeList'		=> $this->page->getTypeList(),
 		);
-		return $this->loadView('asmoyo::admin.page.create', $data);
+		return $this->adminView('page.create', $data);
 	}
 
 	public function store()
@@ -69,7 +69,7 @@ class Admin_PageController extends AsmoyoController
 
 		if( ! $data['page'] ) return App::abort(404);
 
-		return $this->loadView('asmoyo::admin.page.edit', $data);
+		return $this->adminView('page.edit', $data);
 	}
 
 	public function update($slug)
@@ -97,7 +97,7 @@ class Admin_PageController extends AsmoyoController
 
 		if( ! $data['pages'] ) return App::abort(404);
 
-		return $this->setStructure('oneCollumn', 'admin')->loadView('asmoyo::admin.page.editOrder', $data, true);
+		return $this->setStructure('oneCollumn', 'admin')->adminView('page.editOrder', $data, true);
 	}
 
 	public function editOrderSave()

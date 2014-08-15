@@ -15,7 +15,7 @@ class Admin_PostController extends AsmoyoController
 		$data = array(
 			'posts'		=> Paginator::make($posts, $posts['total'], $posts['limit']),
 		);
-		return $this->loadView('asmoyo::admin.post.index', $data, true);
+		return $this->adminView('post.index', $data, true);
 	}
 
 	public function create()
@@ -24,7 +24,7 @@ class Admin_PostController extends AsmoyoController
 			'categoryList' 	=> app('Antoniputra\Asmoyo\Categories\CategoryInterface')->getAsDropdown(),
 			'statusList'	=> $this->post->getStatusList(),
 		);
-		return $this->loadView('asmoyo::admin.post.create', $data);
+		return $this->adminView('post.create', $data);
 	}
 
 	public function store()
@@ -58,7 +58,7 @@ class Admin_PostController extends AsmoyoController
 
 		if( ! $data['post'] ) return App::abort(404);
 
-		return $this->loadView('asmoyo::admin.post.edit', $data);
+		return $this->adminView('post.edit', $data);
 	}
 
 	public function update($slug)

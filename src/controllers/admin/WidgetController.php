@@ -15,7 +15,7 @@ class Admin_WidgetController extends AsmoyoController
 		$data 	= array(
 			'widgets'	=> Paginator::make($widgets, $widgets['total'], $widgets['limit']),
 		);
-		return $this->loadView('asmoyo::admin.widget.index', $data);
+		return $this->adminView('widget.index', $data);
 	}
 
 	public function show($slug)
@@ -63,7 +63,7 @@ class Admin_WidgetController extends AsmoyoController
 			'widget' => $widget,
 			'groups' => Paginator::make($groups, $groups['total'], $groups['limit']),
 		);
-		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.index', $data);
+		return $this->adminView('widget.'.$widget['slug'].'.index', $data);
 	}
 
 	public function groupShowAjax($widgetSlug, $groupSlug)
@@ -92,7 +92,7 @@ class Admin_WidgetController extends AsmoyoController
 			'typeList'	=> $this->widget->getTypeList(),
 		);
 		
-		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.create', $data);
+		return $this->adminView('widget.'.$widget['slug'].'.create', $data);
 	}
 	
 	public function groupStore($widgetSlug)
@@ -121,7 +121,7 @@ class Admin_WidgetController extends AsmoyoController
 			'typeList'	=> $this->widget->getTypeList(),
 		);
 		
-		return $this->loadView('asmoyo::admin.widget.'.$widget['slug'].'.edit', $data);
+		return $this->adminView('widget.'.$widget['slug'].'.edit', $data);
 	}
 	
 	public function groupUpdate($widgetSlug, $groupSlug)
