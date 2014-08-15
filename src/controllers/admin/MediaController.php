@@ -15,7 +15,7 @@ class Admin_MediaController extends AsmoyoController
 		$data 	= array(
 			'medias'	=> Paginator::make($medias, $medias['total'], $medias['limit']),
 		);
-		return $this->setStructure('twoCollumn', 'admin')->adminView('media.index', $data);
+		return $this->adminView('media.index', $data);
 	}
 
 	public function create()
