@@ -29,6 +29,20 @@ class Page extends EloquentBase {
      */
 	protected $fillable = array();
 
+    /**
+    * These are make collumn to Carbon instance
+    * @return array
+    */
+    public function getDates()
+    {
+        return array('created_at', 'updated_at', 'deleted_at');
+    }
+
+    /**
+    * These are additional attribute
+    */
+    protected $appends = array('url');
+
     public function getContentStructureAttribute($value)
     {
         return json_decode($value, true);
@@ -59,13 +73,10 @@ class Page extends EloquentBase {
         $this->attributes['side_right'] = json_encode($value);
     }
 
-	/**
-    * These are make collumn to Carbon instance
-    * @return array
-    */
-	public function getDates()
+    // custom attribute
+    public function getUrlAttribute()
     {
-        return array('created_at', 'updated_at', 'deleted_at');
+        return route('page.show', $this->slug);    
     }
 
     /**

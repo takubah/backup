@@ -40,6 +40,16 @@ class Category extends EloquentBase
     }
 
     /**
+    * These are additional attribute
+    */
+    protected $appends = array('url');
+
+    public function getUrlAttribute()
+    {
+        return route('category.show', $this->slug);
+    }
+
+    /**
     * list status support
     * @var array
     */

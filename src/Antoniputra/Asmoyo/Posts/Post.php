@@ -39,6 +39,16 @@ class Post extends EloquentBase {
     }
 
     /**
+    * These are additional attribute
+    */
+    protected $appends = array('url');
+
+    public function getUrlAttribute()
+    {
+        return route('post.show', $this->slug);
+    }
+
+    /**
     * list type support
     * @var array
     */
