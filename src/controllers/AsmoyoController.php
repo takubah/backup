@@ -4,48 +4,57 @@ use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
 class AsmoyoController extends Controller {
 
-	protected $viewStructure;
+	protected $structure;
 
 	public function setStructure($file, $type='public')
 	{
 		$web = app('asmoyo.web');
-		if($type == 'public')
-		{
-			$this->viewStructure = 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.'. $file;
-		} elseif($type == 'admin' ) {
-			// check if there is not asmoyo:: str, add it !
-			$this->viewStructure =  (false === strpos($file, 'asmoyo::'))
-				? 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $file
-				: $file;
-		}
 
+		if ($type == 'public')
+		{
+			$this->structure = 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.'. $file;
+		}
+		elseif ($type == 'admin')
+		{
+			$this->structure = 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $file;
+		}
 		return $this;
+	}
+
+	public function adminView($content, $data = array())
+	{
+		$web 	= app('asmoyo.web');
+		$base 	= 'asmoyo::.'. $web['web_adminTemplate']['name'] .'.';
+		if ( ! $this->structure )
+		{
+			$this->structure = $base .'oneCollumn';
+		}
+		$content = $base . $content;
+
+		return Pseudo::render(
+			View::make(
+				$this->structure, $data)
+					->nest('content', $content, $data)
+					->render()
+		);
 	}
 
 	public function loadView($content, $data = array())
 	{
-		$web = app('asmoyo.web');
-		
-		// set view structure if empty
-		if(!$this->viewStructure) {
-			$this->viewStructure = ( Request::segment(1) == 'admin' ) 
-				? 'asmoyo::admin.twoCollumn'
-				: 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.twoCollumn';
-		}
-
-		// check content path for publicTemplate, if there is not asmoyoTheme str, add it !
-		if(false === strpos($content, 'asmoyoTheme') AND Request::segment(1) != Config::get('asmoyo::admin.url'))
+		$web 	= app('asmoyo.web');
+		$base 	= 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.';
+		if ( ! $this->structure )
 		{
-			$content = 'asmoyoTheme.'. $web['web_publicTemplate']['name'] .'.'. $content;
+			$this->structure = $base .'oneCollumn';
 		}
-		// check content path for adminTemplate, if there is not asmoyoTheme str, add it !
-		elseif(false === strpos($content, 'asmoyo::') AND Request::segment(1) == Config::get('asmoyo::admin.url'))
-		{
-			$content = 'asmoyo::'. $web['web_adminTemplate']['name'] .'.'. $content;
-		}
+		$content = $base . $content;
 
-		$view = View::make( $this->viewStructure , $data)->nest('content', $content, $data)->render();
-		return Pseudo::render($view);
+		return Pseudo::render(
+			View::make(
+				$this->structure, $data)
+					->nest('content', $content, $data)
+					->render()
+		);
 	}
 
 	protected function getAssets($theme, $file)
@@ -65,12 +74,17 @@ class AsmoyoController extends Controller {
 				$path 	= public_path('themes/'. $web['web_publicTemplate']['name'] .'/'.$file );
 			}
 			// other
-			else {
+			else
+			{
 				$path 	= public_path('themes/'. $theme .'/'. $file);
 			}
 
-			return Response::make( File::get($path) )
-				->header('Content-Type', getMime(File::extension($path)) );
+			return Response::make( File::get($path), 200, array( 'Content-Type' => getMime(File::extension($path)) ))
+				->setCache(array(
+					// 'last_modified' => DateTime::createFromFormat('Y-m-d G:i:s', date('Y-m-d G:i:s', filemtime($path)) ),
+					'max_age' 		=> 86400, // One day
+					'public' 		=> true,   // Allow public caches to cache
+				));
 		}
 		catch(Exception $e)
 		{
@@ -84,11 +98,9 @@ class AsmoyoController extends Controller {
 		$requestedFile = $path . $file;
 		if( is_file($requestedFile) )
 		{
-			// return Response::make( File::get($requestedFile) )->header('Content-Type', getMime(File::extension($requestedFile)));
 			return Response::make(File::get($requestedFile), 200, array('Content-Type' => getMime(File::extension($requestedFile))));
 		} else {
 			$default = $path . app('asmoyo.web')['media_imageDefault'];
-			// return Response::make( File::get($default) )->header('Content-Type', getMime(File::extension($default)) );
 			return Response::make(File::get($default), 200, array('Content-Type' => getMime(File::extension($default))) );
 		}
 	}
