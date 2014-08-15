@@ -94,7 +94,7 @@ body { background:#F0F0F0; }
 .asmoyo-widget-sortir > li .btnRemove { position:absolute; right:0px; top:0px; z-index:9; }
 .asmoyo-widget-sortir > li:hover { background:#e9e9e9; transition: background 200ms; }
 
-.asmoyo-widget-list { margin: 0px 10px 20px 0px; width: 290px; }
+.asmoyo-widget-list { margin: 0px 10px 20px 0px; width: 320px; }
 /* end other */
 
 
