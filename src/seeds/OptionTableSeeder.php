@@ -85,12 +85,12 @@ class OptionTableSeeder extends Seeder {
 			array(
 				'name'			=> 'web_publicTemplate',
 				'value'			=> json_encode(array(
-					'name'	=> 'baretshow',
+					'name'	=> 'standard',
 					'info'	=> array(
 						'structure'	=> array('oneCollumn', 'twoCollumn'),
 					),
 				)),
-				'description'	=> nl2br('Elegant Company Profile Template
+				'description'	=> nl2br('Elegant Template
 
 					<ul>
 						<li>Support One Collumn</li>
