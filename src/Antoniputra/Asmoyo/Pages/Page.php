@@ -76,7 +76,7 @@ class Page extends EloquentBase {
     // custom attribute
     public function getUrlAttribute()
     {
-        return route('page.show', $this->slug);    
+        return route('page.show', $this->slug);
     }
 
     /**
