@@ -71,12 +71,12 @@ class AsmoyoController extends Controller {
 			// public
 			elseif($theme == $web['web_publicTemplate']['name'])
 			{
-				$path 	= public_path('themes/'. $web['web_publicTemplate']['name'] .'/'.$file );
+				$path 	= public_path( $web['web_publicTemplate']['name'] .'/'.$file );
 			}
 			// other
 			else
 			{
-				$path 	= public_path('themes/'. $theme .'/'. $file);
+				$path 	= public_path( $theme .'/'. $file );
 			}
 
 			return Response::make( File::get($path), 200, array( 'Content-Type' => getMime(File::extension($path)) ))

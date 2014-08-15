@@ -26,14 +26,16 @@ View::composer(array('*'), function($view)
 	$view->with('theme',  $theme);
 });
 
-// set variable for header 
+// set variable depends for header 
 View::composer(array('asmoyoTheme.*.partials.header'), function($view)
 {
 	$navbar = app('Antoniputra\Asmoyo\Pages\PageInterface')->getAsMenu();
 	$view->with('navbar', $navbar);
 });
 
-/*View::composers(array(
-    'Antoniputra\Asmoyo\Utilities\Composer\PublicComposer' => array('asmoyoTheme.baretshow.content.home'),
-    // 'AdminComposer' 	=> array('asmoyo::admin.page.index', 'asmoyo::admin.page.edit'),
-));*/
+// set variable depends for banner 
+View::composer(array('asmoyoTheme.*.partials.banner'), function($view)
+{
+	$banner = app('Antoniputra\Asmoyo\Pages\PageInterface')->getAsMenu();
+	$view->with('banner', $banner);
+});
