@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	@section('header')
+	@section('head')
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>
             @section('title')
-                Adminpanel 
+                {{$web['web_title']}}
             @show
         </title>
 
         @section('stylesheets')
-            {{asmoyoAsset( 'css/bootstrap.min.css')}}
-            {{asmoyoAsset( 'css/bootstrap-theme.min.css')}}
-            {{asmoyoAsset( 'css/font-awesome.min.css')}}
-            {{asmoyoAsset( 'css/admin-style.css')}}
+            {{asmoyoAsset('css/bootstrap.min.css', 'standard')}}
+            {{asmoyoAsset('css/font-awesome.min.css', 'standard')}}
+            {{asmoyoAsset('css/app.css', 'standard')}}
         @show
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,14 +26,14 @@
 </head>
 <body>
 
-	@section('navbar')
-        
+	@section('header')
+        @include('asmoyoTheme.standard.partials.header')
     @show
 
     @yield('structure')
 
     @section('footer')
-
+        @include('asmoyoTheme.standard.partials.footer')
     @show
 
     @section('javascripts')
