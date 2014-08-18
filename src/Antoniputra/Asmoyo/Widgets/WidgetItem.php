@@ -33,6 +33,16 @@ class WidgetItem extends EloquentBase {
         return array('created_at', 'updated_at', 'deleted_at');
     }
 
+    public function getContentAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = json_encode($value);
+    }
+
     public function widget()
     {
         return $this->belongsTo('Antoniputra\Asmoyo\Widgets\Widget');
