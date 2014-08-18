@@ -4,6 +4,7 @@ return array(
 
 	/**
 	* Set Profiler (Debug Bar)
+	* (boolean) inheritance at app.debug
 	*/
 	'profiler'		=> Config::get('app.debug'),
 
@@ -62,7 +63,7 @@ return array(
 	),
 
 	/**
-	* Uploads Settings
+	* Uploads path settings
 	*/
 	'uploads'		=> array(
 
@@ -74,7 +75,44 @@ return array(
 		/**
 		* where image upload path should be stored
 		*/
-		'path_image'	=> public_path('packages/antoniputra/asmoyo/uploads/images/')
+		'path_image'	=> public_path('packages/antoniputra/asmoyo/uploads/images/'),
+
+		/**
+		* where audio upload path should be stored
+		*/
+		'path_audio'	=> public_path('packages/antoniputra/asmoyo/uploads/audio/'),
+
+		/**
+		* where video upload path should be stored
+		*/
+		'path_video'	=> public_path('packages/antoniputra/asmoyo/uploads/video/'),
+
+	),
+
+	/**
+	* Pseudo setting
+	*/
+	'pseudo'	=> array(
+
+		/**
+		* Register All your pseudo object here
+		* *
+		* object_name => path to object class should extend of pseudo class
+		*/
+		'object'	=> array(
+			'post'		=> 'Antoniputra\Asmoyo\Utilities\Pseudo\View\PostPseudo',
+			'media'		=> 'Antoniputra\Asmoyo\Utilities\Pseudo\View\MediaPseudo',
+			'category'	=> 'Antoniputra\Asmoyo\Utilities\Pseudo\View\CategoryPseudo',
+			'comment'	=> 'Antoniputra\Asmoyo\Utilities\Pseudo\View\CommentPseudo',
+			// ...
+		),
+
+		'attribute'	=> array(
+			'type'		=> array('list', 'grid', 'media-object', 'detail'),
+			'limit'		=> 3,
+			'sortir'	=> array('title-ascending', 'title-descending', 'new'),
+			'status'	=> array('published', 'privated')
+		),
 
 	),
 );
