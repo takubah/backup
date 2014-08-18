@@ -6,17 +6,26 @@
 				Daftar Widget
 			</a>
 		</li>
-		@if(Request::segment(3))
+
+		@if( isset($widget) )
 			<li>
-				<a href="{{route( 'admin.widget.group', Request::segment(3) )}}" style="text-transform:capitalize;">
+				<a href="{{route('admin.widget.show', $widget['slug'])}}">
 					<i class="fa fa-bars"></i>
-					{{Request::segment(3)}}
+					Widget {{$widget['title']}}
 				</a>
 			</li>
 			<li>
-				<a href="{{route( 'admin.widget.group.create', Request::segment(3) )}}" style="text-transform:capitalize;">
+				<a href="{{route('admin.widget.item.create', $widget['slug'])}}">
 					<i class="fa fa-plus"></i>
-					Tambah Grup Baru
+					Tambah Baru
+				</a>
+			</li>
+		@endif
+		@if( isset($widget['item']) )
+			<li>
+				<a href="{{ route('admin.widget.item.edit', array($widget['slug'], $widget['item']['id'])) }}">
+					<i class="fa fa-pencil"></i>
+					Edit
 				</a>
 			</li>
 		@endif
