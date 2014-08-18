@@ -26,7 +26,6 @@
 				<tr>
 					<th style="width:40px;"> No. </th>
 					<th> Title </th>
-					<th> Status </th>
 					<th> Opsi </th>
 				</tr>
 			</thead>
@@ -39,7 +38,6 @@
 							<h4>{{$widget['title']}}</h4>
 							<p>{{$widget['description']}}</p>
 						</td>
-						<td> {{$widget['status']}} </td>
 						<td>
 							<a href="{{route('admin.widget.group', $widget['slug'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-gear"></i>
