@@ -6,8 +6,8 @@ interface WidgetInterface {
 
 	public function getAllPaginated($page = null, $limit = null, $sortir = null, $status = null);
 
-	public function getById($id);
+	public function getById($id, $itemId = null);
 
-	public function getBySlug($slug);
+	public function getBySlug($slug, $itemId = null);
 	
 }

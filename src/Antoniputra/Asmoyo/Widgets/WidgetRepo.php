@@ -21,7 +21,6 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		$page 	= $this->repoPage($page);
 		$limit 	= $this->repoLimit($limit);
 		$sortir = $this->repoSortir($sortir);
-		$status = $this->repoStatus($status);
 
 		$data = $this->prepareData($limit, $sortir, $status)->with('items');
 		$result = array(
@@ -29,25 +28,62 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 			'page' 	=> $page,
 			'limit'	=> $limit,
 			'sortir' => $sortir,
-			'status' => $status,
 			'items' => $data->get(),
 		);
         return $result;
 	}
 
-	public function getById($id)
+	public function getById($id, $itemId = null)
 	{
 
 	}
 
-	public function getBySlug($slug)
+	public function getBySlug($slug, $itemId = null)
 	{
+		$result = $this->model->where('slug', $slug);
+		
+		if($itemId)
+		{
+			$result = $result->with(array('item' => function($query) use($itemId) {
+				return $query->find($itemId);
+			}));
+		} else {
+			$result = $result->with('items');
+		}
 
+		return $result->first();
 	}
 
-	public function getWidgetPath()
+	public function itemStore($input = array(), $rules = array())
 	{
+		$input = $input ?: Input::all();
+		if($this->repoValidation( $input, $rules, $this->widgetItem->defaultRules() ))
+		{
+			return $this->widgetItem->create($input);
+		}
+		return false;
+	}
 
+	public function itemUpdate($itemId, $input = array(), $rules = array())
+	{
+		$input = $input ?: Input::all();
+		if($this->repoValidation( $input, $rules, $this->widgetItem->defaultRules() ))
+		{
+			return $this->widgetItem->find($itemId)->update($input);
+		}
+		return false;
+	}
+
+	public function itemDelete($itemId, $is_permanent=false)
+	{
+		$prevData = $this->widgetItem->find($itemId);
+
+		if($is_permanent)
+			$prevData->forceDelete();
+		else
+			$prevData->delete();
+
+		return true;
 	}
 
 }

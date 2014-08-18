@@ -33,6 +33,16 @@ class Widget extends EloquentBase {
         return array('created_at', 'updated_at', 'deleted_at');
     }
 
+    /**
+    * These are additional attribute
+    */
+    protected $appends = array('url');
+
+    public function getUrlAttribute()
+    {
+        return route('admin.widget.show', $this->slug);
+    }
+
     public function getAttributeAttribute($value)
     {
         return json_decode($value, true);
@@ -42,14 +52,6 @@ class Widget extends EloquentBase {
     {
         $this->attributes['attribute'] = json_encode($value);
     }
-
-    /**
-    * list status support
-    * @var array
-    */
-    public $statusList = array(
-        'enabled', 'disabled'
-    );
 	
 	/**
     * Default validation rules
@@ -60,9 +62,10 @@ class Widget extends EloquentBase {
             'title'         => 'required',
             'slug'          => 'required',
             'description'   => 'required',
-            'content'   	=> 'required_without:is_hasMany',
-            'view_path'		=> 'required',
-            'status'        => 'required|in:'.implode(',', $this->statusList),
+            'supported'     => 'required',
+            'has_item'      => 'required',
+            'attribute'     => 'required',
+            // 'view_path'		=> 'required',
         );
     }
 

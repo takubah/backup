@@ -43,6 +43,20 @@ class WidgetItem extends EloquentBase {
         $this->attributes['content'] = json_encode($value);
     }
 
+    /**
+    * Default validation rules
+    */
+    public function defaultRules()
+    {
+        return array(
+        	'widget_id'		=> 'required',
+        	'title'			=> 'required',
+        	'description'	=> 'required',
+        	'content'		=> 'required'
+    	);
+	}
+	
+
     public function widget()
     {
         return $this->belongsTo('Antoniputra\Asmoyo\Widgets\Widget');
