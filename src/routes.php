@@ -191,17 +191,36 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 			'as' 		=> 'admin.widget.show',
 			'uses' 		=> 'Admin_WidgetController@show'
 		));
-		Route::put('widget/{id}/enable', array(
-			'as' 		=> 'admin.widget.enable',
-			'uses' 		=> 'Admin_WidgetController@enable'
+
+		// Widget Item
+		Route::get('widget/{slug}/{id}', array(
+			'as' 		=> 'admin.widget.item.show',
+			'uses' 		=> 'Admin_WidgetController@item'
 		));
-		Route::put('widget/{id}/disable', array(
-			'as' 		=> 'admin.widget.disable',
-			'uses' 		=> 'Admin_WidgetController@disable'
+		Route::get('widget/{slug}/create', array(
+			'as' 		=> 'admin.widget.item.create',
+			'uses' 		=> 'Admin_WidgetController@itemCreate'
 		));
+		Route::post('widget/{slug}/create', array(
+			'as' 		=> 'admin.widget.item.store',
+			'uses' 		=> 'Admin_WidgetController@itemStore'
+		));
+		Route::get('widget/{slug}/{id}/edit', array(
+			'as' 		=> 'admin.widget.item.edit',
+			'uses' 		=> 'Admin_WidgetController@itemEdit'
+		));
+		Route::put('widget/{slug}/{id}/edit', array(
+			'as' 		=> 'admin.widget.item.update',
+			'uses' 		=> 'Admin_WidgetController@itemUpdate'
+		));
+		Route::delete('widget/{slug}/{id}/forceDelete', array(
+			'as' 		=> 'admin.widget.item.forceDelete',
+			'uses' 		=> 'Admin_WidgetController@itemForceDelete'
+		));
+		// End Widget Item
 
 		// widget group
-		Route::get('widget/{slug}/index', array(
+		/*Route::get('widget/{slug}/index', array(
 			'as' 		=> 'admin.widget.group',
 			'uses' 		=> 'Admin_WidgetController@group'
 		));
@@ -228,7 +247,7 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		Route::delete('widget/{slug}/destroy/{id}', array(
 			'as' 		=> 'admin.widget.group.destroy',
 			'uses' 		=> 'Admin_WidgetController@groupDestroy'
-		));
+		));*/
 		// End Widget
 
 		// Option

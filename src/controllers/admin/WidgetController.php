@@ -15,7 +15,7 @@ class Admin_WidgetController extends AsmoyoController
 		$data 	= array(
 			'widgets'	=> Paginator::make($widgets, $widgets['total'], $widgets['limit']),
 		);
-		return $this->adminView('widget.index', $data);
+		return $this->setStructure('twoCollumn', 'admin')->adminView('widget.index', $data);
 	}
 
 	public function show($slug)
@@ -26,25 +26,93 @@ class Admin_WidgetController extends AsmoyoController
 
 		if( ! $data['widget'] ) return App::abort(404);
 
-		return 'here is show method';
+		return $this->setStructure('twoCollumn', 'admin')->adminView('widget.show', $data);
 	}
 
-	public function enable($id)
+
+	/**
+	* Widget Item
+	*/
+
+	public function item($widgetSlug, $itemId)
 	{
-		if( $this->widget->enable($id) )
-		{
-			return $this->redirectAlert('admin.widget.index', 'success', 'Berhasil Diaktifkan !!');
-		}
-		return $this->redirectAlert(false, 'danger', 'Gagal Diaktifkan !!');
+		$widget = $this->widget->getBySlug($widgetSlug, $itemId);
+		if( ! $widget OR ! $widget['item'] ) return App::abort(404);
+
+		$data 	= array(
+			'widget'	=> $widget,
+			'content'	=> $widget['item']['content'],
+			'title'		=> $widget['title'] .' - '. $widget['item']['title'],
+		);
+		$widgetView	= $widget['slug'];
+		// return $widget;
+		
+		return $this->setStructure('twoCollumn', 'admin')
+			->adminView('widget.resource.'. $widgetView, $data);
 	}
 
-	public function disable($id)
+	public function itemCreate($widgetSlug)
 	{
-		if( $this->widget->disable($id) )
+		$widget = $this->widget->getBySlug($widgetSlug);
+		if( ! $widget ) return App::abort(404);
+
+		$data 	= array(
+			'widget'	=> $widget,
+			'attribute'	=> $widget['attribute'],
+			'title'		=> $widget['title'] .' - Buat Item',
+		);
+		$widgetView	= $widget['slug'] .'_create';
+		
+		return $this->setStructure('twoCollumn', 'admin')
+			->adminView('widget.resource.'. $widgetView, $data);
+	}
+
+	public function itemStore($widgetSlug)
+	{
+		$widget = $this->widget->getBySlug($widgetSlug);
+		if( ! $widget ) return App::abort(404);
+
+		if ( $this->widget->itemStore(Input::all()) )
 		{
-			return $this->redirectAlert('admin.widget.index', 'success', 'Berhasil Di non-aktifkan !!');
+			return $this->redirectAlert(route('admin.widget.show', $widgetSlug), 'success', 'Berhasil Dibuat !!');
 		}
-		return $this->redirectAlert(false, 'danger', 'Gagal Di non-aktifkan !!');
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->widget->errors);
+	}
+
+	public function itemEdit($widgetSlug, $itemId)
+	{
+		$widget = $this->widget->getBySlug($widgetSlug, $itemId);
+		if( ! $widget OR ! $widget['item'] ) return App::abort(404);
+
+		$data 	= array(
+			'widget'	=> $widget,
+			'content'	=> $widget['item']['content'],
+			'title'		=> 'Edit '. $widget['title'] .' - '. $widget['item']['title'],
+		);
+		// return $widget;
+		$widgetView	= $widget['slug'].'_edit';
+		
+		return $this->setStructure('twoCollumn', 'admin')
+			->adminView('widget.resource.'. $widgetView, $data);
+	}
+
+	public function itemUpdate($widgetSlug, $itemId)
+	{
+		$widget = $this->widget->getBySlug($widgetSlug, $itemId);
+		if( ! $widget OR ! $widget['item'] ) return App::abort(404);
+
+		if ( $this->widget->itemUpdate($itemId, Input::all()) )
+		{
+			return $this->redirectAlert(route('admin.widget.show', $widgetSlug), 'success', 'Berhasil Diperbarui !!');
+		}
+		return $this->redirectAlert(false, 'danger', 'Gagal !!', $this->widget->errors);
+	}
+
+	public function itemForceDelete($widgetSlug, $itemId)
+	{
+		$this->widget->itemDelete($itemId);
+
+		return $this->redirectAlert(route('admin.widget.show', $widgetSlug), 'success', 'Berhasil Dihapus !!');
 	}
 
 	
@@ -63,7 +131,7 @@ class Admin_WidgetController extends AsmoyoController
 			'widget' => $widget,
 			'groups' => Paginator::make($groups, $groups['total'], $groups['limit']),
 		);
-		return $this->adminView('widget.'.$widget['slug'].'.index', $data);
+		return $this->setStructure('twoCollumn', 'admin')->adminView('widget.'.$widget['slug'].'.index', $data);
 	}
 
 	public function groupShowAjax($widgetSlug, $groupSlug)
