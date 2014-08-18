@@ -11,7 +11,7 @@
 
 		@include('asmoyo::admin.widget._menu')
 
-		{{Form::model($widget, array('method' => 'PUT', 'url' => route('admin.widget.item.update', array($widget['slug'], $widget['item']['id'])), 'class' => 'form-horizontal'))}}
+		{{Form::model($widget['item'], array('method' => 'PUT', 'url' => route('admin.widget.item.update', array($widget['slug'], $widget['item']['id'])), 'class' => 'form-horizontal'))}}
 			
 			{{Form::hidden('widget_id', $widget['id'])}}
 
