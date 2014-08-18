@@ -19,6 +19,7 @@ class CreateWidgetsTable extends Migration {
 			$table->string('slug');
 		    $table->text('description');
 		    $table->string('supported');
+		    $table->boolean('has_item')->default(1);
 		    $table->text('attribute');
 			$table->timestamps();
 		});

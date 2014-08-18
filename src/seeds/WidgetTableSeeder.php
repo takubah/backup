@@ -13,6 +13,7 @@ class WidgetTableSeeder extends Seeder {
 			    'slug'			=> 'text',
 			    'description' 	=> 'Daftar text custom',
 			    'supported' 	=> 'all',
+			    'has_item'		=> 1,
 			    'attribute'		=> json_encode(array(
 			    	'field' => array(
 		    			'text'		=> 'textarea',
@@ -26,6 +27,7 @@ class WidgetTableSeeder extends Seeder {
 			    'slug'		 	=> 'listing',
 			    'description'	=> 'Buat flexible custom list',
 			    'supported'	 	=> 'all',
+			    'has_item'		=> 1,
 			    'attribute'		=> json_encode(array(
 			    	'field' => array(
 		    			'title'		=> 'text',
@@ -40,6 +42,7 @@ class WidgetTableSeeder extends Seeder {
 			    'slug'		 	=> 'search',
 			    'description'	=> 'Form searching',
 			    'supported'	 	=> 'all',
+			    'has_item'		=> 0,
 			    'attribute'		=> json_encode(array()),
 			),
 		);
