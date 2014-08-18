@@ -18,10 +18,8 @@ class CreateWidgetsTable extends Migration {
 			$table->string('title');
 			$table->string('slug');
 		    $table->text('description');
-		    $table->text('content')->nullable();
-		    $table->boolean('has_group');
+		    $table->string('supported');
 		    $table->text('attribute');
-		    $table->string('status');
 			$table->timestamps();
 		});
 	}

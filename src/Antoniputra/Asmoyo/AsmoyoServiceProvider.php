@@ -108,7 +108,6 @@ class AsmoyoServiceProvider extends ServiceProvider {
 		{
 			return new \Antoniputra\Asmoyo\Widgets\WidgetRepo(
 				new \Antoniputra\Asmoyo\Widgets\Widget,
-				new \Antoniputra\Asmoyo\Widgets\WidgetGroup,
 				new \Antoniputra\Asmoyo\Widgets\WidgetItem
 			);
 		});

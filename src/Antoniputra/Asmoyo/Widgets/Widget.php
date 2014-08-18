@@ -66,14 +66,14 @@ class Widget extends EloquentBase {
         );
     }
 
-    public function groups()
+    public function items()
     {
-        return $this->hasMany('Antoniputra\Asmoyo\Widgets\WidgetGroup');
+        return $this->hasMany('Antoniputra\Asmoyo\Widgets\WidgetItem');
     }
 
-    public function group()
+    public function item()
     {
-        return $this->hasOne('Antoniputra\Asmoyo\Widgets\WidgetGroup');
+        return $this->hasOne('Antoniputra\Asmoyo\Widgets\WidgetItem');
     }
 
 }

@@ -4,7 +4,7 @@ use Antoniputra\Asmoyo\Cores\EloquentBase;
 
 class WidgetItem extends EloquentBase {
 	
-	protected $table = 'widgets_items';
+	public $table = 'widgets_items';
 
 	/**
     * Morph relation name
@@ -22,28 +22,19 @@ class WidgetItem extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('widget_id', 'widget_group_id', 'parent_id', 'order', 'title', 'content');
+    protected $fillable = array();
 
-	/**
+    /**
     * These are make collumn to Carbon instance
     * @return array
     */
 	public function getDates()
     {
-        return array('created_at', 'updated_at');
+        return array('created_at', 'updated_at', 'deleted_at');
     }
-	
-	/**
-    * Default validation rules
-    */
-    public function defaultRules()
+
+    public function widget()
     {
-        return array(
-            'widget_group_id'   => 'required_without:widget_id',
-            'content'           => 'required',
-        );
+        return $this->belongsTo('Antoniputra\Asmoyo\Widgets\Widget');
     }
-
-
-
 }

@@ -15,13 +15,12 @@ class CreateWidgetsItemsTable extends Migration {
 		Schema::connection( Config::get('asmoyo::config.database') )->create('widgets_items', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('widget_id')->nullable();
-			$table->integer('widget_group_id')->nullable();
-			$table->integer('parent_id')->nullable();
-			$table->integer('order')->nullable();
-			$table->string('title')->nullable();
-			$table->text('content')->nullable();
+			$table->integer('widget_id');
+			$table->string('title');
+			$table->string('description');
+			$table->text('content');
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
