@@ -23,6 +23,7 @@
 				<tr>
 					<th style="width:40px;"> No. </th>
 					<th> Title </th>
+					<th> Support </th>
 					<th> Opsi </th>
 				</tr>
 			</thead>
@@ -36,10 +37,17 @@
 							<p><small>{{$widget['description']}}</small></p>
 						</td>
 						<td>
-							<a href="{{route('admin.widget.show', $widget['slug'])}}" class="btn btn-default btn-sm">
-								<i class="fa fa-gear"></i>
-								Kelola
-							</a>
+							{{$widget['supported']}}
+						</td>
+						<td>
+							@if($widget['has_item'])
+								<a href="{{route('admin.widget.show', $widget['slug'])}}" class="btn btn-default btn-sm">
+									<i class="fa fa-gear"></i>
+									Kelola
+								</a>
+							@else
+								-
+							@endif
 						</td>
 					</tr>
 				@endforeach

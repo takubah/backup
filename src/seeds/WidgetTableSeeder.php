@@ -74,42 +74,42 @@ class WidgetTableSeeder extends Seeder {
 					array(
 						'title'			=> 'Dekorasi Balon (Special Kids & Sweet Party)',
 		    			'link'			=> 'http://baretshow.com',
-		    			'description' 	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat',
+consequat'),
 	    			),
 	    			array(
 						'title'			=> 'MC - Presenter (All Party)',
 		    			'link'			=> 'http://baretshow.com',
-		    			'description' 	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat',
+consequat'),
 	    			),
 	    			array(
 						'title'			=> 'Badut Professional & Akrobat',
 		    			'link'			=> 'http://baretshow.com',
-		    			'description' 	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat',
+consequat'),
 	    			),
 	    			array(
 						'title'			=> 'Puppet Show - VentryLoquis',
 		    			'link'			=> 'http://baretshow.com',
-		    			'description' 	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat',
+consequat'),
 	    			),
 	    			array(
 						'title'			=> 'Sanggar Lukis',
 		    			'link'			=> 'http://baretshow.com',
-		    			'description' 	=> 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat',
+consequat'),
 	    			),
 				)),
 			),
