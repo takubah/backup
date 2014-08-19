@@ -73,25 +73,6 @@ class Admin_WidgetController extends AsmoyoController
 		$widget = $this->widget->getBySlug($widgetSlug);
 		if( ! $widget ) return App::abort(404);
 
-		// handle multiple item
-		if ( isset($input['is_multiple_item']) )
-		{
-			// get total value
-			foreach ($input['content'] as $key => $value) {
-				$total 	= count($value);
-			}
-
-			for ($i=0; $i < $total; $i++)
-			{
-				foreach ($input['content'] as $key => $value) {
-					$result[$i][$key] = $value[$i];
-				}
-			}
-
-			$input['content']	= $result;
-			unset($input['is_multiple_item']);
-		}
-
 		if ( $this->widget->itemStore($input) )
 		{
 			return $this->redirectAlert(route('admin.widget.show', $widgetSlug), 'success', 'Berhasil Dibuat !!');
@@ -121,24 +102,6 @@ class Admin_WidgetController extends AsmoyoController
 		$input = Input::all();
 		$widget = $this->widget->getBySlug($widgetSlug, $itemId);
 		if( ! $widget OR ! $widget['item'] ) return App::abort(404);
-
-		// handle multiple item
-		if ( isset($input['is_multiple_item']) )
-		{
-			// get total value
-			foreach ($input['content'] as $key => $value) {
-				$total 	= count($value);
-			}
-
-			for ($i=0; $i < $total; $i++)
-			{
-				foreach ($input['content'] as $key => $value) {
-					$result['content'][$i][$key] = $value[$i];
-				}
-			}
-
-			$input['content']	= $result;
-		}
 
 		if ( $this->widget->itemUpdate($itemId, $input) )
 		{

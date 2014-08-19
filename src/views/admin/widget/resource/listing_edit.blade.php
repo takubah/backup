@@ -36,7 +36,14 @@
 
 				<legend>Content</legend>
 				<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
+
 					@for($i=0; $i<10; $i++)
+					<?php
+					$title 	= isset($content[$i]['title']) ? $content[$i]['title'] : null;
+					$link 	= isset($content[$i]['link']) ? $content[$i]['link'] : null;
+					$description = isset($content[$i]['description']) ? $content[$i]['description'] : null;
+					?>
+
 					<li id="item_{{$i}}">
 						<i id="btn-move" class="fa fa-arrows moveable"></i>
 						<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">
@@ -47,7 +54,7 @@
 								Title
 							</label>
 							<div class="col-md-9">
-								{{Form::text('content['.$i.'][title]', $content[$i]['title'], array('class' => 'form-control'))}}
+								{{Form::text('content[title][]', $title, array('class' => 'form-control'))}}
 							</div>
 						</div>
 						<div class="form-group">
@@ -55,7 +62,7 @@
 								Link
 							</label>
 							<div class="col-md-9">
-								{{Form::text('content['.$i.'][link]', $content[$i]['link'], array('class' => 'form-control'))}}
+								{{Form::text('content[link][]', $link, array('class' => 'form-control'))}}
 							</div>
 						</div>
 						<div class="form-group">
@@ -63,7 +70,7 @@
 								Description
 							</label>
 							<div class="col-md-9">
-								{{Form::textarea('content['.$i.'][description]', $content[$i]['description'], array('class' => 'form-control', 'rows' => '3'))}}
+								{{Form::textarea('content[description][]', $description, array('class' => 'form-control', 'rows' => '3'))}}
 							</div>
 						</div>
 						<hr style="border-color:#999;">

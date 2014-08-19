@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "way/generators": "2.*",
-        "loic-sharma/profiler": "1.1.*",
+        "barryvdh/laravel-debugbar": "1.*",
         "mockery/mockery": "0.7.2",
         "phpunit/phpunit": "3.7.*"
     },

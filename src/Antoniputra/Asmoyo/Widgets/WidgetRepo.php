@@ -57,6 +57,13 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	public function itemStore($input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
+
+		// handle multiple item
+		if ( isset($input['is_multiple_item']) )
+		{
+			$input = $this->itemMultiple($input);
+		}
+
 		if($this->repoValidation( $input, $rules, $this->widgetItem->defaultRules() ))
 		{
 			return $this->widgetItem->create($input);
@@ -67,6 +74,13 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 	public function itemUpdate($itemId, $input = array(), $rules = array())
 	{
 		$input = $input ?: Input::all();
+
+		// handle multiple item
+		if ( isset($input['is_multiple_item']) )
+		{
+			$input = $this->itemMultiple($input);
+		}
+		
 		if($this->repoValidation( $input, $rules, $this->widgetItem->defaultRules() ))
 		{
 			return $this->widgetItem->find($itemId)->update($input);
@@ -84,6 +98,32 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 			$prevData->delete();
 
 		return true;
+	}
+
+	/**
+	* Handle multiple item
+	*/
+	private function itemMultiple($input = array())
+	{
+		if( isset($input['content']) )
+		{
+			// get total value
+			foreach ($input['content'] as $key => $value) {
+				$total 	= count( array_filter($value) );
+			}
+
+			// rearrange array
+			for ($i=0; $i < $total; $i++)
+			{
+				foreach ($input['content'] as $key => $value) {
+					$result[$i][$key] = $value[$i];
+				}
+			}
+
+			$input['content']	= $result;
+			unset($input['is_multiple_item']);
+		}
+		return $input;
 	}
 
 }

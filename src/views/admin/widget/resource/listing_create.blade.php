@@ -36,7 +36,7 @@
 
 				<legend>Content</legend>
 				<ol id="widgetSortir" class="sortable asmoyo-widget-sortir">
-					@for($i=0; $i<3; $i++)
+					@for($i=0; $i<10; $i++)
 					<li id="item_{{$i}}">
 						<i id="btn-move" class="fa fa-arrows moveable"></i>
 						<a class="btn btn-default btnRemove" onclick="removeRow({{$i}})">

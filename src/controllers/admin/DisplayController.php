@@ -18,19 +18,8 @@ class Admin_DisplayController extends AsmoyoController
 			'sideRight' => 'Sidebar Kanan',
 		);
 
-		// merge widgetContainer with PageContainer
-		/*if($pages['items'])
-		{
-			foreach($pages['items'] as $page)
-			{
-				$pageContainer['page_'.$page['id']] = $page['title'];
-			}
-		}
-		$widgetContainer = array_merge($widgetContainer, $pageContainer);*/
-
 		$data = array(
 			'widgets'			=> Pseudo::getList(),
-			'pages'				=> $pages,
 			'widgetContainer'	=> $widgetContainer
 		);
 		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, true);
