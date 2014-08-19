@@ -12,17 +12,18 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function index()
 	{
-		$pages 				= app('Antoniputra\Asmoyo\Pages\PageInterface')->getAll();
 		$widgetContainer 	= array(
 			'sideLeft' 	=> 'Sidebar Kiri',
 			'sideRight' => 'Sidebar Kanan',
 		);
 
 		$data = array(
-			'widgets'			=> Pseudo::getList(),
+			// 'widgets'			=> Pseudo::getList(),
+			'widgets'			=> app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll(),
 			'widgetContainer'	=> $widgetContainer
 		);
-		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, true);
+		// return $data['widgets']['items'];
+		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, false);
 	}
 
 	public function ajaxSidebarUpdate($position)
@@ -50,8 +51,8 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function ajaxSidebar($position)
 	{
-		sleep(1);
-		if ( ! Request::ajax() ) { return App::abort(404); }
+		sleep(0.5);
+		// if ( ! Request::ajax() ) { return App::abort(404); }
 
 		$web 	= app('asmoyo.web');
 		switch ($position) {
@@ -62,24 +63,33 @@ class Admin_DisplayController extends AsmoyoController
 			case 'right':
 				$sidebar = $web['web_sideRight'];
 			break;
-
-			case 'page':
-				$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById(Input::get('page_id', 0));
-				$sidebar = $page['content_structure'];
-			break;
 		
 			default:
 				return App::abort(404);
 			break;
 		}
 
+		$form = array();
+		if($sidebar) {
+		foreach( $sidebar as $side )
+		{
+			$read = Pseudo::read($side['content']);
+			
+			if ($read['object'] == 'widget')
+			{
+				$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($read['slug'])['items'];
+				$form[][$read['object']] = Form::asmoyoDropdown('widget_item[]', $query, null);
+			}
+
+		} }
+
 		$data = array(
-			'position'	=> $position,
-			'sidebar'	=> $sidebar,
-			'pseudoTypeList' => Pseudo::typeList(),
-			'pseudoSortirList' => Pseudo::sortirList(),
+			'forms'				=> $form,
+			'position'			=> $position,
+			'sidebar'			=> $sidebar,
+			'pseudoTypeList' 	=> Pseudo::typeList(),
+			'pseudoSortirList' 	=> Pseudo::sortirList(),
 		);
-		if($position == 'page') $data = array_merge($data, array('page_id' => $page['id']));
 
 		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
 	}

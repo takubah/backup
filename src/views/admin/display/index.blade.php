@@ -11,11 +11,11 @@
 				<h4>Daftar Widget &raquo;</h4>
 				<div class="row">
 					<div class="col-md-12">
-						@foreach($widgets as $w)
+						@foreach($widgets['items'] as $w)
 							<div class="asmoyo-widget-list panel panel-default pull-left">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										{{$w['title'] ?: $w['name']}}
+										{{$w['title']}}
 									</h4>
 								</div>
 								<div class="panel-body">
@@ -26,8 +26,9 @@
 										<a data-toggle="dropdown" class="btn btn-sm btn-primary">
 											<i class="fa fa-plus"></i> Add
 										</a>
+										<!-- 'asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].' id='.$w["pseudo"]["id"].' widget-name='.$w['widget_name'].' group-name='.$w['group_name'] -->
 										{{HTML::select(
-											'asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].' id='.$w["pseudo"]["id"].' widget-name='.$w['widget_name'].' group-name='.$w['group_name'],
+											'{<asmoyo:widget slug='.$w["slug"].'>}',
 											$widgetContainer,
 											array('class' => 'dropdown-menu widget-chooser'),
 											array('data-title' => $w['title'])
@@ -103,7 +104,7 @@
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
 					title 	= el.attr('data-title'),
-					content	= '{<'+ el.attr('data-value') +'>}';
+					content	= el.attr('data-value');
 
 				if(target == '#sideRight')
 				{

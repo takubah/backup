@@ -78,6 +78,17 @@ HTML::macro('asmoyoAsset', function($file, $theme='admin')
     }
 });
 
+Form::macro('asmoyoDropdown', function($name, $data, $selected=null)
+{
+    if ( $data ) {
+        foreach ($data as $d) {
+            $item[$d['id']] = $d['title'];
+        }
+    }
+
+    return Form::select($name, $item, $selected, array('class' => 'form-control'));
+});
+
 // Form Link
 Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $confirm_message=null)
 {

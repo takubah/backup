@@ -21,7 +21,7 @@ class AsmoyoController extends Controller {
 		return $this;
 	}
 
-	public function adminView($content, $data = array())
+	public function adminView($content, $data = array(), $pseudo=true)
 	{
 		$web 	= app('asmoyo.web');
 		$base 	= 'asmoyo::.'. $web['web_adminTemplate']['name'] .'.';
@@ -30,13 +30,15 @@ class AsmoyoController extends Controller {
 			$this->structure = $base .'oneCollumn';
 		}
 		$content = $base . $content;
-
-		return Pseudo::render(
-			View::make(
-				$this->structure, $data)
+		
+		$output = View::make($this->structure, $data)
 					->nest('content', $content, $data)
-					->render()
-		);
+					->render();
+
+		if ($pseudo)
+			return Pseudo::render($output);
+		else
+			return $output;
 	}
 
 	public function loadView($content, $data = array())

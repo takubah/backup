@@ -90,7 +90,7 @@ abstract class Pseudo {
 	public static function getList()
 	{
 		$lists 	= array();
-		$widgets = app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll('all');
+		$widgets = app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll();
 		foreach ($widgets['items'] as $w)
 		{
 			if($w['groups']) {

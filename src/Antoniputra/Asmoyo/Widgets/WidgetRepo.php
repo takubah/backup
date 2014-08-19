@@ -13,7 +13,16 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 
 	public function getAll($limit = null, $sortir = null, $status = null)
 	{
-		return 'testing cok';
+		$limit 	= $this->repoLimit($limit);
+		$sortir = $this->repoSortir($sortir);
+
+		$data = $this->prepareData($limit, $sortir, $status)->with('items');
+		$result = array(
+			'limit'	=> $limit,
+			'sortir' => $sortir,
+			'items' => $data->get(),
+		);
+        return $result;
 	}
 
 	public function getAllPaginated($page = null, $limit = null, $sortir = null, $status = null)
@@ -80,7 +89,7 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 		{
 			$input = $this->itemMultiple($input);
 		}
-		
+
 		if($this->repoValidation( $input, $rules, $this->widgetItem->defaultRules() ))
 		{
 			return $this->widgetItem->find($itemId)->update($input);
