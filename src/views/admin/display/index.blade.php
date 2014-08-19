@@ -26,13 +26,15 @@
 										<a data-toggle="dropdown" class="btn btn-sm btn-primary">
 											<i class="fa fa-plus"></i> Add
 										</a>
-										<!-- 'asmoyo:'.$w["pseudo"]["object"].' type='.$w["pseudo"]["type"].' sortir='.$w["pseudo"]["sortir"].' id='.$w["pseudo"]["id"].' widget-name='.$w['widget_name'].' group-name='.$w['group_name'] -->
-										{{HTML::select(
-											'{<asmoyo:widget slug='.$w["slug"].'>}',
-											$widgetContainer,
-											array('class' => 'dropdown-menu widget-chooser'),
-											array('data-title' => $w['title'])
-										)}}
+										<ul class="dropdown-menu widget-chooser">
+											@foreach ($widgetContainer as $target => $text)
+												<li>
+													<a data-target="{{$target}}" data-widget="{{$w['slug']}}" data-value="{<asmoyo:widget widget={{$w['slug']}} item=0>}" data-title="">
+														{{$text}}
+													</a>
+												</li>
+											@endforeach
+										</ul>
 									</div>
 									<div style="clear:both;"></div>
 								</div>
@@ -104,6 +106,7 @@
 				var el 		= $(this),
 					target 	= '#'+ el.attr('data-target'),
 					title 	= el.attr('data-title'),
+					widget 	= el.attr('data-widget'),
 					content	= el.attr('data-value');
 
 				if(target == '#sideRight')
@@ -123,10 +126,10 @@
 				$.ajax({
 					type: "POST",
 					url: urlPost,
-					data: { title: title, content: content }
+					data: { title: title, widget: widget, content: content }
 				})
 				.success(function( msg )
-				{					
+				{
 					if (msg) {
 						$.get(url, function(data,status)
 						{

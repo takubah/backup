@@ -82,7 +82,8 @@ Form::macro('asmoyoDropdown', function($name, $data, $selected=null)
 {
     if ( $data ) {
         foreach ($data as $d) {
-            $item[$d['id']] = $d['title'];
+            $pseudo = "{<asmoyo:widget slug=listing id=". $d['id'].">}";
+            $item[$pseudo] = $d['title'];
         }
     }
 
@@ -119,33 +120,6 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $co
 
     $output .= Form::close();
     
-    return $output;
-});
-
-HTML::macro('select', function($value, $list=array(), $attr=array(), $attrChild=array()){
-    
-    $output = '<ul';
-    if (is_array($attr)) {
-        foreach ($attr as $key => $v) {
-            $output .= ' '. $key .'="'.$v.'" ';
-        }
-    }
-    $output .= '>';
-
-    foreach ($list as $target => $text) {
-        $output .= '<li>';
-        $output .= '<a data-target="'.$target.'" data-value="'.$value.'" ';
-
-        if ($attrChild) {
-            foreach ($attrChild as $key => $v) {
-                $output .= $key .'="'.$v.'" ';
-            }
-        }
-
-        $output .= '>'. $text .'</a>';
-        $output .= '</li>';
-    }
-    $output .= '</ul>';
     return $output;
 });
 

@@ -1,14 +1,14 @@
-@if($sidebar)
+@if($containers)
 	{{Form::open(array('method' => 'POST', 'route' => array('admin.display.ajaxSidebarUpdate', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)', 'id' => 'form_'.$position))}}
 		{{Form::hidden('position', $position)}}
 	<ul class="widget-sortable nav">
 		<?php $i = 1; ?>
-		@foreach($sidebar as $key => $side)
+		@foreach($containers as $key => $c)
 			<li>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title" style="position:relative;">
-							{{$side['title']}}
+							{{$c['widget']}} : <small>{{$c['title']}}</small>
 							<div style="position:absolute; top:-7px; right:0px;">
 								<span class="btn btn-default btn-sm handle">
 									<i class="fa fa-arrows"></i>
@@ -21,10 +21,19 @@
 					</div>
 					<div class="panel_{{$position}}_{{$i}} panel-collapse collapse">
 						<div class="panel-body">
-							
-							@foreach($forms as $form)
-								{{$form['widget']}}
-							@endforeach
+							{{Form::hidden('widget[]', $c['widget'])}}
+							<p>
+								{{Form::text('title[]', $c['title'], array('class' => 'form-control'))}}
+							</p>
+
+							<p>
+								@if( is_array($c['item']) )
+									{{Form::select('pseudo[]', $c['item'], $c['content'], array('class' => 'form-control'))}}
+								@else
+									{{Form::hidden('pseudo[]', $c['content'])}}
+									tidak tersedia list untuk widget ini
+								@endif
+							</p>
 
 							<!-- btn remove -->
 							<div class="text-right">

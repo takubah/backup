@@ -26,6 +26,58 @@ class Admin_DisplayController extends AsmoyoController
 		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, false);
 	}
 
+	public function ajaxSidebar($position)
+	{
+		// sleep(0.5);
+		// if ( ! Request::ajax() ) { return App::abort(404); }
+
+		$web 	= app('asmoyo.web');
+		switch ($position) {
+			case 'left':
+				$containers = $web['web_sideLeft'];
+			break;
+
+			case 'right':
+				$containers = $web['web_sideRight'];
+			break;
+		
+			default:
+				return App::abort(404);
+			break;
+		}
+		
+		// merge dropdown pseudo list
+		if($containers) {
+		foreach( $containers as $key => $c )
+		{
+			$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($c['widget']);
+
+			// get widget item
+			if ($query['has_item']) {
+				foreach ($query['items'] as $q) {
+					$default = "{<asmoyo:widget slug=".$query['slug']." item=0>}";
+					$pseudo	= "{<asmoyo:widget slug=".$query['slug']." item=". $q['id'].">}";
+	            	$item[$default] = 'tidak ada';
+	            	$item[$pseudo] = $q['title'];
+				}
+			} else {
+				$item = "{<asmoyo:widget slug=".$query['slug'].">}";
+			}
+        	$containers[$key]['item'] = $item; // add item list
+        	$item = null; // flush item list
+		} }
+		// return $containers;
+
+		$data = array(
+			'position'			=> $position,
+			'containers'		=> $containers,
+			'pseudoTypeList' 	=> Pseudo::typeList(),
+			'pseudoSortirList' 	=> Pseudo::sortirList(),
+		);
+
+		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
+	}
+
 	public function ajaxSidebarUpdate($position)
 	{
 		$web 	= app('asmoyo.web');
@@ -33,7 +85,8 @@ class Admin_DisplayController extends AsmoyoController
 		foreach ($input['title'] as $key => $title) {
 			$new[] 	= array(
 				'title'		=> $title,
-				'content'	=> '{<asmoyo:'.$input["object"][$key].' type='.$input["type"][$key].' sortir='.$input["sortir"][$key].' widget-name='.$input["widget_name"][$key] .'>}',
+				'widget'	=> $input['widget'][$key],
+				'content'	=> $input['pseudo'][$key],
 			);
 		}
 
@@ -47,51 +100,6 @@ class Admin_DisplayController extends AsmoyoController
 			return Response::json('Berhasil di perbarui !!', 200);
 		}
 		return Response::json(array('error' => 'something error'), 500);
-	}
-
-	public function ajaxSidebar($position)
-	{
-		sleep(0.5);
-		// if ( ! Request::ajax() ) { return App::abort(404); }
-
-		$web 	= app('asmoyo.web');
-		switch ($position) {
-			case 'left':
-				$sidebar = $web['web_sideLeft'];
-			break;
-
-			case 'right':
-				$sidebar = $web['web_sideRight'];
-			break;
-		
-			default:
-				return App::abort(404);
-			break;
-		}
-
-		$form = array();
-		if($sidebar) {
-		foreach( $sidebar as $side )
-		{
-			$read = Pseudo::read($side['content']);
-			
-			if ($read['object'] == 'widget')
-			{
-				$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($read['slug'])['items'];
-				$form[][$read['object']] = Form::asmoyoDropdown('widget_item[]', $query, null);
-			}
-
-		} }
-
-		$data = array(
-			'forms'				=> $form,
-			'position'			=> $position,
-			'sidebar'			=> $sidebar,
-			'pseudoTypeList' 	=> Pseudo::typeList(),
-			'pseudoSortirList' 	=> Pseudo::sortirList(),
-		);
-
-		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
 	}
 
 	public function ajaxSidebarAdd($position)
