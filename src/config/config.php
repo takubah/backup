@@ -3,12 +3,6 @@
 return array(
 
 	/**
-	* Set Profiler (Debug Bar)
-	* (boolean) inheritance at app.debug
-	*/
-	'profiler'		=> Config::get('app.debug'),
-
-	/**
 	* Set Database
 	*/
 	'database'		=> 'mysql',
