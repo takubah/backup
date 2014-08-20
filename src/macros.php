@@ -1,7 +1,6 @@
 <?php
 use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
-
 function getMime($ext, $default='text/html')
 {
     $mimes = array(
@@ -24,23 +23,6 @@ function getMedia($file, $size='medium')
     return route('getMedia', $size .'/'. $file);
 }
 
-function getAssetUrl($file, $theme='admin')
-{
-    $web    = app('asmoyo.web');
-    if($theme == 'admin')
-    {
-        $theme = $web['web_adminTemplate']['name'];
-    } elseif($theme == 'public') {
-        $theme = $web['web_publicTemplate']['name'];
-    }
-    return route('getAssets', $theme.'/'.$file);
-}
-
-function pseudoRead($str)
-{
-    return Pseudo::read($str);
-}
-
 function asmoyoAsset($file, $theme='admin')
 {
     return HTML::asmoyoAsset($file, $theme);
@@ -49,12 +31,17 @@ function asmoyoAsset($file, $theme='admin')
 HTML::macro('asmoyoAsset', function($file, $theme='admin')
 {
 	$web 	= app('asmoyo.web');
+    // is admin
     if($theme == 'admin')
     {
         $theme = $web['web_adminTemplate']['name'];
-    } elseif($theme == 'public') {
+    }
+    // is public
+    elseif($theme == 'public')
+    {
         $theme = $web['web_publicTemplate']['name'];
     }
+
 	$url 	= route('getAssets', $theme.'/'.$file);
 
     // get file extension
@@ -66,28 +53,12 @@ HTML::macro('asmoyoAsset', function($file, $theme='admin')
         case 'js':
             return HTML::script($url);
         break;
-
-        case 'url':
-            return $url;
-        break;
         
         default:
             // generate url
             return $url;
         break;
     }
-});
-
-Form::macro('asmoyoDropdown', function($name, $data, $selected=null)
-{
-    if ( $data ) {
-        foreach ($data as $d) {
-            $pseudo = "{<asmoyo:widget slug=listing id=". $d['id'].">}";
-            $item[$pseudo] = $d['title'];
-        }
-    }
-
-    return Form::select($name, $item, $selected, array('class' => 'form-control'));
 });
 
 // Form Link
@@ -120,48 +91,5 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $co
 
     $output .= Form::close();
     
-    return $output;
-});
-
-Form::macro('asmoyoWidget', function($name, $type, $value=null, $i=null, $attr=array())
-{
-    $output = '';
-    $id     = $name.'_'.$i;
-    $name   = 'content['.$name.'][]';
-    switch ($type) {
-        case 'text':
-            $prop   = array('id' => $id, 'class' => 'form-control');
-            $attr   = array_merge($prop, $attr);
-            $output .= Form::text($name, $value, $attr);
-        break;
-
-        case 'textarea':
-            $prop   = array('id' => $id, 'class' => 'form-control', 'rows' => '3');
-            $attr   = array_merge($prop, $attr);
-            $output .= Form::textarea($name, $value, $attr);
-        break;
-
-        case 'media':
-            $prop   = array('id' => $id, 'class' => 'form-control');
-            $attr   = array_merge($prop, $attr);
-            $output .= Form::text($name, $value, $attr);
-
-            $id_preview = 'media_preview_'.$i;
-            $output .= '<a id="'.$id_preview.'" class="thumbnail" style="margin:0px; height:300px; background:url(\''.$value.'\') center no-repeat; "> </a>';
-
-            $id_caller  = 'media_caller_'.$i;
-            $output .= '
-                <a href="'.route('admin.media.ajaxIndex').'" id="'.$id_caller.'" class="btn btn-default medias" data-toggle="modal" data-target="#modalAjax" >
-                    <i class="fa fa-picture-o"></i>
-                    Select Media
-                </a>
-            ';
-        break;
-    
-        default:
-            return 'field type not found';
-        break;
-    }
-
     return $output;
 });
