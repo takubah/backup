@@ -23,15 +23,20 @@
 						<div class="panel-body">
 							{{Form::hidden('widget[]', $c['widget'])}}
 							<p>
-								{{Form::text('title[]', $c['title'], array('class' => 'form-control'))}}
+								{{Form::text('title[]', $c['title'], array('class' => 'form-control', 'placeholder' => 'Custom title'))}}
 							</p>
 
 							<p>
 								@if( is_array($c['item']) )
 									{{Form::select('pseudo[]', $c['item'], $c['content'], array('class' => 'form-control'))}}
+									<p>
+										<a href="{{route('admin.widget.show', $c['widget'])}}" target="_blank">
+											Lihat item &raquo;
+										</a>
+									</p>
 								@else
 									{{Form::hidden('pseudo[]', $c['content'])}}
-									tidak tersedia list untuk widget ini
+									tidak tersedia item untuk widget ini
 								@endif
 							</p>
 

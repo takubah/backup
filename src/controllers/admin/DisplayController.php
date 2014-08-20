@@ -28,8 +28,7 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function ajaxSidebar($position)
 	{
-		// sleep(0.5);
-		// if ( ! Request::ajax() ) { return App::abort(404); }
+		if ( ! Request::ajax() ) { return App::abort(404); }
 
 		$web 	= app('asmoyo.web');
 		switch ($position) {
