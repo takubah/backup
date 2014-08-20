@@ -1,6 +1,11 @@
 <?php
 use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
+/**
+* Global Function
+*/
+
+// get mime type (used for response content type)
 function getMime($ext, $default='text/html')
 {
     $mimes = array(
@@ -18,16 +23,29 @@ function getMime($ext, $default='text/html')
     return $mimes[$ext];
 }
 
+// shortcut function for get media file
 function getMedia($file, $size='medium')
 {
     return route('getMedia', $size .'/'. $file);
 }
 
+// shortcut function for generate asset.
+// with defined relative path given template name
 function asmoyoAsset($file, $theme='admin')
 {
     return HTML::asmoyoAsset($file, $theme);
 }
 
+/**
+* End Global Function
+*/
+
+
+/**
+* Macro
+*/
+
+// generate asset to relative template
 HTML::macro('asmoyoAsset', function($file, $theme='admin')
 {
 	$web 	= app('asmoyo.web');
@@ -61,7 +79,7 @@ HTML::macro('asmoyoAsset', function($file, $theme='admin')
     }
 });
 
-// Form Link
+// generate link from form so can custom method
 Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $confirm_message=null)
 {
     // attribute for form
@@ -93,3 +111,7 @@ Form::macro('asmoyoLink', function($text, $method, $action, $attr = array(), $co
     
     return $output;
 });
+
+/**
+* End Macro
+*/
