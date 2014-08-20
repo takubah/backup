@@ -1,13 +1,13 @@
-<?php namespace Antoniputra\Asmoyo\Utilities\Pseudo\View;
+<?php namespace Antoniputra\Asmoyo\Utilities\Pseudo\Object;
 
 use View, App;
 use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
-class CategoryPseudo extends Pseudo
+class MediaPseudo extends Pseudo
 {
 	public function translate($attr)
 	{
-		$repo = App::make('Antoniputra\Asmoyo\Categories\CategoryInterface');
+		$repo = App::make('Antoniputra\Asmoyo\Medias\MediaInterface');
 
 		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
 		$attr['limit']	= $repo->repoLimit( array_get($attr, 'limit') );
@@ -20,18 +20,21 @@ class CategoryPseudo extends Pseudo
 		switch ($attr['type'])
 		{
 			case 'list':
-				$data['repo'] = $repo->getStructure($attr['limit'], $attr['sortir']);
+				$data['repo'] = $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
+				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
 			case 'grid':
 				$data['attr']['size'] 	= array_get($attr, 'size') ?: '100px' ;
 				$data['repo'] 			= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
+				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
 			case 'media-object':
 				$data['attr']['description'] = array_get($attr, 'description') ?: 1 ;
 				$data['attr']['size'] 		= array_get($attr, 'size') ?: '100px' ;
 				$data['repo'] 				= $repo->getAll($attr['limit'], $attr['sortir'], $attr['status']);
+				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 
 			case 'detail':
@@ -48,13 +51,13 @@ class CategoryPseudo extends Pseudo
 				}
 
 				$data['repo'] = $repo;
+				return View::make('asmoyo::pseudo.media', $data)->render();
 			break;
 			
 			default:
 				return '';
 			break;
 		}
-		return View::make('asmoyo::pseudo.category', $data)->render();
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php namespace Antoniputra\Asmoyo\Utilities\Pseudo;
 
-use Antoniputra\Asmoyo\Utilities\Pseudo\View as PseudoView;
+use Antoniputra\Asmoyo\Utilities\Pseudo\Object as PseudoObject;
 
 abstract class Pseudo {
     
@@ -31,19 +31,19 @@ abstract class Pseudo {
 			switch ($object)
 			{
 				case 'post':
-					$obj = new PseudoView\PostPseudo;
+					$obj = new PseudoObject\PostPseudo;
 				break;
 				case 'media':
-					$obj = new PseudoView\MediaPseudo;
+					$obj = new PseudoObject\MediaPseudo;
 				break;
 				case 'category':
-					$obj = new PseudoView\CategoryPseudo;
+					$obj = new PseudoObject\CategoryPseudo;
 				break;
 				case 'comment':
-					$obj = new PseudoView\CommentPseudo;
+					$obj = new PseudoObject\CommentPseudo;
 				break;
 				case 'widget':
-					$obj = new PseudoView\WidgetPseudo;
+					$obj = new PseudoObject\WidgetPseudo;
 				break;
 				default:
 					$obj = false;

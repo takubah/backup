@@ -1,4 +1,4 @@
-<?php namespace Antoniputra\Asmoyo\Utilities\Pseudo\View;
+<?php namespace Antoniputra\Asmoyo\Utilities\Pseudo\Object;
 
 use View, App;
 use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
