@@ -7,13 +7,14 @@ class CategoryPseudo extends Pseudo
 {
 	public function translate($attr)
 	{
-		$repo = App::make('Antoniputra\Asmoyo\Categories\CategoryInterface');
-
-		$attr['type'] 	= array_get($attr, 'type') ?: 'list';
-		$attr['limit']	= $repo->repoLimit( array_get($attr, 'limit') );
-		$attr['sortir']	= $repo->repoSortir( array_get($attr, 'sortir') );
-		$attr['status']	= $repo->repoSortir( array_get($attr, 'status') );
-		$attr['id']		= array_get($attr, 'id') ?: null;
+		$repo 	= App::make('Antoniputra\Asmoyo\Categories\CategoryInterface');
+		$attr 	= array(
+			'type' 		=> array_get($attr, 'type') ?: 'list',
+			'limit'		=> $repo->repoLimit( array_get($attr, 'limit') ),
+			'sortir'	=> $repo->repoSortir( array_get($attr, 'sortir') ),
+			'status'	=> $repo->repoSortir( array_get($attr, 'status') ),
+			'id'		=> array_get($attr, 'id') ?: null,
+		);
 
 		$data = array('attr' => $attr);
 
@@ -46,7 +47,6 @@ class CategoryPseudo extends Pseudo
 				} else {
 					return '';
 				}
-
 				$data['repo'] = $repo;
 			break;
 			
