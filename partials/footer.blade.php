@@ -23,7 +23,7 @@
 			<div class="col-md-8">
 				<div class="media">
 					<a class="pull-left" href="#">
-						<img class="media-object" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c2.0.160.160/p160x160/10513425_906509026033081_8269383889380536741_n.jpg?oh=b7f22d23433edf6107b6a901df167402&oe=547E92E1&__gda__=1415539977_a9780d814a1f8533962e61ebf220e831" alt="">
+						<!-- <img class="media-object" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c2.0.160.160/p160x160/10513425_906509026033081_8269383889380536741_n.jpg?oh=b7f22d23433edf6107b6a901df167402&oe=547E92E1&__gda__=1415539977_a9780d814a1f8533962e61ebf220e831" alt=""> -->
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading">About Me</h4>

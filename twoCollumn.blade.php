@@ -14,7 +14,7 @@
 
             <div class="col-md-4">
                 @section('sideRight')
-                    
+                    @include('asmoyoTheme.standard.partials.side')
                 @show
             </div>
         </div>
