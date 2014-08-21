@@ -5,11 +5,6 @@ use Antoniputra\Asmoyo\Utilities\Pseudo\Pseudo;
 
 class Admin_DisplayController extends AsmoyoController
 {
-	public function __construct()
-	{
-		
-	}
-
 	public function index()
 	{
 		$widgetContainer 	= array(
@@ -18,11 +13,10 @@ class Admin_DisplayController extends AsmoyoController
 		);
 
 		$data = array(
-			// 'widgets'			=> Pseudo::getList(),
 			'widgets'			=> app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll(),
 			'widgetContainer'	=> $widgetContainer
 		);
-		// return $data['widgets']['items'];
+		// return app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug('listing', 0);
 		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, false);
 	}
 
@@ -54,13 +48,13 @@ class Admin_DisplayController extends AsmoyoController
 			// get widget item
 			if ($query['has_item']) {
 				foreach ($query['items'] as $q) {
-					$default = "{<asmoyo:widget slug=".$query['slug']." item=0>}";
-					$pseudo	= "{<asmoyo:widget slug=".$query['slug']." item=". $q['id'].">}";
+					$default = "{<asmoyo:widget name=".$query['slug']." item=0>}";
+					$pseudo	= "{<asmoyo:widget name=".$query['slug']." item=". $q['id'].">}";
 	            	$item[$default] = 'tidak ada';
 	            	$item[$pseudo] = $q['title'];
 				}
 			} else {
-				$item = "{<asmoyo:widget slug=".$query['slug'].">}";
+				$item = "{<asmoyo:widget name=".$query['slug'].">}";
 			}
         	$containers[$key]['item'] = $item; // add item list
         	$item = null; // flush item list
@@ -70,8 +64,6 @@ class Admin_DisplayController extends AsmoyoController
 		$data = array(
 			'position'			=> $position,
 			'containers'		=> $containers,
-			'pseudoTypeList' 	=> Pseudo::typeList(),
-			'pseudoSortirList' 	=> Pseudo::sortirList(),
 		);
 
 		return View::make('asmoyo::admin.display.ajaxSidebar', $data);

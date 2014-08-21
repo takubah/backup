@@ -29,7 +29,7 @@
 										<ul class="dropdown-menu widget-chooser">
 											@foreach ($widgetContainer as $target => $text)
 												<li>
-													<a data-target="{{$target}}" data-widget="{{$w['slug']}}" data-value="{<asmoyo:widget widget={{$w['slug']}} item=0>}" data-title="">
+													<a data-target="{{$target}}" data-widget="{{$w['slug']}}" data-value="{<asmoyo:widget name={{$w['slug']}} item=0>}" data-title="">
 														{{$text}}
 													</a>
 												</li>

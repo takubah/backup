@@ -47,18 +47,13 @@ class WidgetRepo extends RepoBase implements WidgetInterface
 
 	}
 
-	public function getBySlug($slug, $itemId = null)
+	public function getBySlug($slug, $itemId = 0)
 	{
 		$result = $this->model->where('slug', $slug);
 		
-		if($itemId)
-		{
-			$result = $result->with(array('item' => function($query) use($itemId) {
-				return $query->find($itemId);
-			}));
-		} else {
-			$result = $result->with('items');
-		}
+		$result = $result->with(array('item' => function($query) use($itemId) {
+			return $query->find($itemId);
+		}));
 
 		return $result->first();
 	}

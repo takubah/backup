@@ -9,15 +9,18 @@ class WidgetPseudo extends Pseudo
 	{
 		$repo 	= App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface');
 		$attr 	= array(
-			'slug'	=> array_get($attr, 'slug') ?: null,
+			'name'	=> array_get($attr, 'name') ?: null,
 			'item'	=> array_get($attr, 'item') ?: 0,
 		);
 
+		$widget = $repo->getBySlug($attr['name'], $attr['item']);
+
 		$data = array(
 			'attr' 		=> $attr,
-			'widget' 	=> $repo->getBySlug($attr['slug'], $attr['item'])
+			'widget' 	=> $widget,
+			'item'	 	=> $widget['item'],
 		);
-		return View::make('asmoyo::pseudo.widget', $data)->render();
+		$file = $this->path('widget');
+		return View::make($file, $data)->render();
 	}
-
 }
