@@ -7,19 +7,15 @@ class WidgetPseudo extends Pseudo
 {
 	public function translate($attr)
 	{
-		$widget = App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface');
-		$attr = array(
-			'widget-name' => array_get($attr, 'widget-name') ?: '',
-			'group-name' => array_get($attr, 'group-name') ?: '',
-			'type'	 	=> array_get($attr, 'type') ?: 'list',
-			'limit'		=> $widget->repoLimit( array_get($attr, 'limit') ),
-			'sortir'	=> $widget->repoSortir( array_get($attr, 'sortir') ),
-			'status'	=> $widget->repoSortir( array_get($attr, 'status') ),
-			'size'	 	=> array_get($attr, 'size') ?: '100px' ,
+		$repo 	= App::make('Antoniputra\Asmoyo\Widgets\WidgetInterface');
+		$attr 	= array(
+			'slug'	=> array_get($attr, 'slug') ?: null,
+			'item'	=> array_get($attr, 'item') ?: 0,
 		);
+
 		$data = array(
 			'attr' 		=> $attr,
-			'widget' 	=> $widget->getBySlugWithGroup($attr['widget-name'], $attr['group-name'])
+			'widget' 	=> $repo->getBySlug($attr['slug'], $attr['item'])
 		);
 		return View::make('asmoyo::pseudo.widget', $data)->render();
 	}

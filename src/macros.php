@@ -36,6 +36,23 @@ function asmoyoAsset($file, $theme='admin')
     return HTML::asmoyoAsset($file, $theme);
 }
 
+function getSidebar($position='left')
+{
+    $web    = app('asmoyo.web');
+    $sides  = false;
+
+    if ($position == 'left')
+    {
+        $sides = $web['web_sideLeft'];
+    }
+    elseif ($position == 'right')
+    {
+        $sides = $web['web_sideRight'];
+    }
+
+    return $sides;
+}
+
 /**
 * End Global Function
 */
