@@ -27,7 +27,7 @@ class AsmoyoController extends Controller {
 		$base 	= 'asmoyo::.'. $web['web_adminTemplate']['name'] .'.';
 		if ( ! $this->structure )
 		{
-			$this->structure = $base .'oneCollumn';
+			$this->structure = $base .'twoCollumn';
 		}
 		$content = $base . $content;
 		

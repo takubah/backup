@@ -22,7 +22,7 @@ class Widget extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-    protected $fillable = array();
+    protected $fillable = array('title', 'slug', 'description', 'supported', 'has_item', 'attribute');
 
 	/**
     * These are make collumn to Carbon instance

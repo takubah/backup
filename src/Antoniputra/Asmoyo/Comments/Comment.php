@@ -22,7 +22,7 @@ class Comment extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('groupable_id', 'groupable_type', 'user_id',  'title', 'content', 'status', 'anonymous_name', 'anonymous_email', 'anonymous_url', 'anonymous_agent');
+	protected $fillable = array('objectable_id', 'objectable_type', 'user_id', 'type', 'title', 'content', 'status', 'anonymous_name', 'anonymous_email', 'anonymous_url', 'anonymous_agent');
 
 	/**
     * These are make collumn to Carbon instance
