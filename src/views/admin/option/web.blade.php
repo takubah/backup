@@ -152,8 +152,6 @@
 
 @section('javascripts')
 	@parent
-
-	{{asmoyoAsset( 'js/asmoyo.js', 'admin')}}
 	<script type="text/javascript">	
 		$( "#forWebLogo" ).asmoyoMediaModal({
 			field_file: '#web_logo',

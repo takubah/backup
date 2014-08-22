@@ -79,6 +79,11 @@
 				<i class="fa fa-picture-o"></i> Media
 			</a>
 		</li>
+		{{-- <li @if($activePage == 'gallery') class="active" @endif>
+			<a href="{{route('admin.gallery.index')}}" class="show-tooltip" data-placement="right" title="Gallery">
+				<i class="fa fa-picture-o"></i> Gallery
+			</a>
+		</li> --}}
 		<li @if($activePage == 'post') class="active" @endif>
 			<a href="{{route('admin.post.index')}}" class="show-tooltip" data-placement="right" title="Posting">
 				<i class="fa fa-file-text-o"></i> Posting
