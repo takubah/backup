@@ -12,11 +12,15 @@
 
 		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 			<!-- Indicators -->
-			<!-- <ol class="carousel-indicators">
-				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-			</ol> -->
+			<ol class="carousel-indicators">
+				<?php $i = 0; ?>
+				@if($content)
+				@foreach($content as $c)
+					<li data-target="#carousel-example-generic" data-slide-to="{{$i}}" class="@if($i==0) active @endif"></li>
+				<?php $i++; ?>
+				@endforeach
+				@endif
+			</ol>
 
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner">
@@ -24,7 +28,7 @@
 				@if($content)
 				@foreach($content as $c)
 					<div class="item @if($i==0) active @endif">
-						<img src="{{getMedia($c['file'])}}" style="width:100%; height:350px;">
+						<img src="{{getMedia($c['file'])}}" style="width:100%; max-height:350px;">
 						<div class="carousel-caption">
 							<h3>{{$c['title']}}</h3>
 							<p>{{$c['description']}}</p>
