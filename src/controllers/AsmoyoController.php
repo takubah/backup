@@ -35,10 +35,7 @@ class AsmoyoController extends Controller {
 					->nest('content', $content, $data)
 					->render();
 
-		if ($pseudo)
-			return Pseudo::render($output);
-		else
-			return $output;
+		return $output;
 	}
 
 	public function loadView($content, $data = array())

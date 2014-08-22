@@ -75,7 +75,7 @@ class GalleryRepo extends RepoBase implements GalleryInterface
 			'sortir' => $sortir,
 			'status' => $status,
 		);
-		$result['items'] = $data->with('cover', 'medias')->skip( $limit * ($page-1) )
+		$result['items'] = $data->with('medias')->skip( $limit * ($page-1) )
 	                ->take($limit)
 	                ->get();
 

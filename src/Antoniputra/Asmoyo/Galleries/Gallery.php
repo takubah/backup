@@ -68,7 +68,7 @@ class Gallery extends EloquentBase
 
 	public function medias()
 	{
-		return $this->hasMany('Antoniputra\Asmoyo\Medias\Media');
+        return $this->belongsToMany('Antoniputra\Asmoyo\Medias\Media', 'galleries_medias');
 	}
 
 }

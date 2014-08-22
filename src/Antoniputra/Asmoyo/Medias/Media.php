@@ -64,9 +64,8 @@ class Media extends EloquentBase
         );
     }
 
-
-	public function category()
+    public function galleries()
     {
-        return $this->belongsTo('Antoniputra\Asmoyo\Categories\Category');
+        return $this->belongsToMany('Antoniputra\Asmoyo\Galleries\Gallery', 'galleries_medias');
     }
 }

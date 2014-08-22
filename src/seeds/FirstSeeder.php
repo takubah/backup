@@ -47,29 +47,6 @@ class FirstSeeder extends Seeder {
 
 		DB::table('categories')->insert($categories);
 		// End Categories Seeder
-
-		// Galleries Seeder
-		DB::table('galleries')->truncate();
-
-		$galleries 	= array(
-			array(
-				'media_id'		=> 1,
-				'title'			=> 'Album Default',
-				'slug'			=> 'album-default',
-				'description'	=> 'Uncategorized Item',
-				'status'		=> 'published',
-			),
-			array(
-				'media_id'		=> 1,
-				'title'			=> 'My First Album',
-				'slug'			=> 'my-first-album',
-				'description'	=> 'bla bla bla description',
-				'status'		=> 'published',
-			),
-		);
-
-		DB::table('galleries')->insert($galleries);
-		// End Galleries Seeder
 	}
 
 }
