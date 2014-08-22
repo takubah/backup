@@ -2,9 +2,9 @@
 
 @section('structure')
 	
-	<div class="container-fluid asmoyo-container">
+	<div class="container body-container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="content">
                     @section('content')
                         {{$content}}
@@ -12,9 +12,9 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 @section('sideRight')
-                    @include('asmoyoTheme.standard.partials.side')
+                    @include('asmoyoTheme.standard.partials.sideRight')
                 @show
             </div>
         </div>
