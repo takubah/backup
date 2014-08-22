@@ -14,9 +14,12 @@
         </title>
 
         @section('stylesheets')
-            {{asmoyoAsset( 'css/bootstrap.min.css', 'admin')}}
-            {{asmoyoAsset( 'css/bootstrap-theme.min.css', 'admin')}}
-            {{asmoyoAsset( 'css/font-awesome.min.css', 'admin')}}
+            {{-- asmoyoAsset( 'css/bootstrap.min.css', 'admin') --}}
+            {{-- asmoyoAsset( 'css/bootstrap-theme.min.css', 'admin') --}}
+            {{-- asmoyoAsset( 'css/font-awesome.min.css', 'admin') --}}
+
+            {{HTML::style('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css')}}
+            {{HTML::style('//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css')}}
             {{asmoyoAsset( 'css/admin-style.css', 'admin')}}
         @show
 
@@ -47,8 +50,11 @@
     @show
 
     @section('javascripts')
-        {{asmoyoAsset( 'js/jquery.min.js', 'admin')}}
-        {{asmoyoAsset( 'js/bootstrap.min.js', 'admin')}}
+        {{-- asmoyoAsset( 'js/jquery.min.js', 'admin') --}}
+        {{-- asmoyoAsset( 'js/bootstrap.min.js', 'admin') --}}
+
+        {{HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}
+        {{HTML::script('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js')}}
         {{asmoyoAsset( 'js/asmoyo.js', 'admin')}}
     @show
 

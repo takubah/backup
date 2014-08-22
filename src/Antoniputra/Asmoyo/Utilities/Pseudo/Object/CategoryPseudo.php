@@ -54,7 +54,8 @@ class CategoryPseudo extends Pseudo
 				return '';
 			break;
 		}
-		return View::make('asmoyo::pseudo.category', $data)->render();
+		$file = $this->path('category');
+		return View::make($file, $data)->render();
 	}
 
 }

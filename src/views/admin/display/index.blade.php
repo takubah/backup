@@ -84,7 +84,7 @@
 
 @section('javascripts')
 	@parent
-	{{HTML::script('//code.jquery.com/ui/1.11.0/jquery-ui.js')}}
+	{{HTML::script('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')}}
 	<script type="text/javascript">
 		$(function() {
 			// load side left

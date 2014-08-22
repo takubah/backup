@@ -54,7 +54,8 @@ class MediaPseudo extends Pseudo
 				return '';
 			break;
 		}
-		return View::make('asmoyo::pseudo.media', $data)->render();
+		$file = $this->path('media');
+		return View::make($file, $data)->render();
 	}
 
 }

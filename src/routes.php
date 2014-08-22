@@ -219,37 +219,6 @@ Route::group(array('before' => 'etag.get', 'after' => 'etag.set'), function()
 		));
 		// End Widget Item
 
-		// widget group
-		/*Route::get('widget/{slug}/index', array(
-			'as' 		=> 'admin.widget.group',
-			'uses' 		=> 'Admin_WidgetController@group'
-		));
-		Route::get('widget/{slug}/create', array(
-			'as' 		=> 'admin.widget.group.create',
-			'uses' 		=> 'Admin_WidgetController@groupCreate'
-		));
-		Route::post('widget/{slug}/create', array(
-			'as' 		=> 'admin.widget.group.store',
-			'uses' 		=> 'Admin_WidgetController@groupStore'
-		));
-		Route::get('widget/{slug}/show/{any}', array(
-			'as' 		=> 'admin.widget.group.showAjax',
-			'uses' 		=> 'Admin_WidgetController@groupShowAjax'
-		));
-		Route::get('widget/{slug}/edit/{any}', array(
-			'as' 		=> 'admin.widget.group.edit',
-			'uses' 		=> 'Admin_WidgetController@groupEdit'
-		));
-		Route::put('widget/{slug}/edit/{any}', array(
-			'as' 		=> 'admin.widget.group.update',
-			'uses' 		=> 'Admin_WidgetController@groupUpdate'
-		));
-		Route::delete('widget/{slug}/destroy/{id}', array(
-			'as' 		=> 'admin.widget.group.destroy',
-			'uses' 		=> 'Admin_WidgetController@groupDestroy'
-		));*/
-		// End Widget
-
 		// Option
 		Route::get('option', array(
 			'as' 		=> 'admin.option.index',

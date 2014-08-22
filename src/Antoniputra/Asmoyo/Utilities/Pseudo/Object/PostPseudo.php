@@ -54,7 +54,8 @@ class PostPseudo extends Pseudo
 				return '';
 			break;
 		}
-		return View::make('asmoyo::pseudo.post', $data)->render();
+		$file = $this->path('post');
+		return View::make($file, $data)->render();
 	}
 
 }

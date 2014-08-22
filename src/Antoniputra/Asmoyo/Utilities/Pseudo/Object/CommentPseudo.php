@@ -35,6 +35,7 @@ class CommentPseudo extends Pseudo
 				return '';
 			break;
 		}
-		return View::make('asmoyo::pseudo.comment', $data);
+		$file = $this->path('comment');
+		return View::make($file, $data)->render();
 	}
 }
