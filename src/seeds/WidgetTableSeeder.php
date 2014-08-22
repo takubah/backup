@@ -37,6 +37,22 @@ class WidgetTableSeeder extends Seeder {
 			),
 
 			array(
+			    'title' 		=> 'Banner',
+			    'slug'		 	=> 'banner',
+			    'description'	=> 'Buat flexible Banner',
+			    'supported'	 	=> 'all',
+			    'has_item'		=> 1,
+			    'attribute'		=> json_encode(array(
+			    	'field' => array(
+		    			'title'		=> 'text',
+		    			'file'		=> 'text',
+		    			'link'		=> 'text',
+		    			'description' => 'textarea',
+	    			),
+		    	)),
+			),
+
+			array(
 			    'title' 		=> 'Search',
 			    'slug'		 	=> 'search',
 			    'description'	=> 'Form searching',
@@ -110,6 +126,25 @@ consequat'),
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 consequat'),
+	    			),
+				)),
+			),
+			array(
+				'widget_id'		=> 3,
+				'title'			=> 'Banner Home',
+				'description'	=> 'ini adalah Banner home',
+				'content'		=> json_encode(array(
+					array(
+						'title'			=> 'Baretshow Magic',
+						'file'			=> 'http://placehold.it/900x350',
+		    			'link'			=> 'http://baretshow.com',
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+	    			),
+	    			array(
+						'title'			=> 'Spectaculer Event',
+						'file'			=> 'http://placehold.it/900x350',
+		    			'link'			=> 'http://baretshow.com',
+		    			'description' 	=> nl2br('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
 	    			),
 				)),
 			),
