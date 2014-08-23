@@ -11,8 +11,11 @@ class Public_PageController extends AsmoyoController
 
 	public function show($slug)
 	{
-		return 'ini adalah page show : '. $slug;
-		$data = array();
-		return $this->loadView('asmoyoTheme.baretshow.content.page.show', $data);
+		$page = $this->page->getBySlug($slug);
+		$data = array(
+			'page'	=> $page,
+		);
+
+		return $this->setStructure($page['structure'], 'public')->loadView('content.page.show', $data);
 	}
 }
