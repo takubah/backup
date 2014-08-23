@@ -2,7 +2,7 @@
 
 @section('structure')
 	
-	<div class="container-fluid asmoyo-container">
+	<div class="container body-container">
         <div class="row">
             <div class="col-md-12">
 
