@@ -27,7 +27,7 @@ class Page extends EloquentBase {
      * These are the mass-assignable keys
      * @var array
      */
-	protected $fillable = array('parent_id', 'status', 'type', 'structure', 'order', 'title', 'slug', 'content', 'content_structure', 'side_left', 'side_right', 'footer', 'meta_title', 'meta_keyword', 'meta_description');
+	protected $fillable = array('parent_id', 'status', 'type', 'structure', 'order', 'is_locked', 'title', 'slug', 'content', 'content_structure', 'side_left', 'side_right', 'footer', 'meta_title', 'meta_keyword', 'meta_description');
 
     /**
     * These are make collumn to Carbon instance

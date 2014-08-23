@@ -20,6 +20,7 @@ class CreatePagesTable extends Migration {
 			$table->string('type');
 			$table->string('structure');
 			$table->integer('order');
+			$table->boolean('is_locked');
 			$table->string('title');
 			$table->string('slug');
 			$table->text('content');

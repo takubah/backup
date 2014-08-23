@@ -41,12 +41,14 @@
 							<a href="{{route('admin.page.edit', $page['slug'])}}" class="btn btn-default btn-sm">
 								<i class="fa fa-pencil"></i> Edit
 							</a>
-							{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.page.destroy', $page['id']), array(
-									'icon'	=> 'fa fa-trash-o',
-									'class'	=> 'btn btn-danger btn-sm'
-								),
-								'Anda yakin ?'
-							)}}
+							@if( ! $page['is_locked'] )
+								{{Form::asmoyoLink('Hapus', 'DELETE', route('admin.page.destroy', $page['id']), array(
+										'icon'	=> 'fa fa-trash-o',
+										'class'	=> 'btn btn-danger btn-sm'
+									),
+									'Anda yakin ?'
+								)}}
+							@endif
 						</td>
 					</tr>
 				@endforeach
