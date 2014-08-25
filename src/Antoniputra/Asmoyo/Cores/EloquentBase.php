@@ -10,9 +10,17 @@ class EloquentBase extends \Eloquent
 		$this->fillable = $fillable;
 	}
 
-	public function getFillable($fillable=array())
+	public function getFillable($key=null)
 	{
-		return $this->fillable;
+        $fillable = $this->fillable;
+        
+        if($key) {
+            if ( in_array($key, $fillable) ) {
+                return $fillable[$key];
+            }
+        }
+        
+        return $fillable;
 	}
 
 

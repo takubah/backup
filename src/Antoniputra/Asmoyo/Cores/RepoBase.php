@@ -131,7 +131,7 @@ abstract class RepoBase
 		if(is_array($status))
 		{
 			$data = $data->where($status[0], $status[1]);
-		} elseif( isset($this->model->getFillable()['status']) ) {
+		} elseif( $this->model->getFillable($status) ) {
 			switch ($status)
 			{
 				case 'all':
