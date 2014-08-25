@@ -17,7 +17,7 @@ class Admin_DisplayController extends AsmoyoController
 
 	public function ajaxSidebar($position)
 	{
-		// if ( ! Request::ajax() ) { return App::abort(404); }
+		if ( ! Request::ajax() ) { return App::abort(404); }
 
 		$web 	= app('asmoyo.web');
 		switch ($position) {
@@ -50,7 +50,7 @@ class Admin_DisplayController extends AsmoyoController
 		foreach( $containers as $key => $c )
 		{
 			// if isset key widget. (key widget is important at here)
-			if ( isset($c['widget']) )
+			if ( isset($c['widget']) AND $c['widget'] )
 			{
 				$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($c['widget']);
 
@@ -87,6 +87,40 @@ class Admin_DisplayController extends AsmoyoController
 		return View::make('asmoyo::admin.display.ajaxSidebar', $data);
 	}
 
+	public function ajaxSidebarAdd($position)
+	{
+		$web 	= app('asmoyo.web');
+		$input 	= Input::all();
+		$data 	= array();
+
+		if ($position == 'left')
+		{
+			$data['web_sideLeft'] 	= array_merge($web['web_sideLeft'], array($input));
+		}
+		elseif($position == 'right')
+		{
+			$data['web_sideRight'] 	= array_merge($web['web_sideRight'], array($input));
+		}
+		else
+		{
+			$page_id = str_replace('page_', '', $position);
+			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById( $page_id );
+			$page->content_structure = array_merge($page['content_structure'], array($input));
+
+			if ( $page->save() ) {
+				return Response::json('Berhasil di buat !!', 200);
+			} else {
+				return Response::json(array('error' => 'something error cok jancok'), 500);
+			}
+		}
+
+		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
+		{
+			return Response::json('Berhasil di buat !!', 200);
+		}
+		return Response::json(array('error' => 'something error'), 500);
+	}
+
 	public function ajaxSidebarUpdate($position)
 	{
 		$web 	= app('asmoyo.web');
@@ -119,40 +153,6 @@ class Admin_DisplayController extends AsmoyoController
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
 		{
 			return Response::json('Berhasil di perbarui !!', 200);
-		}
-		return Response::json(array('error' => 'something error'), 500);
-	}
-
-	public function ajaxSidebarAdd($position)
-	{
-		$web 	= app('asmoyo.web');
-		$input 	= Input::all();
-		$data 	= array();
-
-		if ($position == 'left')
-		{
-			$data['web_sideLeft'] 	= array_merge($web['web_sideLeft'], array($input));
-		}
-		elseif($position == 'right')
-		{
-			$data['web_sideRight'] 	= array_merge($web['web_sideRight'], array($input));
-		}
-		else
-		{
-			$page_id = str_replace('page_', '', $position);
-			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById( $page_id );
-			$page->content_structure = array_merge($page['content_structure'], array($input));
-
-			if ( $page->save() ) {
-				return Response::json('Berhasil di buat !!', 200);
-			} else {
-				return Response::json(array('error' => 'something error cok jancok'), 500);
-			}
-		}
-
-		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
-		{
-			return Response::json('Berhasil di buat !!', 200);
 		}
 		return Response::json(array('error' => 'something error'), 500);
 	}

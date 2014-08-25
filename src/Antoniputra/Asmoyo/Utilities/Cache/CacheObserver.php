@@ -17,7 +17,6 @@ class CacheObserver {
 
     public function created($model)
     {
-        
         $this->clearCacheTags($model->getTable());
     }
 
