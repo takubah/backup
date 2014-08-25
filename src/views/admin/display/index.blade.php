@@ -27,10 +27,10 @@
 											<i class="fa fa-plus"></i> Add
 										</a>
 										<ul class="dropdown-menu widget-chooser">
-											@foreach ($widgetContainer as $target => $text)
+											@foreach ($widgetContainer as $wc)
 												<li>
-													<a data-target="{{$target}}" data-widget="{{$w['slug']}}" data-value="{<asmoyo:widget name={{$w['slug']}} item=0>}" data-title="">
-														{{$text}}
+													<a style="cursor:pointer;" data-target="{{$wc['id']}}" data-widget="{{$w['slug']}}" data-value="{<asmoyo:widget name={{$w['slug']}} item=0>}" data-title="">
+														{{$wc['title']}}
 													</a>
 												</li>
 											@endforeach
@@ -46,39 +46,18 @@
 			</div>
 		</div>
 	</div>
-	
 
 	<div class="col-md-4">
-		<div class="asmoyo-box">
-			<h3 class="box-header">
-				Sidebar Kiri
-			</h3>
-			<div class="box-content" id="sideLeft">
-				<!-- ajax content -->
-			</div>
-		</div>
-
-		<div class="asmoyo-box">
-			<h3 class="box-header">
-				Sidebar Kanan
-			</h3>
-			<div class="box-content" id="sideRight">
-				<!-- ajax content -->
-			</div>
-		</div>
-
-		{{--@if($pages['items'])
-		@foreach($pages['items'] as $page)
+		@foreach($widgetContainer as $wc)
 			<div class="asmoyo-box">
 				<h3 class="box-header">
-					{{$page['title']}}
+					{{$wc['title']}}
 				</h3>
-				<div class="box-content" id="page_{{$page['id']}}">
+				<div class="box-content" id="{{$wc['id']}}">
 					<!-- ajax content -->
 				</div>
 			</div>
 		@endforeach
-		@endif--}}
 	</div>
 </div>
 
@@ -87,20 +66,34 @@
 	{{HTML::script('//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')}}
 	<script type="text/javascript">
 		$(function() {
+			/*
 			// load side left
-			$( '#sideLeft' ).html('loading...');
+			$( '#left' ).html('loading...');
 			$.get("{{route('admin.display.ajaxSidebar', 'left')}}", function(data,status)
 			{
-				$( '#sideLeft' ).html(data);
+				$( '#left' ).html(data);
 			});
 
 			// load side right
-			$( '#sideRight' ).html('loading...');
+			$( '#right' ).html('loading...');
 			$.get("{{route('admin.display.ajaxSidebar', 'right')}}", function(data,status)
 			{
-				$( '#sideRight' ).html(data);
+				$( '#right' ).html(data);
 			});
+			*/
 
+			/* Load Available Container */
+			@foreach($widgetContainer as $wc)
+
+				$( "#{{ $wc['id'] }}" ).html("loading...");
+				$.get("{{route('admin.display.ajaxSidebar', $wc['id'])}}", function(data,status)
+				{
+					$( "#{{ $wc['id'] }}" ).html(data);
+				});
+
+			@endforeach
+
+			/* Insert Process */
 			$('.widget-chooser > li > a').click(function(){
 				// initialize variable
 				var el 		= $(this),
@@ -109,16 +102,16 @@
 					widget 	= el.attr('data-widget'),
 					content	= el.attr('data-value');
 
-				if(target == '#sideRight')
+				if(target == '#right')
 				{
 					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'right')}}",
 						url 	= "{{route('admin.display.ajaxSidebar', 'right')}}";
-				} else if(target == '#sideLeft') {
+				} else if(target == '#left') {
 					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'left')}}",
 						url 	= "{{route('admin.display.ajaxSidebar', 'left')}}";
 				} else {
-					var urlPost = "{{route('admin.display.ajaxSidebarAdd', 'page')}}",
-						url 	= "{{route('admin.display.ajaxSidebar', 'page')}}";
+					var urlPost = "{{route('admin.display.ajaxSidebarAdd', '')}}/"+ target.replace('#', ''),
+						url 	= "{{route('admin.display.ajaxSidebar', '')}}/"+ target.replace('#', '');
 				}
 
 				// add proses

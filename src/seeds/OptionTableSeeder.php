@@ -116,23 +116,13 @@ class OptionTableSeeder extends Seeder {
 
 			array(
 				'name'			=> 'web_sideLeft',
-				'value'			=> json_encode(array(
-					/*array(
-						'title'	 	=> 'Daftar Posting Baru',
-						'content'	=> '{<asmoyo:post type=list sortir=new size=80px>}',
-					),*/
-				)),
+				'value'			=> json_encode(array()),
 				'description'	=> 'item sidebar left',
 				'type'			=> 'json',
 			),
 			array(
 				'name'			=> 'web_sideRight',
-				'value'			=> json_encode(array(
-					/*array(
-						'title'	 	=> 'Kategori',
-						'content'	=> '{<asmoyo:category type=grid sortir=title-descending size=80px>}',
-					),*/
-				)),
+				'value'			=> json_encode(array()),
 				'description'	=> 'item sidebar right',
 				'type'			=> 'json',
 			),

@@ -7,22 +7,17 @@ class Admin_DisplayController extends AsmoyoController
 {
 	public function index()
 	{
-		$widgetContainer 	= array(
-			'sideLeft' 	=> 'Sidebar Kiri',
-			'sideRight' => 'Sidebar Kanan',
-		);
-
 		$data = array(
 			'widgets'			=> app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getAll(),
-			'widgetContainer'	=> $widgetContainer
+			'pages'				=> app('Antoniputra\Asmoyo\Pages\PageInterface')->getAll(null, null, 'published'),
+			'widgetContainer'	=> $this->widgetContainer()
 		);
-		// return app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug('listing', 0);
 		return $this->setStructure('oneCollumn', 'admin')->adminView('display.index', $data, false);
 	}
 
 	public function ajaxSidebar($position)
 	{
-		if ( ! Request::ajax() ) { return App::abort(404); }
+		// if ( ! Request::ajax() ) { return App::abort(404); }
 
 		$web 	= app('asmoyo.web');
 		switch ($position) {
@@ -33,31 +28,54 @@ class Admin_DisplayController extends AsmoyoController
 			case 'right':
 				$containers = $web['web_sideRight'];
 			break;
-		
+			
+			// handle page widget if available
 			default:
-				return App::abort(404);
+				$page_id = str_replace('page_', '', $position);
+				if( $page = app('Antoniputra\Asmoyo\Pages\PageInterface')->getById($page_id) )
+				{
+					$containers = $page['content_structure'];
+				}
+				// if not found, throw 404
+				else
+				{
+					return App::abort(404);
+				}
+				
 			break;
 		}
 		
-		// merge dropdown pseudo list
+		// generate dropdown pseudo list
 		if($containers) {
 		foreach( $containers as $key => $c )
 		{
-			$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($c['widget']);
+			// if isset key widget. (key widget is important at here)
+			if ( isset($c['widget']) )
+			{
+				$query 	= app('Antoniputra\Asmoyo\Widgets\WidgetInterface')->getBySlug($c['widget']);
 
-			// get widget item
-			if ($query['has_item']) {
-				foreach ($query['items'] as $q) {
-					$default = "{<asmoyo:widget name=".$query['slug']." item=0>}";
-					$pseudo	= "{<asmoyo:widget name=".$query['slug']." item=". $q['id'].">}";
-	            	$item[$default] = 'tidak ada';
-	            	$item[$pseudo] = $q['title'];
+				// get widget item
+				if ($query['has_item']) {
+					foreach ($query['items'] as $q) {
+						$default 	= "{<asmoyo:widget name=".$query['slug']." item=0>}";
+						$pseudo		= "{<asmoyo:widget name=".$query['slug']." item=". $q['id'].">}";
+
+						// this is pseudo dropdown list
+		            	$item[$default] = 'tidak ada';
+		            	$item[$pseudo] = $q['title'];
+					}
 				}
-			} else {
-				$item = "{<asmoyo:widget name=".$query['slug'].">}";
-			}
-        	$containers[$key]['item'] = $item; // add item list
-        	$item = null; // flush item list
+				// widget who haven't item (like search widget)
+				else
+				{
+					$item = "{<asmoyo:widget name=".$query['slug'].">}";
+				}
+	        	// add item list
+	        	$containers[$key]['item'] = $item; 
+
+	        	// flush item list
+	        	$item = null;
+        	}
 		} }
 		// return $containers;
 
@@ -81,10 +99,22 @@ class Admin_DisplayController extends AsmoyoController
 			);
 		}
 
-		if ($position == 'left')
+		if ($position == 'left') {
 			$data['web_sideLeft'] 	= $new;
-		else
+		}
+		elseif($position == 'right') {
 			$data['web_sideRight'] 	= $new;
+		}
+		else {
+			$page_id = str_replace('page_', '', $position);
+			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById( $page_id );
+			$page->content_structure = $new;
+			if ( $page->save() ) {
+				return Response::json('Berhasil di buat !!', 200);
+			} else {
+				return Response::json(array('error' => 'something error cok jancok'), 500);
+			}
+		}
 
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
 		{
@@ -109,9 +139,15 @@ class Admin_DisplayController extends AsmoyoController
 		}
 		else
 		{
-			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById($input['page_id'])->toArray();
-			// $page['content_structure'];
-			return 'berhasil masuk page';
+			$page_id = str_replace('page_', '', $position);
+			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById( $page_id );
+			$page->content_structure = array_merge($page['content_structure'], array($input));
+
+			if ( $page->save() ) {
+				return Response::json('Berhasil di buat !!', 200);
+			} else {
+				return Response::json(array('error' => 'something error cok jancok'), 500);
+			}
 		}
 
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
@@ -132,10 +168,22 @@ class Admin_DisplayController extends AsmoyoController
 			unset($web['web_sideLeft'][$keyToRemove]);
 			$data['web_sideLeft'] 	= array_values($web['web_sideLeft']);
 		}
-		else
+		elseif ($position == 'right')
 		{
 			unset($web['web_sideRight'][$keyToRemove]);
 			$data['web_sideRight'] 	= array_values($web['web_sideRight']);
+		} else {
+			$page_id = str_replace('page_', '', $position);
+			$page 	= app('Antoniputra\Asmoyo\Pages\PageInterface')->getById( $page_id );
+			$content_structure = $page['content_structure'];
+			unset( $content_structure[$keyToRemove] );
+			$page->content_structure = $content_structure;
+			
+			if ( $page->save() ) {
+				return Response::json('Berhasil di hapus !!', 200);
+			} else {
+				return Response::json(array('error' => 'something error cok jancok'), 500);
+			}
 		}
 
 		if( app('Antoniputra\Asmoyo\Options\OptionInterface')->update($data) )
@@ -143,5 +191,32 @@ class Admin_DisplayController extends AsmoyoController
 			return Response::json('Berhasil di hapus !!', 200);
 		}
 		return Response::json(array('error' => 'something error'), 500);
+	}
+
+	protected function widgetContainer( $container = array() )
+	{
+		// sidebar container
+		$default = array(
+			array(
+				'id'	=> 'left',
+				'title'	=> 'Sidebar Kiri',
+			),
+			array(
+				'id'	=> 'right',
+				'title'	=> 'Sidebar Kanan',
+			),
+		);
+
+		// pages container
+		$pages = app('Antoniputra\Asmoyo\Pages\PageInterface')->getAll(null, null, 'published');
+		if ( $pages['items'] ) {
+			foreach ($pages['items'] as $page) {
+				$default[] = array(
+					'id'	=> 'page_'.$page['id'],
+					'title'	=> $page['title']
+				);
+			}
+		}
+		return $default;
 	}
 }

@@ -1,4 +1,5 @@
 @if($containers)
+	<div id="handler_{{$position}}" data-url-submit="{{route('admin.display.ajaxSidebar', $position)}}" data-url-delete="{{route('admin.display.ajaxSidebarRemove', $position)}}" data-target="#{{$position}}" > </div>
 	{{Form::open(array('method' => 'POST', 'route' => array('admin.display.ajaxSidebarUpdate', $position), 'class' => 'form-horizontal', 'onsubmit' => 'widgetSubmit(\''.$position.'\', this)', 'id' => 'form_'.$position))}}
 		{{Form::hidden('position', $position)}}
 	<ul class="widget-sortable nav">
@@ -8,7 +9,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title" style="position:relative;">
-							{{$c['widget']}} : <small>{{$c['title']}}</small>
+							{{$c['widget'] ?: 'Page'}} : <small>{{$c['title']}}</small>
 							<div style="position:absolute; top:-7px; right:0px;">
 								<span class="btn btn-default btn-sm handle">
 									<i class="fa fa-arrows"></i>
@@ -27,7 +28,7 @@
 							</p>
 
 							<p>
-								@if( is_array($c['item']) )
+								@if( isset($c['item']) AND is_array($c['item']) )
 									{{Form::select('pseudo[]', $c['item'], $c['content'], array('class' => 'form-control'))}}
 									<p>
 										<a href="{{route('admin.widget.show', $c['widget'])}}" target="_blank">
@@ -41,9 +42,11 @@
 							</p>
 
 							<!-- btn remove -->
-							<div class="text-right">
-								<a class="btn btn-danger btn-sm" data-key="{{$key}}" onclick="widgetRemove('{{$position}}', this)">Hapus</a>
-							</div>
+							@if( $c['widget'] )
+								<div class="text-right">
+									<a class="btn btn-danger btn-sm" data-key="{{$key}}" onclick="widgetRemove('{{$position}}', this)">Hapus</a>
+								</div>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -79,15 +82,11 @@
 	function widgetRemove(position, that)
 	{
 		if ( ! confirm('anda yakin ?')) { return false; };
-		if(position == 'right') {
-			var urlDelete = "{{route('admin.display.ajaxSidebarRemove', 'right')}}",
-				url 	= "{{route('admin.display.ajaxSidebar', 'right')}}",
-				target 	= "#sideRight";
-		} else {
-			var urlDelete = "{{route('admin.display.ajaxSidebarRemove', 'left')}}",
-				url 	= "{{route('admin.display.ajaxSidebar', 'left')}}",
-				target 	= "#sideLeft";
-		}
+
+		var handler = $('#handler_{{$position}}'),
+			url 	= handler.attr('data-url-submit'),
+			urlDelete = handler.attr('data-url-delete'),
+			target 	= handler.attr('data-target');
 
 		// delete process
 		$( target ).html('loading...');
@@ -110,16 +109,14 @@
 		event.preventDefault();
 	}
 
-	// handle widget save
+	// handle widget save update
 	function widgetSubmit(position, form)
 	{
-		if(position == 'right') {
-			var url 	= "{{route('admin.display.ajaxSidebar', 'right')}}",
-				target 	= "#sideRight";
-		} else {
-			var url 	= "{{route('admin.display.ajaxSidebar', 'left')}}",
-				target 	= "#sideLeft";
-		}
+		// console.log('widget submit function called');
+		var handler = $('#handler_{{$position}}'),
+			url 	= handler.attr('data-url-submit'),
+			urlDelete = handler.attr('data-url-delete'),
+			target 	= handler.attr('data-target');
 
 		// update process
 		$( target ).html('loading...');
