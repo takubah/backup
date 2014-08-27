@@ -1,0 +1,121 @@
+options
+	id 				- integer
+	name 			- string
+	value 			- text
+	type 			- string
+
+medias
+    id 				- integer
+    category_id		- integer
+    type 			- string (internal|external)
+    file			- string
+    mime_type		- string
+    size			- integer
+    title 			- string
+    description 	- text
+
+users
+    id                      - integer
+    email                   - string
+    username                - string
+    password                - string
+    permissions             - text
+    activated               - tinyInteger (default:0)
+    activation_code         - string
+    activated_at            - timestamp
+    last_login              - timestamp
+    remember_token          - string (nullable)
+    persist_code            - string
+    reset_password_code     - string
+    media_id                - integer
+    fullname                - string
+    birthday                - date
+    gender                  - enum ('male', female)
+    city                    - integer
+    address                 - text
+
+categories
+    id              - integer
+    media_id        - integer
+    parent_id       - integer (nullable)
+    title           - string
+    url             - string
+    description     - text
+    status          - string (publish|private)
+
+galleries
+    id 				- integer
+    media_id		- integer
+    title 			- string
+    url 			- string
+    description 	- text
+    status			- string (publish|private)
+
+pages
+	id 				- integer
+	parent_id 		- integer (nullable)
+	status 			- (published, privated, drafted)
+	title 			- string
+	url 			- string
+	content			- text
+	side_left		- text
+	side_right		- text
+	footer			- text
+	meta_title		- string
+	meta_keyword 	- text
+	meta_description- text
+
+widgets
+    id 				- integer
+    objectable_id   - integer
+    objectable_type - string (post, media, other)
+    title 			- string
+    description 	- text
+    content         - text
+    view_path		- string
+    is_hasMany  	- boolean
+    status          - string (enabled, disabled)
+
+widgets_groups
+	id 				- integer
+	widget_id 		- integer
+	title 			- string
+	description 	- string
+
+widgets_items
+	id 				- integer
+    widget_group_id - integer
+    parent_id       - integer (nullable)
+	objectable_id 	- integer
+	objectable_type - string (post, media, other)
+	content 		- text
+
+posts
+    id 				- integer
+    groupable_id 	- integer
+    groupable_type 	- string (category, widget, widget_group)
+    media_id 		- integer (nullable)
+    user_id 		- integer
+    type            - string (article, audio, video, product)
+    title 			- string
+    url 			- string
+    description 	- text
+    body			- text
+    status			- string (published|privated|scheduled|drafted)
+    meta_title		- string
+    meta_keyword	- text
+    meta_description- text
+
+comments
+	id 				- integer
+	objectable_id 	- integer
+    objectable_type	- string (post, page, category)
+    user_id			- integer (nullable)
+    type            - string (object, message)
+    title           - string
+    content			- text
+    status			- string (pending|published|privated)
+    anonymous_name 	- string
+    anonymous_email	- string
+    anonymous_url	- string
+    anonymous_agent	- text
